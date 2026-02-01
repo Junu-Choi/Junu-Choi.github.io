@@ -27,8 +27,20 @@ latest_posts:
   limit: 3 # leave blank to include all the blog posts
 ---
 
-Write your biography here. Tell the world about yourself. Link to your favorite [subreddit](http://reddit.com). You can put a picture in, too. The code is already in, just name your picture `prof_pic.jpg` and put it in the `img/` folder.
+I am a graduate student of the **Interdisciplinary Program in Artificial Intelligence (IPAI)** at **Seoul National University**. My research lies at the intersection of **Machine Learning** and **Scientific Computing**, with a primary focus on the mathematical foundations of generative models.
 
-Put your address / P.O. box / other info right below your picture. You can also disable any of these elements by editing `profile` property of the YAML header of your `_pages/about.md`. Edit `_bibliography/papers.bib` and Jekyll will render your [publications page](/al-folio/publications/) automatically.
+Currently, I am investigating **Trajectory Regularization** and **Optimization Theory** to enhance the robustness and controllability of diffusion models and flow matching.
 
-Link to your social media connections, too. This theme is set up to use [Font Awesome icons](https://fontawesome.com/) and [Academicons](https://jpswalsh.github.io/academicons/), like the ones below. Add your Facebook, Twitter, LinkedIn, Google Scholar, or just disable all of them.
+---
+
+### 🎓 Education
+
+* **M.S. in Artificial Intelligence (IPAI)**, Seoul National University (2025 - Present)
+* **B.S. in Mathematical Sciences and School of Computing** (Double Major), KAIST (2017 - 2025)
+
+### 🔬 Research Experience
+
+* **Machine Learning Researcher**, Humelo Inc. (2020 - 2024)
+    * Conducted research on High-fidelity Text-to-Speech (TTS) synthesis.
+    * Developed Vocal Style Conversion models.
+    * Optimized efficiency via Large Model Pruning and Quantization.
