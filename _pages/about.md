@@ -6,7 +6,7 @@ subtitle: <a href='#'>Graduate Student</a> at Seoul National University
 
 profile:
   align: right
-  image: prof_pic.jpg
+  image: prof_img.jpg
   image_circular: false # crops the image to make it circular
   more_info: >
     <p>Building 27, Room 221</p>
