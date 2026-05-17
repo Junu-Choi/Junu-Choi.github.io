@@ -25,8 +25,8 @@ export const papers: Paper[] = [
     // Title withheld during review; switch to "Space–Time Aligned Diffusion Dynamics"
     // once ECCV 2026 acceptance is announced.
     title: "Manuscript under review",
-    authors: "Junu Choi, Youngjoon Hong",
-    venue: "ECCV 2026 — post-rebuttal",
+    authors: "Junu Choi, Youngjoon Hong†",
+    venue: "ECCV 2026 — post-rebuttal · †corresponding",
     selected: true,
   },
   {
