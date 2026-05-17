@@ -15,7 +15,23 @@ export type Paper = {
  * Add new papers here. The /papers page lists all entries (newest first);
  * the about page renders only entries with `selected: true`.
  *
- * Leave the array empty to hide the "Selected papers" section on the home page
- * and show an "in preparation" message on /papers.
+ * For papers under review, leave `title` as a placeholder ("Manuscript
+ * under review") and update once the venue announces accepted titles.
+ * Replace `authors` with the full author list when public.
  */
-export const papers: Paper[] = [];
+export const papers: Paper[] = [
+  {
+    year: 2026,
+    title: "Manuscript under review",
+    authors: "Junu Choi, et al.",
+    venue: "ECCV 2026 — post-rebuttal",
+    selected: true,
+  },
+  {
+    year: 2026,
+    title: "Manuscript under review",
+    authors: "Junu Choi, et al.",
+    venue: "NeurIPS 2026 — submitted",
+    selected: true,
+  },
+];
