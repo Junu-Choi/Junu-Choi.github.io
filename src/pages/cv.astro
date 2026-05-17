@@ -85,11 +85,18 @@ const expectedHash = "4e62b4fcd27edfdc23251df7002ed399eeb81bd64a6cb76829fc891376
         const hash = Array.from(new Uint8Array(buf))
           .map((b) => b.toString(16).padStart(2, '0'))
           .join('');
-        if (hash === expectedHash) {
-          window.print();
-        } else {
+        if (hash !== expectedHash) {
           window.alert('Incorrect passphrase.');
+          return;
         }
+        /* Clear document title so the browser's default print header
+           does not embed "CV — Junu Choi" alongside the auto-timestamp.
+           To remove the timestamp itself the user must uncheck
+           "Headers and footers" in the print dialog (one-time setting). */
+        const origTitle = document.title;
+        document.title = '';
+        setTimeout(() => { document.title = origTitle; }, 1500);
+        window.print();
       });
   </script>
 

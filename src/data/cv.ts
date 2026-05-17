@@ -22,6 +22,7 @@ export const cv = {
       title: "M.S., Interdisciplinary Program in Artificial Intelligence",
       place: "Seoul National University",
       date: "2025 – present",
+      details: ["GPA: 4.30 / 4.30 (in progress)"],
     },
     {
       title: "B.S. (Double Major), School of Computing × Mathematical Sciences",
@@ -64,11 +65,11 @@ export const cv = {
       ],
     },
     {
-      title: "Independent research",
-      place: "KAIST",
+      title: "Team Project Lead",
+      place: "KAIST · School of Computing",
       date: "Mar – Jun 2024",
       details: [
-        "Speculative decoding accelerated via feature-distribution speculation and intermediate-feature-level decoding; combined knowledge distillation with sparse rejection.",
+        "Led a small team in accelerating speculative decoding via feature-distribution speculation and intermediate-feature-level decoding; combined knowledge distillation with sparse rejection.",
       ],
     },
     {

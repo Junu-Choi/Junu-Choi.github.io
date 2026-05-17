@@ -403,10 +403,21 @@ dl.cv-skills dd {
   .cv-download { display: none !important; }
   .rail::after { display: none !important; }
 
-  /* Page setup */
+  /* Page setup — try to suppress browser-added headers/footers.
+     Note: most browsers ONLY remove these when the user unchecks
+     "Headers and footers" in the print dialog (a one-time setting).
+     The named-page-box rules below are honoured by Firefox and partially
+     by WebKit; Chrome ignores them but at least the empty content
+     declarations don't add anything. */
   @page {
     size: A4;
     margin: 16mm 14mm;
+    @top-left     { content: ""; }
+    @top-center   { content: ""; }
+    @top-right    { content: ""; }
+    @bottom-left  { content: ""; }
+    @bottom-center { content: ""; }
+    @bottom-right { content: ""; }
   }
   html, body { background: #fff !important; color: #111 !important; }
   body {
@@ -443,10 +454,17 @@ dl.cv-skills dd {
     letter-spacing: .01em;
   }
 
-  /* Section rules tightened for print */
+  /* Section rules tightened for print, with orphan protection */
   .rule {
     margin: .9rem 0 .45rem;
     background: #ccc;
+    page-break-after: avoid;
+    break-after: avoid-page;
+  }
+  /* Whatever comes right after a section rule should not break before */
+  .rule + * {
+    page-break-before: avoid;
+    break-before: avoid-page;
   }
   .rule span {
     background: #fff !important;
