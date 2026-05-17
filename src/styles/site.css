@@ -1,0 +1,306 @@
+/* Site layout — rail + paper, lifted from the D mockup. */
+
+:root {
+  --serif: "Newsreader", "Iowan Old Style", "Charter", Georgia, serif;
+  --sans:  "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --mono:  "JetBrains Mono", "SF Mono", "Menlo", monospace;
+
+  --rail-w: 240px;
+
+  /* Content-level indentation steps */
+  --ind-1: 1.25rem;    /* lists & figures under a section rule (main column) */
+  --ind-2: .85rem;     /* sub-info within an item (meta, venue, caption) */
+  --ind-rail: .625rem; /* half of --ind-1 — used inside the narrow rail */
+}
+
+body {
+  font-family: var(--sans);
+  font-feature-settings: "ss01", "cv11";
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--ink);
+}
+
+/* ─────────────────────────────────────────── Left rail */
+
+.rail {
+  position: fixed; top: 0; left: 0;
+  width: var(--rail-w); height: 100vh;
+  background: var(--bg-page);
+  overflow-y: auto;
+}
+.rail::after {
+  content: "";
+  position: fixed;
+  top: 50%; left: calc(var(--rail-w) - 1.5px);
+  transform: translateY(-50%);
+  width: 3px;
+  height: clamp(320px, 62vh, 600px);
+  background: var(--ref-dash);
+  border-radius: 1.5px;
+  pointer-events: none;
+}
+.rail-inner {
+  padding: 4.5rem 1.7rem 2rem;
+  display: flex; flex-direction: column; height: 100%;
+  font-size: .82rem; color: var(--ink-soft);
+}
+
+.rail-brand { margin-bottom: 2.4rem; }
+.rail-name {
+  font-family: var(--sans);
+  font-size: .72rem;
+  font-weight: 500;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.rail-nav {
+  display: flex; flex-direction: column;
+  gap: .5rem;
+  margin-bottom: 2.4rem;
+  padding-left: var(--ind-rail);
+}
+.rail-nav a {
+  color: var(--ink-soft); border-bottom: 0;
+  letter-spacing: .02em;
+  display: inline-flex; align-items: center;
+  width: fit-content;
+}
+.rail-nav a:hover { color: var(--accent-strong); }
+.rail-nav a.active { color: var(--ink); }
+.rail-nav a.active::before {
+  content: ""; display: inline-block;
+  width: 14px; height: 1px; background: var(--accent);
+  margin-right: .55rem;
+}
+
+.rail-section { margin-bottom: 2rem; }
+.rail-label {
+  font-size: .68rem; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--ink-soft); opacity: .75;
+  margin-bottom: .55rem;
+}
+.rail-meta {
+  line-height: 1.55;
+  color: var(--ink-soft);
+  padding-left: var(--ind-rail);
+}
+.rail-email {
+  font-family: var(--mono);
+  font-size: .78rem;
+  letter-spacing: .005em;
+  color: var(--ink-soft);
+  border-bottom: 0;
+}
+.rail-email:hover { color: var(--accent-strong); }
+
+.rail-links {
+  list-style: none; margin: 0;
+  padding: 0 0 0 var(--ind-rail);
+  display: flex; flex-direction: column; gap: .35rem;
+}
+.rail-links a { color: var(--ink-soft); border-bottom: 0; }
+.rail-links a:hover { color: var(--accent-strong); }
+
+.rail-foot {
+  margin-top: auto;
+  font-family: var(--mono);
+  font-size: .68rem;
+  color: var(--ink-soft); opacity: .7;
+  letter-spacing: .02em;
+  padding-top: 1.5rem;
+  border-top: 1px dashed var(--hair);
+  display: flex; align-items: center; gap: .5rem;
+}
+.kdot {
+  display: inline-block; width: 6px; height: 6px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--k-2), var(--k-3));
+  box-shadow: 0 0 0 2px rgba(153,42,42,.08);
+}
+
+/* ─────────────────────────────────────────── Main column */
+
+.paper {
+  margin-left: var(--rail-w);
+  max-width: clamp(660px, calc(100vw - var(--rail-w)), 1320px);
+  padding: 4.5rem clamp(2rem, 5vw, 5rem) 6rem;
+}
+
+/* Home / about masthead — big serif name */
+.masthead { margin-bottom: 3rem; }
+.masthead h1 {
+  font-family: var(--serif);
+  font-variation-settings: "opsz" 60;
+  font-weight: 500;
+  font-size: clamp(2.6rem, 4.2vw, 3.8rem);
+  line-height: 1.05;
+  letter-spacing: -.025em;
+  margin: 0 0 .7rem;
+}
+.tagline { font-size: .98rem; color: var(--ink-soft); }
+.tagline a { color: var(--ink-soft); border-bottom: 1px solid var(--hair); }
+.tagline a:hover { color: var(--accent-strong); border-bottom-color: var(--accent); }
+
+/* Sub-page header — smaller, for /papers /notes /cv /projects */
+.page-head { margin-bottom: 2.5rem; }
+.page-head .eyebrow {
+  font-family: var(--mono);
+  font-size: .7rem; letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: .55rem;
+}
+.page-head h1 {
+  font-family: var(--serif);
+  font-variation-settings: "opsz" 36;
+  font-weight: 500;
+  font-size: clamp(1.8rem, 2.6vw, 2.4rem);
+  line-height: 1.1;
+  letter-spacing: -.015em;
+  margin: 0;
+}
+
+/* About prose */
+.about p {
+  font-family: var(--serif);
+  font-variation-settings: "opsz" 18;
+  font-size: 1.08rem;
+  line-height: 1.65;
+  margin: 1.1rem 0;
+  max-width: 72ch;
+  color: var(--ink);
+}
+.about em { font-style: italic; color: var(--accent-strong); }
+
+/* Section rule — hairline with inset label, anchored left */
+.rule {
+  position: relative;
+  height: 1px; background: var(--hair);
+  margin: 4rem 0 1.8rem;
+}
+.rule span {
+  position: absolute; top: -.7rem; left: 0;
+  background: var(--bg-page);
+  padding-right: .9rem;
+  font-size: .7rem; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--ink-soft);
+  font-weight: 500;
+}
+
+/* Research areas */
+.areas { list-style: none; padding: 0 0 0 var(--ind-1); margin: 0; }
+.areas li {
+  padding: .85rem 0;
+  max-width: 78ch;
+}
+.area-name {
+  display: flex; align-items: center;
+  font-family: var(--serif);
+  font-variation-settings: "opsz" 20;
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--ink);
+  letter-spacing: -.005em;
+}
+.kbar {
+  display: inline-block; width: 18px; height: 2px;
+  margin-right: .85rem;
+  background: linear-gradient(to right, var(--k-2), var(--k-3));
+  border-radius: 1px;
+  flex-shrink: 0;
+}
+.area-desc {
+  font-size: .92rem;
+  color: var(--ink-soft);
+  margin-top: .2rem;
+  margin-left: calc(18px + .85rem);
+  line-height: 1.5;
+}
+
+/* Papers */
+dl.pubs { margin: 0; padding-left: var(--ind-1); max-width: 82ch; }
+dl.pubs dt {
+  float: left; clear: left; width: 60px;
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  color: var(--accent);
+  font-size: .82rem; font-weight: 500;
+  padding-top: .4rem;
+  letter-spacing: .02em;
+}
+dl.pubs dd {
+  margin: 0 0 1.6rem 60px;
+  padding-bottom: 1.6rem;
+}
+.title {
+  font-family: var(--serif);
+  font-variation-settings: "opsz" 20;
+  font-weight: 500;
+  font-size: 1.08rem;
+  letter-spacing: -.005em;
+  border-bottom: 0;
+  color: var(--ink);
+}
+.title:hover { color: var(--accent-strong); }
+.meta {
+  font-size: .9rem; color: var(--ink-soft);
+  margin-top: .25rem;
+  padding-left: var(--ind-2);
+}
+.meta strong { color: var(--ink); font-weight: 500; }
+.venue {
+  font-size: .82rem; color: var(--ink-soft);
+  margin-top: .3rem;
+  padding-left: var(--ind-2);
+  letter-spacing: .01em;
+}
+.venue a.quiet { color: var(--ink-soft); border-bottom: 0; }
+.venue a.quiet:hover { color: var(--accent-strong); }
+
+/* Figure */
+.fig { margin: 0; padding-left: var(--ind-1); max-width: 82ch; }
+.fig img { width: 100%; height: 28px; display: block; border-radius: 1px; }
+.fig figcaption {
+  font-size: .85rem; color: var(--ink-soft);
+  margin-top: .7rem;
+  padding-left: var(--ind-2);
+  line-height: 1.55;
+  max-width: 70ch;
+}
+.figlabel {
+  font-family: var(--mono);
+  font-size: .72rem;
+  color: var(--accent);
+  letter-spacing: .04em;
+  margin-right: .5rem;
+}
+.quiet { color: var(--ink-soft); opacity: .85; }
+
+/* Empty-state notes (e.g., papers list while in preparation) */
+.note {
+  font-family: var(--serif);
+  font-variation-settings: "opsz" 18;
+  font-size: 1.04rem;
+  color: var(--ink-soft);
+  max-width: 65ch;
+  margin: 1.2rem 0;
+}
+.note em { color: var(--accent-strong); font-style: italic; }
+
+/* ─────────────────────────────────────────── Narrow screens */
+@media (max-width: 920px) {
+  .rail {
+    position: static; width: 100%; height: auto;
+    border-right: 0; border-bottom: 1px solid var(--hair);
+  }
+  .rail::after { display: none; }
+  .rail-inner { padding: 2rem; height: auto; }
+  .rail-foot { margin-top: 1.5rem; }
+  .paper {
+    margin-left: 0;
+    max-width: 100%;
+    padding: 3rem 1.5rem 4rem;
+  }
+}

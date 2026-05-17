@@ -1,0 +1,42 @@
+---
+import { site } from "../config/site";
+
+interface Props {
+  activeNav?: string;
+}
+const { activeNav } = Astro.props;
+---
+<aside class="rail">
+  <div class="rail-inner">
+    <div class="rail-brand">
+      <div class="rail-name">{site.name}</div>
+    </div>
+
+    <nav class="rail-nav">
+      {site.nav.map(({ label, href }) => (
+        <a class={activeNav === label ? "active" : undefined} href={href}>{label}</a>
+      ))}
+    </nav>
+
+    <div class="rail-section">
+      <div class="rail-label">contact</div>
+      <div class="rail-meta">
+        <a class="rail-email" href={`mailto:${site.email}`}>{site.emailDisplay}</a>
+      </div>
+    </div>
+
+    <div class="rail-section">
+      <div class="rail-label">elsewhere</div>
+      <ul class="rail-links">
+        {site.externalLinks.map(({ label, href }) => (
+          <li><a href={href}>{label}</a></li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="rail-foot">
+      <span class="kdot" aria-hidden="true"></span>
+      last updated &mdash; {site.lastUpdated}
+    </div>
+  </div>
+</aside>

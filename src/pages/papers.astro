@@ -1,0 +1,25 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SectionRule from "../components/SectionRule.astro";
+import PaperList from "../components/PaperList.astro";
+import { papers } from "../data/papers";
+---
+<BaseLayout title="Papers" activeNav="papers">
+
+  <header class="page-head">
+    <div class="eyebrow">papers</div>
+    <h1>Publications &amp; preprints</h1>
+  </header>
+
+  {papers.length === 0 ? (
+    <p class="note">
+      <em>In preparation.</em> Preprints and publications will appear here as they are released.
+    </p>
+  ) : (
+    <section>
+      <SectionRule label="All"/>
+      <PaperList/>
+    </section>
+  )}
+
+</BaseLayout>

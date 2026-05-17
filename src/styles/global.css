@@ -1,0 +1,48 @@
+/* Palette — derived from the matplotlib curvature colormap (CURV_CMAP). */
+
+:root {
+  /* Ink family */
+  --ink:        #17181A;   /* primary text */
+  --ink-soft:   #4B5058;   /* secondary text */
+  --hair:       #C9CCD1;   /* hairline rules */
+
+  /* Plane / paper */
+  --bg-plane:   #F4EFE7;   /* warm paper tint — used on panels, not full page */
+  --bg-page:    #FAFAF6;   /* warm off-white — main page background */
+  --bg-panel:   #F4EFE7;   /* alias for paper tint when used as a panel */
+  --bg-sunken:  #EFE9DD;   /* slightly deeper tint for layered panels */
+
+  /* Endpoints / reference */
+  --source:     #17181A;
+  --target:     #8C9097;
+  --ref-dash:   #B2B6BB;
+
+  /* kappa-sequential stops (paper → peach → terracotta → deep red → crimson) */
+  --k-0:        #EFE7DB;
+  --k-1:        #E2B89A;
+  --k-2:        #C8704F;
+  --k-3:        #992A2A;
+  --k-4:        #4A0E16;
+
+  /* Semantic accents pulled from the deep end of the cmap */
+  --accent:           #992A2A;
+  --accent-strong:    #4A0E16;
+  --accent-soft-bg:   #EFE7DB;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+body {
+  margin: 0;
+  background: var(--bg-page);
+  color: var(--ink);
+}
+a {
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--hair);
+  transition: color .15s, border-color .15s;
+}
+a:hover { color: var(--accent-strong); border-bottom-color: var(--accent); }
+hr { border: 0; border-top: 1px solid var(--hair); margin: 2.5rem 0; }
+::selection { background: var(--k-1); color: var(--ink); }

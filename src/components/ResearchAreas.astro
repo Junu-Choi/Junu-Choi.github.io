@@ -1,0 +1,11 @@
+---
+import { researchAreas } from "../data/research";
+---
+<ul class="areas">
+  {researchAreas.map((a) => (
+    <li>
+      <div class="area-name"><span class="kbar" aria-hidden="true"></span>{a.name}</div>
+      <div class="area-desc">{a.description}</div>
+    </li>
+  ))}
+</ul>

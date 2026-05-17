@@ -1,0 +1,56 @@
+---
+import { papers, type Paper } from "../data/papers";
+
+interface Props {
+  /** If true, only include papers marked `selected: true`. */
+  selectedOnly?: boolean;
+}
+const { selectedOnly = false } = Astro.props;
+const list: Paper[] = (selectedOnly ? papers.filter((p) => p.selected) : papers)
+  .slice()
+  .sort((a, b) => b.year - a.year);
+
+/** Bold the literal "Junu Choi" inside an author string. */
+function splitAuthors(authors: string): { text: string; bold: boolean }[] {
+  const me = "Junu Choi";
+  const out: { text: string; bold: boolean }[] = [];
+  let i = 0;
+  while (i < authors.length) {
+    const idx = authors.indexOf(me, i);
+    if (idx === -1) { out.push({ text: authors.slice(i), bold: false }); break; }
+    if (idx > i) out.push({ text: authors.slice(i, idx), bold: false });
+    out.push({ text: me, bold: true });
+    i = idx + me.length;
+  }
+  return out;
+}
+---
+{list.length > 0 && (
+  <dl class="pubs">
+    {list.map((p) => (
+      <>
+        <dt>{p.year}</dt>
+        <dd>
+          <a href="#" class="title">{p.title}</a>
+          <div class="meta">
+            {splitAuthors(p.authors).map((seg) => seg.bold ? <strong>{seg.text}</strong> : <>{seg.text}</>)}
+          </div>
+          <div class="venue">
+            <span>{p.venue}</span>
+            {p.links && p.links.length > 0 && (
+              <>
+                {" · "}
+                {p.links.map((l, i) => (
+                  <>
+                    {i > 0 ? " · " : null}
+                    <a class="quiet" href={l.href}>{l.label}</a>
+                  </>
+                ))}
+              </>
+            )}
+          </div>
+        </dd>
+      </>
+    ))}
+  </dl>
+)}

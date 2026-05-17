@@ -1,0 +1,38 @@
+---
+import "../styles/global.css";
+import "../styles/site.css";
+import Rail from "../components/Rail.astro";
+import { site } from "../config/site";
+
+interface Props {
+  title?: string;
+  description?: string;
+  activeNav?: string;
+}
+const { title, description, activeNav } = Astro.props;
+const pageTitle = title ? `${title} — ${site.name}` : site.name;
+const desc = description ?? `${site.name} — ${site.affiliationShort}`;
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>{pageTitle}</title>
+  <meta name="description" content={desc}/>
+  <meta name="generator" content={Astro.generator}/>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet"
+  />
+</head>
+<body>
+  <Rail activeNav={activeNav}/>
+  <main class="paper">
+    <slot/>
+  </main>
+</body>
+</html>
