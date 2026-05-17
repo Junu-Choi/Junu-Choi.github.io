@@ -1,0 +1,53 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export async function getStaticPaths() {
+  const notes = await getCollection('notes', ({ data }) => !data.draft);
+  return notes.map((note) => ({
+    params: { slug: note.id },
+    props: { note },
+  }));
+}
+
+const { note } = Astro.props;
+const { Content } = await render(note);
+const isoDate = note.data.publishedAt.toISOString().slice(0, 10);
+const isoUpdated = note.data.updatedAt?.toISOString().slice(0, 10);
+---
+<BaseLayout title={note.data.title} description={note.data.abstract} activeNav="notes">
+
+  <article class="note-article">
+    <header class="note-head">
+      <div class="eyebrow">notes</div>
+      <h1>{note.data.title}</h1>
+      <div class="note-meta">
+        <time datetime={note.data.publishedAt.toISOString()}>{isoDate}</time>
+        {isoUpdated && isoUpdated !== isoDate && (
+          <span class="note-meta-sep"> · updated {isoUpdated}</span>
+        )}
+        {note.data.tags.length > 0 && (
+          <>
+            <span class="note-meta-sep"> · </span>
+            {note.data.tags.map((t, i) => (
+              <>
+                {i > 0 ? <span class="note-meta-sep">, </span> : null}
+                <span class="note-tag">{t}</span>
+              </>
+            ))}
+          </>
+        )}
+      </div>
+      <p class="note-abstract">{note.data.abstract}</p>
+    </header>
+
+    <div class="note-body">
+      <Content />
+    </div>
+
+    <footer class="note-foot">
+      <a href="/notes/">&larr; all notes</a>
+    </footer>
+  </article>
+
+</BaseLayout>

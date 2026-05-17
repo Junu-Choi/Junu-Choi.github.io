@@ -1,0 +1,40 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const allNotes = await getCollection('notes', ({ data }) => !data.draft);
+const notes = allNotes.sort((a, b) =>
+  b.data.publishedAt.getTime() - a.data.publishedAt.getTime()
+);
+---
+<BaseLayout title="Notes" activeNav="notes">
+
+  <header class="page-head">
+    <div class="eyebrow">notes</div>
+    <h1>Research notes</h1>
+  </header>
+
+  {notes.length === 0 ? (
+    <p class="note">
+      <em>Coming soon.</em> Informal notes on stochastic analysis, geometry, and generative models will be posted here.
+    </p>
+  ) : (
+    <ul class="notes-list">
+      {notes.map((n) => (
+        <li class="notes-entry">
+          <a href={`/notes/${n.id}/`} class="notes-title">{n.data.title}</a>
+          <time class="notes-date" datetime={n.data.publishedAt.toISOString()}>
+            {n.data.publishedAt.toISOString().slice(0, 10)}
+          </time>
+          <p class="notes-abstract">{n.data.abstract}</p>
+          {n.data.tags.length > 0 && (
+            <ul class="notes-tags">
+              {n.data.tags.map((t) => <li>{t}</li>)}
+            </ul>
+          )}
+        </li>
+      ))}
+    </ul>
+  )}
+
+</BaseLayout>

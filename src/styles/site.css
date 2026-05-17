@@ -389,6 +389,309 @@ dl.cv-skills dd {
   color: var(--ink-soft);
 }
 
+/* ─────────────────────────────── Notes index */
+
+ul.notes-list { list-style: none; padding: 0; margin: 0; }
+.notes-entry {
+  padding: 1.4rem 0 1.6rem;
+  border-top: 1px solid var(--hair);
+  max-width: 82ch;
+}
+.notes-entry:last-child { border-bottom: 1px solid var(--hair); }
+.notes-title {
+  font-family: var(--serif);
+  font-variation-settings: "opsz" 28;
+  font-weight: 500;
+  font-size: 1.3rem;
+  letter-spacing: -.01em;
+  color: var(--ink);
+  border-bottom: 0;
+  display: block;
+}
+.notes-title:hover { color: var(--accent-strong); }
+.notes-date {
+  display: block;
+  font-family: var(--mono);
+  font-size: .78rem;
+  color: var(--ink-soft);
+  letter-spacing: .02em;
+  margin-top: .25rem;
+}
+.notes-abstract {
+  font-family: var(--serif);
+  font-variation-settings: "opsz" 18;
+  font-size: 1rem;
+  color: var(--ink-soft);
+  line-height: 1.6;
+  margin: .55rem 0 0;
+  max-width: 70ch;
+}
+.notes-tags {
+  list-style: none; padding: 0; margin: .55rem 0 0;
+  display: flex; flex-wrap: wrap; gap: .4rem;
+  font-family: var(--mono);
+  font-size: .72rem;
+  color: var(--ink-soft);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+.notes-tags li::before { content: "· "; color: var(--hair); }
+.notes-tags li:first-child::before { content: ""; }
+
+/* ─────────────────────────────── Individual note article */
+
+.note-article { max-width: 82ch; }
+
+.note-head { margin-bottom: 2.5rem; }
+.note-head h1 {
+  font-family: var(--serif);
+  font-variation-settings: "opsz" 60;
+  font-weight: 500;
+  font-size: clamp(2rem, 3.4vw, 2.8rem);
+  line-height: 1.1;
+  letter-spacing: -.02em;
+  margin: 0 0 .55rem;
+}
+.note-meta {
+  font-family: var(--mono);
+  font-size: .76rem;
+  color: var(--ink-soft);
+  letter-spacing: .02em;
+}
+.note-meta-sep { color: var(--hair); }
+.note-tag { color: var(--accent); }
+.note-abstract {
+  font-family: var(--serif);
+  font-variation-settings: "opsz" 20;
+  font-style: italic;
+  font-size: 1.12rem;
+  color: var(--ink-soft);
+  line-height: 1.6;
+  max-width: 70ch;
+  margin: 1.4rem 0 0;
+  padding-left: 1rem;
+  border-left: 2px solid var(--hair);
+}
+
+/* Note body — markdown/MDX rendered content */
+.note-body {
+  font-family: var(--serif);
+  font-variation-settings: "opsz" 18;
+  font-size: 1.08rem;
+  line-height: 1.7;
+  color: var(--ink);
+  max-width: 70ch;
+}
+.note-body > * + * { margin-top: 1.1rem; }
+.note-body p { margin: 0; }
+.note-body em { color: var(--accent-strong); }
+.note-body strong { color: var(--ink); font-weight: 600; }
+.note-body a {
+  color: var(--ink);
+  border-bottom: 1px solid var(--hair);
+}
+.note-body a:hover {
+  color: var(--accent-strong);
+  border-bottom-color: var(--accent);
+}
+
+/* Headings inside notes */
+.note-body h2 {
+  font-family: var(--serif);
+  font-variation-settings: "opsz" 32;
+  font-weight: 500;
+  font-size: 1.5rem;
+  letter-spacing: -.01em;
+  margin: 3.2rem 0 .8rem;
+  color: var(--ink);
+}
+.note-body h2::before {
+  content: "";
+  display: block;
+  height: 1px;
+  background: var(--hair);
+  margin-bottom: 1.6rem;
+  width: 56px;
+}
+.note-body h3 {
+  font-family: var(--serif);
+  font-variation-settings: "opsz" 24;
+  font-weight: 500;
+  font-size: 1.18rem;
+  margin: 2rem 0 .55rem;
+  color: var(--ink);
+}
+.note-body h4 {
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: .95rem;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  margin: 1.5rem 0 .35rem;
+  color: var(--ink-soft);
+}
+
+/* Lists */
+.note-body ul, .note-body ol {
+  padding-left: 1.6rem;
+  max-width: 68ch;
+}
+.note-body ul li, .note-body ol li {
+  margin: .35rem 0;
+}
+.note-body ul {
+  list-style: none;
+  padding-left: 0;
+}
+.note-body ul > li {
+  padding-left: 1.4rem;
+  position: relative;
+}
+.note-body ul > li::before {
+  content: "·";
+  position: absolute;
+  left: .4rem;
+  color: var(--accent);
+  font-weight: 700;
+}
+.note-body ol {
+  list-style: none;
+  counter-reset: ol-num;
+  padding-left: 0;
+}
+.note-body ol > li {
+  counter-increment: ol-num;
+  padding-left: 1.8rem;
+  position: relative;
+}
+.note-body ol > li::before {
+  content: counter(ol-num) ".";
+  position: absolute;
+  left: 0;
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  color: var(--accent);
+  font-size: .9em;
+}
+
+/* Blockquote */
+.note-body blockquote {
+  margin: 1.2rem 0;
+  padding: .1rem 0 .1rem 1.2rem;
+  border-left: 2px solid var(--accent);
+  background: var(--accent-soft-bg);
+  color: var(--ink);
+  font-style: italic;
+}
+.note-body blockquote p { margin: .55rem 0; }
+
+/* Code — inline and blocks */
+.note-body code {
+  font-family: var(--mono);
+  font-size: .92em;
+  background: var(--bg-panel);
+  padding: .1em .35em;
+  border-radius: 2px;
+  color: var(--ink);
+}
+.note-body pre {
+  font-family: var(--mono);
+  font-size: .85rem;
+  line-height: 1.55;
+  background: var(--bg-panel);
+  padding: 1rem 1.2rem;
+  border: 1px solid var(--hair);
+  border-left: 2px solid var(--accent);
+  overflow-x: auto;
+  margin: 1.2rem 0;
+  max-width: 80ch;
+}
+.note-body pre code {
+  background: none;
+  padding: 0;
+  font-size: inherit;
+}
+
+/* Figures */
+.note-body figure {
+  margin: 1.6rem 0;
+  max-width: 80ch;
+}
+.note-body figure img,
+.note-body figure svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  background: var(--bg-panel);
+  border: 1px solid var(--hair);
+  padding: .6rem;
+}
+.note-body figcaption {
+  font-family: var(--sans);
+  font-size: .85rem;
+  color: var(--ink-soft);
+  margin-top: .55rem;
+  padding-left: .6rem;
+  line-height: 1.55;
+}
+
+/* Tables */
+.note-body table {
+  border-collapse: collapse;
+  margin: 1.2rem 0;
+  font-family: var(--sans);
+  font-size: .9rem;
+  max-width: 80ch;
+  width: 100%;
+}
+.note-body th, .note-body td {
+  border-bottom: 1px solid var(--hair);
+  padding: .5rem .8rem;
+  text-align: left;
+  vertical-align: top;
+}
+.note-body th {
+  font-family: var(--mono);
+  font-size: .76rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  border-bottom: 1.5px solid var(--ink);
+}
+
+/* KaTeX adjustments */
+.note-body .katex-display {
+  margin: 1.4rem 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: .25rem 0;
+}
+.note-body .katex {
+  font-size: 1.05em;
+}
+
+/* References footer */
+.note-body hr {
+  border: 0;
+  border-top: 1px solid var(--hair);
+  margin: 3rem 0 1.6rem;
+}
+
+/* Foot */
+.note-foot {
+  margin-top: 4rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--hair);
+  max-width: 70ch;
+  font-family: var(--mono);
+  font-size: .82rem;
+}
+.note-foot a {
+  color: var(--ink-soft);
+  border-bottom: 0;
+}
+.note-foot a:hover { color: var(--accent-strong); }
+
 /* Print-only elements (hidden in screen view) */
 .print-only { display: none; }
 
