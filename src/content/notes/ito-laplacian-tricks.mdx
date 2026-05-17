@@ -1,6 +1,6 @@
 ---
 title: "Three tricks for the Itô Laplacian"
-abstract: "The trace term that appears in Itô's formula is the dominant computational bottleneck in SDE-based generative modelling. This note walks through three ways the literature avoids paying its full $O(d)$ cost — Hutchinson's stochastic estimator, isotropic diffusion, and Langevin sampling — with derivations, references, and a comparative experiment."
+abstract: "The trace term that appears in Itô's formula is the dominant computational bottleneck in SDE-based generative modelling. This note walks through three ways the literature avoids paying its full linear-in-dimension cost — Hutchinson's stochastic estimator, isotropic diffusion, and Langevin sampling — with derivations, references, and a comparative experiment."
 publishedAt: 2026-05-17
 tags: ["stochastic dynamics", "generative modeling", "computational methods"]
 draft: false
@@ -12,7 +12,7 @@ Consider the Itô stochastic differential equation
 $$
 dX_t = b(X_t)\, dt + \sigma(X_t)\, dW_t
 $$
-on $\mathbb{R}^d$, where $b: \mathbb{R}^d \to \mathbb{R}^d$ is the drift, $\sigma: \mathbb{R}^d \to \mathbb{R}^{d \times d}$ is the diffusion matrix, and $W_t$ is a $d$-dimensional Brownian motion. For a sufficiently smooth test function $f: \mathbb{R}^d \to \mathbb{R}$, **Itô's lemma** [^kuo, p. 100] reads
+on $\mathbb{R}^d$, where $b: \mathbb{R}^d \to \mathbb{R}^d$ is the drift, $\sigma: \mathbb{R}^d \to \mathbb{R}^{d \times d}$ is the diffusion matrix, and $W_t$ is a $d$-dimensional Brownian motion. For a sufficiently smooth test function $f: \mathbb{R}^d \to \mathbb{R}$, **Itô's lemma** (Kuo, 2006, ch. 7) reads
 $$
 df(X_t) \;=\; \Big[\, \langle b,\, \nabla f \rangle \;+\; \tfrac{1}{2}\,\operatorname{tr}\!\big(\sigma \sigma^\top \nabla^{2} f\big) \,\Big] dt \;+\; \langle \nabla f,\, \sigma\, dW_t \rangle.
 $$
@@ -144,5 +144,3 @@ Hardware: $2 \times$ NVIDIA RTX PRO 6000 Blackwell (96 GiB each), PyTorch 2.x wi
 15. Vincent, P. (2011). *A Connection Between Score Matching and Denoising Autoencoders.* **Neural Computation**, 23(7), 1661–1674.
 16. Welling, M., & Teh, Y. W. (2011). *Bayesian Learning via Stochastic Gradient Langevin Dynamics.* **ICML 2011**.
 17. Yao, Z., Gholami, A., Keutzer, K., & Mahoney, M. W. (2020). *PyHessian: Neural Networks Through the Lens of the Hessian.* **IEEE Big Data 2020**.
-
-[^kuo]: H.-H. Kuo, *Introduction to Stochastic Integration*, Universitext, Springer (2006).
