@@ -1,7 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import SectionRule from "../components/SectionRule.astro";
-import ResearchAreas from "../components/ResearchAreas.astro";
 import CVEntries from "../components/CVEntries.astro";
 import { cv } from "../data/cv";
 import { site } from "../config/site";
@@ -41,18 +40,13 @@ const expectedHash = "4e62b4fcd27edfdc23251df7002ed399eeb81bd64a6cb76829fc891376
   </section>
 
   <section>
-    <SectionRule label="Research interests"/>
-    <ResearchAreas/>
+    <SectionRule label="Publications"/>
+    <CVEntries items={cv.publications}/>
   </section>
 
   <section>
     <SectionRule label="Experience"/>
     <CVEntries items={cv.experience}/>
-  </section>
-
-  <section>
-    <SectionRule label="Selected projects"/>
-    <CVEntries items={cv.projects}/>
   </section>
 
   <section>

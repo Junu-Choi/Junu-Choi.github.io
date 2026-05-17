@@ -30,6 +30,21 @@ export const cv = {
     },
   ] satisfies CVSection,
 
+  publications: [
+    {
+      title: "Manuscript under review",
+      place: "European Conference on Computer Vision (ECCV) 2026",
+      date: "2026",
+      details: ["Post-rebuttal; awaiting final decision."],
+    },
+    {
+      title: "Manuscript under review",
+      place: "Conference on Neural Information Processing Systems (NeurIPS) 2026",
+      date: "2026",
+      details: ["Submitted; under review."],
+    },
+  ] satisfies CVSection,
+
   experience: [
     {
       title: "Visiting Researcher",
@@ -46,6 +61,14 @@ export const cv = {
       details: [
         "PEFT fine-tuning of conversational LLMs on instruction-based medical Q&A data.",
         "Designed a novel evaluation methodology for LLM output quality that mitigates GPT-4 evaluator bias and instability.",
+      ],
+    },
+    {
+      title: "Independent research",
+      place: "KAIST",
+      date: "Mar – Jun 2024",
+      details: [
+        "Speculative decoding accelerated via feature-distribution speculation and intermediate-feature-level decoding; combined knowledge distillation with sparse rejection.",
       ],
     },
     {
@@ -69,25 +92,16 @@ export const cv = {
     },
   ] satisfies CVSection,
 
-  projects: [
-    {
-      title: "Speculative decoding via intermediate features",
-      place: "Personal research, KAIST",
-      date: "Mar – Jun 2024",
-      details: [
-        "Reduced compute risk in speculative decoding via feature-distribution speculation and intermediate-feature-level decoding; combined knowledge distillation with sparse rejection.",
-      ],
-    },
-  ] satisfies CVSection,
-
   awards: [
+    {
+      title: "Full graduate fellowship",
+      place: "Seoul National University, Interdisciplinary Program in AI",
+      date: "2025 – present",
+    },
     {
       title: "Qualcomm Innovation Award",
       place: "KAIST × Qualcomm AI Hackathon",
       date: "2019",
-      details: [
-        "CNN-based emotion-recognition system for video.",
-      ],
     },
   ] satisfies CVSection,
 
