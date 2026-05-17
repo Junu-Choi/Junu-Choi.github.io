@@ -47,7 +47,7 @@ export const cv = {
 
   experience: [
     {
-      title: "Visiting Researcher",
+      title: "Undergraduate Researcher",
       place: "Visual AI Group, KAIST",
       date: "Jan – Mar 2025",
       details: [
@@ -55,7 +55,7 @@ export const cv = {
       ],
     },
     {
-      title: "Visiting Researcher",
+      title: "Undergraduate Researcher",
       place: "MLILAB, KAIST",
       date: "Mar – Aug 2024",
       details: [
@@ -106,7 +106,7 @@ export const cv = {
   ] satisfies CVSection,
 
   skills: {
-    Languages: ["Python"],
+    Languages: ["Python", "CUDA"],
     "ML frameworks": ["PyTorch", "TensorFlow", "JAX"],
     "Scientific": ["NumPy", "SciPy", "matplotlib"],
     Tools: ["Linux/macOS", "tmux", "vim", "git"],
