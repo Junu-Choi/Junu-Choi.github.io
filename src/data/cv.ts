@@ -31,20 +31,8 @@ export const cv = {
     },
   ] satisfies CVSection,
 
-  publications: [
-    {
-      title: "Manuscript under review",
-      place: "European Conference on Computer Vision (ECCV) 2026",
-      date: "2026",
-      details: ["Post-rebuttal; awaiting final decision."],
-    },
-    {
-      title: "Manuscript under review",
-      place: "Conference on Neural Information Processing Systems (NeurIPS) 2026",
-      date: "2026",
-      details: ["Submitted; under review."],
-    },
-  ] satisfies CVSection,
+  // Publications are sourced from src/data/papers.ts to keep the
+  // CV, /papers tab, and home page in lockstep. See cv.astro.
 
   experience: [
     {

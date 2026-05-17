@@ -2,7 +2,9 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import SectionRule from "../components/SectionRule.astro";
 import CVEntries from "../components/CVEntries.astro";
+import PaperList from "../components/PaperList.astro";
 import { cv } from "../data/cv";
+import { papers } from "../data/papers";
 import { site } from "../config/site";
 
 /**
@@ -39,10 +41,12 @@ const expectedHash = "4e62b4fcd27edfdc23251df7002ed399eeb81bd64a6cb76829fc891376
     <CVEntries items={cv.education}/>
   </section>
 
-  <section>
-    <SectionRule label="Publications"/>
-    <CVEntries items={cv.publications}/>
-  </section>
+  {papers.length > 0 && (
+    <section>
+      <SectionRule label="Publications"/>
+      <PaperList/>
+    </section>
+  )}
 
   <section>
     <SectionRule label="Experience"/>
