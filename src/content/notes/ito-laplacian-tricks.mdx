@@ -1,6 +1,6 @@
 ---
-title: "Three tricks for the Itô Laplacian"
-abstract: "The trace term that appears in Itô's formula is the dominant computational bottleneck in SDE-based generative modelling. This note walks through two methods for paying its linear-in-dimension cost — Hutchinson's stochastic estimator, and isotropic diffusion combined with denoising score matching — and one bypass that reframes the problem so the cost never appears: Langevin sampling. Derivations, references, and a comparative experiment."
+title: "The trace term in Itô's formula: one method, two bypasses"
+abstract: "The trace term in Itô's formula is the dominant computational bottleneck in SDE-based generative modelling. In a strict sense there is only one general-purpose method for handling it — Hutchinson's stochastic estimator, which preserves the SDE you actually care about — alongside two widely-used bypasses that work only by changing the problem: constraining the diffusion to be isotropic, and reframing the task as sampling via Langevin dynamics. Derivations, references, and a comparative experiment."
 publishedAt: 2026-05-17
 tags: ["stochastic dynamics", "generative modeling", "computational methods"]
 draft: false
@@ -20,15 +20,15 @@ The infinitesimal generator $\mathcal{L}$ is therefore
 $$
 \mathcal{L} f \;=\; \langle b, \nabla f \rangle \;+\; \tfrac{1}{2}\, \operatorname{tr}\!\big(\sigma \sigma^\top \nabla^{2} f\big),
 $$
-and the second term — half the trace of the diffusion-weighted Hessian — is what I will call the **Itô Laplacian** below.
+The second term — half the trace of the diffusion-weighted Hessian — is the **second-order part of the generator**. With $a(x, t) := \sigma(x, t) \sigma(x, t)^\top$ writing it as $\tfrac{1}{2}\, a^{ij}\, \partial^{2}_{ij} f$ identifies it as a *generalized* (Hörmander-type) Laplacian; it reduces to the standard $\tfrac{1}{2} \Delta f$ only in the isotropic case $\sigma \equiv I$. For brevity, I will refer to it below as **the trace term**.
 
 This term is everywhere in SDE-based machine learning. It appears in the Fokker-Planck equation that governs the marginal density $p_t$ of $X_t$, in the continuous-time change-of-variables formula used by continuous normalising flows, and in the implicit score-matching objective once one integrates by parts. Whenever a learning algorithm asks for $\mathcal{L} f$ where $f$ is a neural network with $d$-dimensional input, the trace term becomes the dominant cost: $\nabla^{2} f$ is a $d \times d$ Hessian, and computing its trace exactly requires $O(d)$ Hessian-vector products, i.e. $O(d)$ backward passes. For $d$ in the thousands — image pixels, dense embeddings, particle states — this is prohibitive.
 
-There are roughly **two genuinely different methods** for paying this cost — and **one bypass** that sidesteps the question altogether. The two methods are not interchangeable. Method 1 is a numerical trick that runs on top of any SDE; Method 2 is a *modelling choice* that simplifies the SDE itself, after which a denoising identity removes the trace from the loss. The bypass — Langevin dynamics — reframes the problem as sampling, and is a different beast structurally; I treat it separately below.
+In a strict sense, there is **only one general-purpose method** for handling this term: Hutchinson's stochastic estimator. It is the only response that preserves the SDE you actually care about. The two other responses commonly invoked in the literature — isotropic $\sigma$ and Langevin sampling — are not methods at all in this sense; they are **bypasses** that work by changing the problem. The first changes the *SDE itself* (and only applies when the diffusion was a design choice in the first place); the second drops trace estimation in favour of sampling and only applies when sampling is what you ultimately wanted. Both are widely used, both are reasonable in their settings, but conflating them with Hutchinson elides the question *whose problem are you solving?*
 
-## Method 1 · Approximate it: Hutchinson's stochastic trace estimator
+## The method · Hutchinson's stochastic trace estimator
 
-The first method is to replace the deterministic trace with an unbiased Monte-Carlo estimate.
+The method is to replace the deterministic trace with an unbiased Monte-Carlo estimate.
 
 **Lemma (Hutchinson, 1990).** For any square matrix $A \in \mathbb{R}^{d \times d}$ and any random vector $\xi \in \mathbb{R}^{d}$ with $\mathbb{E}[\xi] = 0$ and $\mathbb{E}[\xi \xi^\top] = I$,
 $$
@@ -45,27 +45,33 @@ $$
 $$
 i.e. a forward pass through $f$, a backward pass for $\nabla f$, an inner product with $\xi$, and a second backward pass — $O(1)$ in the input dimension $d$. The original $O(d)$ trace becomes $O(N)$ in the number of probes.
 
-**Choice of probe distribution.** Among zero-mean, identity-covariance distributions, Rademacher entries ($\xi_i \in \{-1, +1\}$ uniformly) minimise the variance of $\xi^\top A\, \xi$ (Roosta-Khorasani & Ascher, 2015): the off-diagonal contributions cancel deterministically and only diagonal terms inject variance. Gaussian probes are slightly worse in variance but are convenient when one needs differentiability in $\xi$.
+**Choice of probe distribution.** Among iid distributions with $\mathbb{E}[\xi_i] = 0$ and $\operatorname{Var}(\xi_i) = 1$, Rademacher entries ($\xi_i \in \{-1, +1\}$ with equal probability) minimise the variance of $\xi^\top A\, \xi$ for symmetric $A$ (Hutchinson, 1990; Roosta-Khorasani & Ascher, 2015). Expanding $\xi^\top A\, \xi = \sum_i A_{ii}\, \xi_i^{2} + 2 \sum_{i < j} A_{ij}\, \xi_i \xi_j$, the Rademacher condition $\xi_i^{2} \equiv 1$ makes the **diagonal contribution exact** ($\sum_i A_{ii} = \operatorname{tr}(A)$), so all Monte-Carlo variance comes from the off-diagonal cross terms; with $A = \nabla^2 f$, a Hessian whose diagonal carries most of the signal, this is a real saving. Gaussian probes have a strictly larger variance — by $2 \sum_i A_{ii}^{2}$ — but are convenient when one needs differentiability in $\xi$.
 
 **Where this estimator powers things.** FFJORD (Grathwohl et al., 2019) trained continuous normalising flows at image-scale dimension precisely because Hutchinson's trick lets one estimate the log-determinant trace appearing in the continuous change-of-variables formula. The same estimator underlies sliced score matching (Song et al., 2020) and a number of Hessian-spectrum analyses of neural networks (e.g., Yao et al., 2020).
 
 The price is variance: $\widehat{\operatorname{tr}}_N$ is unbiased but its standard deviation falls only as $N^{-1/2}$, and large rank-1 components of $A$ inflate the constant. This is why the next two tricks are still useful when one can afford a structural assumption.
 
-## Method 2 · Simplify it: constrain the diffusion to be isotropic
+## Bypass 1 · A different SDE: constrain $\sigma$ to isotropic
 
-The second method is structurally different from the first: rather than computing the trace on a general SDE, **constrain the SDE itself** so the trace either collapses to a scalar Laplacian or disappears from the training objective outright.
+The first bypass is not a method at all in the sense of the previous section. Rather than computing the trace on the SDE you started with, it asks you to **commit to a different SDE in the first place** — one whose diffusion $\sigma(x, t) = \sigma(t)\, I$ is spatially isotropic — and then exploits the special structure of that SDE to make the trace disappear from the training objective entirely.
+
+This is only available if the diffusion was your design choice to begin with. If the SDE is given to you by physics, geometry, or data covariance — for example, a manifold-aware diffusion that respects a local metric, or coloured noise inferred from a covariance model — this bypass does not apply, and Hutchinson is the only recourse.
 
 If $\sigma(x, t) = \sigma(t)\, I$ — time-dependent but **spatially isotropic** diffusion — then
 $$
 \sigma \sigma^\top \;=\; \sigma^2(t)\, I, \qquad \operatorname{tr}(\sigma \sigma^\top \nabla^{2} f) \;=\; \sigma^{2}(t)\, \Delta f,
 $$
-where $\Delta f = \sum_{i=1}^{d} \partial_{i}^{2} f$ is the ordinary Laplacian. This is still $O(d)$ to evaluate exactly, but the scalar form opens a much sharper simplification: an **integration-by-parts identity** removes the Laplacian from the training objective entirely.
+where $\Delta f = \sum_{i=1}^{d} \partial_{i}^{2} f$ is the ordinary Laplacian. This is still $O(d)$ to evaluate exactly, but the scalar form admits a sharper simplification: a change-of-target identity removes the Hessian-trace from the *training* objective entirely.
 
-Recall Hyvärinen's (2005) score-matching loss for a learned score $s_\theta \approx \nabla \log p$,
+Recall Hyvärinen's (2005) implicit score-matching loss for a learned score $s_\theta \approx \nabla \log p$,
 $$
-J(\theta) \;=\; \mathbb{E}_{p(x)} \!\left[\, \tfrac{1}{2}\, \lVert s_\theta(x) \rVert^2 \;+\; \operatorname{tr}(\nabla s_\theta(x)) \,\right],
+J_{\mathrm{ISM}}(\theta) \;=\; \mathbb{E}_{p(x)} \!\left[\, \tfrac{1}{2}\, \lVert s_\theta(x) \rVert^2 \;+\; \nabla \!\cdot\! s_\theta(x) \,\right] \;+\; C,
 $$
-which contains a trace of a Jacobian — structurally the same problem. Vincent's (2011) **denoising score matching** identity replaces this trace with a regression target that involves no Hessian at all, provided the data perturbation is isotropic Gaussian.
+obtained from the explicit Fisher-divergence loss by an integration by parts; the divergence $\nabla \!\cdot\! s_\theta = \operatorname{tr}(\nabla s_\theta)$ is structurally the same trace problem as before. **Vincent's (2011) denoising score-matching identity** then re-routes back to a Fisher-divergence form against a noise-perturbed density: for an isotropic-Gaussian corruption $\tilde{x} = x + \sigma \epsilon$ with $\epsilon \sim \mathcal{N}(0, I)$, one has
+$$
+J_{\mathrm{DSM}}(\theta) \;=\; \tfrac{1}{2}\, \mathbb{E}_{x, \epsilon} \!\left[\, \big\lVert s_\theta(\tilde{x}) + \tfrac{\epsilon}{\sigma} \big\rVert^{2} \,\right] \;\equiv\; J_{\mathrm{ISM}}(\theta) \text{ (under }p_\sigma\text{), up to constants}.
+$$
+The right-hand side is a pure regression target: no Hessian, no trace.
 
 The variance-exploding and variance-preserving SDEs of Song et al. (2021),
 $$
@@ -75,9 +81,11 @@ both belong to this isotropic class, which is why DDPM (Ho et al., 2020) and the
 
 **The cost.** Isotropy is a genuine modelling assumption. Geometric or manifold-aware diffusion — where the noise should respect a local metric — cannot be expressed as $\sigma(t)\, I$. In those settings one either generalises the denoising-score-matching identity (cf. De Bortoli et al., 2022 for diffusion on Riemannian manifolds) or falls back to Hutchinson.
 
-## Bypass · Let Langevin dynamics carry the Laplacian
+## Bypass 2 · A different question: Langevin sampling
 
-The two methods above either approximate the trace (Method 1) or restructure the SDE to remove the trace from the loss (Method 2). A third route does neither — it **reframes the problem entirely**: instead of computing the Laplacian, add it back as noise.
+The second bypass is even further from a "method". It does not compute the trace; it does not even ask for its value. Instead, it **changes the question** from "estimate $\operatorname{tr}(\sigma\sigma^\top \nabla^2 f)$ on this SDE" to "sample from a target $\pi$ via a stochastic process whose stationary distribution is $\pi$". The Laplacian is then absorbed by the white-noise injection of that process; it is never computed because the algorithm never asks for it.
+
+This is only available if the downstream task is itself sampling. If you wanted a density value, a log-likelihood, or any quantity that exposes the Laplacian as a number, this bypass does not apply.
 
 Consider sampling from a density $\pi(x) \propto \exp(-U(x))$. The overdamped Langevin SDE
 $$
@@ -89,13 +97,17 @@ $$
 $$
 and crucially the Laplacian term $\Delta p_t$ — which would be expensive to evaluate if we tried — is **implicit in the white-noise injection** $\sqrt{2}\, dW_t$. Euler-Maruyama discretisation gives the unadjusted Langevin algorithm; replacing the exact $\nabla U$ with a stochastic-gradient estimate gives Welling & Teh's (2011) SGLD. In both cases the Laplacian never appears in code.
 
-This is more than a sampling trick. In score-based generative modelling, the reverse-time SDE
+This is more than a sampling trick. Under Anderson's (1982) time-reversal identity, the reverse-time SDE associated with a forward $dX_t = b\, dt + \sigma\, dW_t$ is
 $$
-dX_t \;=\; \big[\, b(X_t, t) \;-\; \sigma^{2}(t)\, \nabla_{x} \log p_t(X_t) \,\big]\, dt \;+\; \sigma(t)\, d\bar{W}_t
+dX_t \;=\; \big[\, b(X_t, t) \;-\; \nabla \!\cdot\! (\sigma \sigma^\top)(X_t, t) \;-\; \sigma \sigma^\top(X_t, t)\, \nabla_{x} \log p_t(X_t) \,\big]\, dt \;+\; \sigma(X_t, t)\, d\bar{W}_t,
 $$
-is a Langevin-type system whose drift is exactly the (learned) score and whose noise carries the Laplacian of the running marginal. Off-the-shelf SDE solvers — Euler-Maruyama, Heun, the higher-order schemes of Karras et al. (2022) — integrate this without ever differentiating through $\nabla^{2}$. The Laplacian was paid for once, implicitly, in the choice of noise schedule.
+where the divergence term $\nabla \!\cdot\! (\sigma\sigma^\top)$ has $j$-th component $\sum_i \partial_i (\sigma \sigma^\top)_{ij}$. **For spatially-constant diffusion** — in particular $\sigma(x, t) = \sigma(t)\, I$ as in Bypass 1 — that divergence vanishes and the expression collapses to
+$$
+dX_t \;=\; \big[\, b(X_t, t) \;-\; \sigma^{2}(t)\, \nabla_{x} \log p_t(X_t) \,\big]\, dt \;+\; \sigma(t)\, d\bar{W}_t,
+$$
+which is the form one sees in Song et al. (2021). This reverse SDE is a Langevin-type system whose drift is exactly the (learned) score and whose noise carries the second-order term of the running generator. Off-the-shelf SDE solvers — Euler-Maruyama, Heun, the higher-order schemes of Karras et al. (2022) — integrate this without ever differentiating through $\nabla^{2}$. The trace was paid for once, implicitly, in the choice of noise schedule.
 
-The connection to Method 2 is then exact: **isotropy makes the score-matching loss tractable; Langevin sampling makes the resulting score-based model usable**. Together they explain why diffusion-style generative models scaled to image and audio dimension without anyone writing a Hessian-vector product.
+The connection between the two bypasses is then exact: **isotropy makes the score-matching loss tractable; Langevin sampling makes the resulting score-based model usable**. Together they explain why diffusion-style generative models scaled to image and audio dimension without anyone writing a Hessian-vector product.
 
 The cost is Monte-Carlo variance and discretisation error. Total wall-clock depends on how many integration steps are required, which depends on how well the noise schedule is tuned — a more or less separate research problem.
 
@@ -103,14 +115,14 @@ The cost is Monte-Carlo variance and discretisation error. Total wall-clock depe
 
 *Pending — the comparison below is what will be filled in next.*
 
-**Setup.** Only Methods 1 and 2 are directly comparable as trace-estimation procedures, so the experiment is built around them; Method 3 (Langevin) is illustrated separately as a sampling demonstration.
+**Setup.** Of the three responses, only the **method** (Hutchinson) produces a numerical estimate of the trace on an arbitrary SDE; the bypasses produce a different object. The experiment is therefore built around comparing Hutchinson against an exact baseline, with the bypasses illustrated qualitatively.
 
-- Target dynamics: an Ornstein-Uhlenbeck process where $\operatorname{tr}(\nabla^{2} f)$ admits a closed-form reference value.
-- Test function $f$: a two-layer MLP $f_\theta : \mathbb{R}^d \to \mathbb{R}$ at $d \in \{10, 100, 1000\}$.
-- Method 1: Hutchinson with $N \in \{1, 4, 16\}$ Rademacher probes.
-- Method 2: exact $\Delta f$ via vmap'd JVPs (valid under the isotropic assumption); also the reference value.
-- Bypass: Langevin Euler-Maruyama on a known target — shown qualitatively, no trace estimate needed.
-- Metrics: wall-clock per gradient step, estimator standard deviation, peak GPU memory.
+- Baseline: exact $\operatorname{tr}(\nabla^{2} f)$ via $d$ Hessian-vector products against canonical basis vectors. Used as ground truth for small $d$.
+- Test function $f$: a two-layer MLP $f_\theta : \mathbb{R}^d \to \mathbb{R}$ at $d \in \{10, 32, 100, 316, 1000\}$ with input $x \sim \mathcal{N}(0, I_d)$.
+- Method · Hutchinson with $N \in \{1, 4, 16, 64\}$ Rademacher probes; both wall-clock and the empirical variance $\widehat{\operatorname{Var}}[\widehat{\operatorname{tr}}_N]$ recorded over 100 independent runs.
+- Bypass 1 illustration: a small score network trained by DSM on an isotropic VE SDE, showing that the loss converges with **no Hessian evaluation in the training loop**.
+- Bypass 2 illustration: Euler-Maruyama sampling from a 2D mixture-of-Gaussians via Langevin, showing convergence in distribution without any trace estimate.
+- Metrics: wall-clock per estimate; estimator standard deviation; peak GPU memory.
 
 Hardware: $2 \times$ NVIDIA RTX PRO 6000 Blackwell (96 GiB each), PyTorch 2.x with `torch.func.{grad, vjp, jvp}`. Figures will use the κ-sequential colourmap from the rest of this site so they read identically in print.
 
@@ -118,30 +130,31 @@ Hardware: $2 \times$ NVIDIA RTX PRO 6000 Blackwell (96 GiB each), PyTorch 2.x wi
 
 (values to be filled in after the experiment; structural summary below.)
 
-|                                          | what it does                          | per-step cost     | applicability        | best fit                            |
-| ---------------------------------------- | ------------------------------------- | ----------------- | -------------------- | ----------------------------------- |
-| **Method 1** · Hutchinson                | unbiased stochastic trace estimate    | $O(N)$ HVPs       | any $\sigma$         | density estimation, FFJORD          |
-| **Method 2** · Isotropic $\sigma(t)\, I$ | trace removed from the loss via DSM   | $O(1)$ (no HVP)   | $\sigma = \sigma(t)\, I$ only | score-based diffusion training      |
-| **Bypass** · Langevin sampling           | Laplacian implicit in white noise     | $O(1)$ (no HVP)   | sampling problems    | score-based sampling, Bayesian MCMC |
+|                                          | what it does                            | preserves the SDE? | gives a trace value? | when it applies                            |
+| ---------------------------------------- | --------------------------------------- | ------------------ | -------------------- | ------------------------------------------ |
+| **Method** · Hutchinson                  | unbiased stochastic estimate            | yes                | yes (with MC noise)  | any $\sigma$; you need an actual number    |
+| **Bypass 1** · Isotropic $\sigma(t)\, I$ | trace removed from the loss via DSM     | no — by design     | no                   | $\sigma$ is yours to choose                |
+| **Bypass 2** · Langevin sampling         | trace implicit in white noise           | yes (but reverse-time form requires isotropy) | no                   | the downstream task is sampling, not estimation |
 
 ---
 
 ## References
 
-1. Chen, R. T. Q., Rubanova, Y., Bettencourt, J., & Duvenaud, D. (2018). *Neural Ordinary Differential Equations.* **NeurIPS 2018**.
-2. De Bortoli, V., Mathieu, E., Hutchinson, M. J., Thornton, J., Teh, Y. W., & Doucet, A. (2022). *Riemannian Score-Based Generative Modeling.* **NeurIPS 2022**.
-3. Grathwohl, W., Chen, R. T. Q., Bettencourt, J., Sutskever, I., & Duvenaud, D. (2019). *FFJORD: Free-form Continuous Dynamics for Scalable Reversible Generative Models.* **ICLR 2019**.
-4. Ho, J., Jain, A., & Abbeel, P. (2020). *Denoising Diffusion Probabilistic Models.* **NeurIPS 2020**.
-5. Hutchinson, M. F. (1990). *A stochastic estimator of the trace of the influence matrix for Laplacian smoothing splines.* **Communications in Statistics — Simulation and Computation**, 19(2), 433–450.
-6. Hyvärinen, A. (2005). *Estimation of Non-Normalized Statistical Models by Score Matching.* **Journal of Machine Learning Research**, 6, 695–709.
-7. Karras, T., Aittala, M., Aila, T., & Laine, S. (2022). *Elucidating the Design Space of Diffusion-Based Generative Models.* **NeurIPS 2022**.
-8. Kuo, H.-H. (2006). *Introduction to Stochastic Integration.* Universitext, Springer.
-9. Lipman, Y., Chen, R. T. Q., Ben-Hamu, H., Nickel, M., & Le, M. (2023). *Flow Matching for Generative Modeling.* **ICLR 2023**.
-10. Roberts, G. O., & Tweedie, R. L. (1996). *Exponential convergence of Langevin distributions and their discrete approximations.* **Bernoulli**, 2(4), 341–363.
-11. Roosta-Khorasani, F., & Ascher, U. (2015). *Improved bounds on sample size for implicit matrix trace estimators.* **Foundations of Computational Mathematics**, 15(5), 1187–1212.
-12. Song, Y., & Ermon, S. (2019). *Generative Modeling by Estimating Gradients of the Data Distribution.* **NeurIPS 2019**.
-13. Song, Y., Garg, S., Shi, J., & Ermon, S. (2020). *Sliced Score Matching: A Scalable Approach to Density and Score Estimation.* **UAI 2020**.
-14. Song, Y., Sohl-Dickstein, J., Kingma, D. P., Kumar, A., Ermon, S., & Poole, B. (2021). *Score-Based Generative Modeling through Stochastic Differential Equations.* **ICLR 2021**.
-15. Vincent, P. (2011). *A Connection Between Score Matching and Denoising Autoencoders.* **Neural Computation**, 23(7), 1661–1674.
-16. Welling, M., & Teh, Y. W. (2011). *Bayesian Learning via Stochastic Gradient Langevin Dynamics.* **ICML 2011**.
-17. Yao, Z., Gholami, A., Keutzer, K., & Mahoney, M. W. (2020). *PyHessian: Neural Networks Through the Lens of the Hessian.* **IEEE Big Data 2020**.
+1. Anderson, B. D. O. (1982). *Reverse-time diffusion equation models.* **Stochastic Processes and their Applications**, 12(3), 313–326.
+2. Chen, R. T. Q., Rubanova, Y., Bettencourt, J., & Duvenaud, D. (2018). *Neural Ordinary Differential Equations.* **NeurIPS 2018**.
+3. De Bortoli, V., Mathieu, E., Hutchinson, M. J., Thornton, J., Teh, Y. W., & Doucet, A. (2022). *Riemannian Score-Based Generative Modeling.* **NeurIPS 2022**.
+4. Grathwohl, W., Chen, R. T. Q., Bettencourt, J., Sutskever, I., & Duvenaud, D. (2019). *FFJORD: Free-form Continuous Dynamics for Scalable Reversible Generative Models.* **ICLR 2019**.
+5. Ho, J., Jain, A., & Abbeel, P. (2020). *Denoising Diffusion Probabilistic Models.* **NeurIPS 2020**.
+6. Hutchinson, M. F. (1990). *A stochastic estimator of the trace of the influence matrix for Laplacian smoothing splines.* **Communications in Statistics — Simulation and Computation**, 19(2), 433–450.
+7. Hyvärinen, A. (2005). *Estimation of Non-Normalized Statistical Models by Score Matching.* **Journal of Machine Learning Research**, 6, 695–709.
+8. Karras, T., Aittala, M., Aila, T., & Laine, S. (2022). *Elucidating the Design Space of Diffusion-Based Generative Models.* **NeurIPS 2022**.
+9. Kuo, H.-H. (2006). *Introduction to Stochastic Integration.* Universitext, Springer.
+10. Lipman, Y., Chen, R. T. Q., Ben-Hamu, H., Nickel, M., & Le, M. (2023). *Flow Matching for Generative Modeling.* **ICLR 2023**.
+11. Roberts, G. O., & Tweedie, R. L. (1996). *Exponential convergence of Langevin distributions and their discrete approximations.* **Bernoulli**, 2(4), 341–363.
+12. Roosta-Khorasani, F., & Ascher, U. (2015). *Improved bounds on sample size for implicit matrix trace estimators.* **Foundations of Computational Mathematics**, 15(5), 1187–1212.
+13. Song, Y., & Ermon, S. (2019). *Generative Modeling by Estimating Gradients of the Data Distribution.* **NeurIPS 2019**.
+14. Song, Y., Garg, S., Shi, J., & Ermon, S. (2020). *Sliced Score Matching: A Scalable Approach to Density and Score Estimation.* **UAI 2020**.
+15. Song, Y., Sohl-Dickstein, J., Kingma, D. P., Kumar, A., Ermon, S., & Poole, B. (2021). *Score-Based Generative Modeling through Stochastic Differential Equations.* **ICLR 2021**.
+16. Vincent, P. (2011). *A Connection Between Score Matching and Denoising Autoencoders.* **Neural Computation**, 23(7), 1661–1674.
+17. Welling, M., & Teh, Y. W. (2011). *Bayesian Learning via Stochastic Gradient Langevin Dynamics.* **ICML 2011**.
+18. Yao, Z., Gholami, A., Keutzer, K., & Mahoney, M. W. (2020). *PyHessian: Neural Networks Through the Lens of the Hessian.* **IEEE Big Data 2020**.
