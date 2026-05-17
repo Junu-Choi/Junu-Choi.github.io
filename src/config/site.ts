@@ -15,7 +15,6 @@ export const site = {
   ],
 
   externalLinks: [
-    { label: "email",   href: "mailto:junu.choi.research@gmail.com" },
     { label: "github",  href: "https://github.com/Junu-Choi" },
     { label: "scholar", href: "https://scholar.google.com/" },
     { label: "arxiv",   href: "https://arxiv.org/" },
