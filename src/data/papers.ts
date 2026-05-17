@@ -22,8 +22,10 @@ export type Paper = {
 export const papers: Paper[] = [
   {
     year: 2026,
+    // Title withheld during review; switch to "Space–Time Aligned Diffusion Dynamics"
+    // once ECCV 2026 acceptance is announced.
     title: "Manuscript under review",
-    authors: "Junu Choi, et al.",
+    authors: "Junu Choi, Youngjoon Hong",
     venue: "ECCV 2026 — post-rebuttal",
     selected: true,
   },
