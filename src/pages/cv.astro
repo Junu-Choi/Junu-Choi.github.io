@@ -1,15 +1,102 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import SectionRule from "../components/SectionRule.astro";
+import ResearchAreas from "../components/ResearchAreas.astro";
+import CVEntries from "../components/CVEntries.astro";
+import { cv } from "../data/cv";
+import { site } from "../config/site";
+
+/**
+ * SHA-256 of the download passphrase. Default value here is the hash of
+ * `junu-cv-private`. To change: pick a new passphrase and replace the
+ * `expectedHash` value below with the output of
+ *   echo -n "your-new-passphrase" | shasum -a 256 | head -c 64
+ */
+const expectedHash = "4e62b4fcd27edfdc23251df7002ed399eeb81bd64a6cb76829fc8913768082c3";
 ---
 <BaseLayout title="CV" activeNav="cv">
 
   <header class="page-head">
     <div class="eyebrow">cv</div>
     <h1>Curriculum Vitae</h1>
+    <div class="cv-meta">
+      <span class="cv-updated">Last updated &mdash; {cv.lastUpdated}</span>
+      <button type="button" class="cv-download" data-action="download-cv">
+        Download as PDF
+      </button>
+    </div>
   </header>
 
-  <p class="note">
-    <em>PDF coming soon.</em> Once uploaded to <code>/public/cv.pdf</code>, this page will embed the file directly.
-  </p>
+  {/* Print-only header — replaces the page-head when the user prints */}
+  <div class="print-only print-header" aria-hidden="true">
+    <h1 class="print-name">{site.name}</h1>
+    <div class="print-contact">
+      {site.email} &nbsp;·&nbsp; github.com/Junu-Choi &nbsp;·&nbsp; {site.url}
+    </div>
+  </div>
+
+  <section>
+    <SectionRule label="Education"/>
+    <CVEntries items={cv.education}/>
+  </section>
+
+  <section>
+    <SectionRule label="Research interests"/>
+    <ResearchAreas/>
+  </section>
+
+  <section>
+    <SectionRule label="Experience"/>
+    <CVEntries items={cv.experience}/>
+  </section>
+
+  <section>
+    <SectionRule label="Selected projects"/>
+    <CVEntries items={cv.projects}/>
+  </section>
+
+  <section>
+    <SectionRule label="Honors &amp; awards"/>
+    <CVEntries items={cv.awards}/>
+  </section>
+
+  <section>
+    <SectionRule label="Skills"/>
+    <dl class="cv-skills">
+      {Object.entries(cv.skills).map(([k, vs]) => (
+        <>
+          <dt>{k}</dt>
+          <dd>{vs.join(", ")}</dd>
+        </>
+      ))}
+    </dl>
+  </section>
+
+  {/*
+    Download gate: SHA-256 of a passphrase is compared client-side.
+    Not cryptographically strong (anyone can dev-tools the hash and brute-force
+    a weak passphrase) — but adequate for "casual visitors can't grab the
+    button-driven PDF; only people who know the passphrase can".
+  */}
+  <script is:inline define:vars={{ expectedHash }}>
+    document
+      .querySelector('[data-action="download-cv"]')
+      ?.addEventListener('click', async () => {
+        const pwd = window.prompt('Passphrase:');
+        if (!pwd) return;
+        const buf = await crypto.subtle.digest(
+          'SHA-256',
+          new TextEncoder().encode(pwd)
+        );
+        const hash = Array.from(new Uint8Array(buf))
+          .map((b) => b.toString(16).padStart(2, '0'))
+          .join('');
+        if (hash === expectedHash) {
+          window.print();
+        } else {
+          window.alert('Incorrect passphrase.');
+        }
+      });
+  </script>
 
 </BaseLayout>

@@ -289,6 +289,216 @@ dl.pubs dd {
 }
 .note em { color: var(--accent-strong); font-style: italic; }
 
+/* ─────────────────────────────── CV page */
+
+.cv-meta {
+  display: flex; align-items: baseline; gap: 1.6rem;
+  margin-top: .9rem;
+  font-family: var(--mono);
+  font-size: .8rem;
+  color: var(--ink-soft);
+  letter-spacing: .02em;
+}
+.cv-download {
+  font: inherit;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--hair);
+  color: var(--ink-soft);
+  padding: 0 .1rem 2px;
+  cursor: pointer;
+  transition: color .15s, border-color .15s;
+}
+.cv-download:hover {
+  color: var(--accent-strong);
+  border-bottom-color: var(--accent);
+}
+
+.cv-list { list-style: none; padding: 0 0 0 var(--ind-1); margin: 0; }
+.cv-entry {
+  padding: .9rem 0 1.05rem;
+  max-width: 82ch;
+}
+.cv-entry-head {
+  display: flex; align-items: baseline; gap: 1rem;
+  margin-bottom: .15rem;
+}
+.cv-entry-title {
+  flex: 1;
+  font-family: var(--serif);
+  font-variation-settings: "opsz" 20;
+  font-weight: 500;
+  font-size: 1.06rem;
+  letter-spacing: -.005em;
+  color: var(--ink);
+}
+.cv-entry-date {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  color: var(--accent);
+  font-size: .82rem;
+  letter-spacing: .02em;
+  white-space: nowrap;
+}
+.cv-entry-place {
+  color: var(--ink-soft);
+  font-size: .92rem;
+  padding-left: var(--ind-2);
+}
+.cv-entry-details {
+  list-style: none;
+  padding: 0 0 0 var(--ind-2);
+  margin: .4rem 0 0;
+  max-width: 76ch;
+}
+.cv-entry-details li {
+  font-size: .9rem;
+  color: var(--ink-soft);
+  line-height: 1.55;
+  margin: .3rem 0;
+  padding-left: 1rem;
+  position: relative;
+}
+.cv-entry-details li::before {
+  content: "·";
+  position: absolute;
+  left: .2rem;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+dl.cv-skills {
+  margin: 0;
+  padding-left: var(--ind-1);
+  max-width: 80ch;
+}
+dl.cv-skills dt {
+  float: left; clear: left; width: 140px;
+  font-family: var(--mono);
+  font-size: .76rem;
+  font-weight: 500;
+  color: var(--accent);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  padding-top: .25rem;
+}
+dl.cv-skills dd {
+  margin: 0 0 .65rem 140px;
+  font-family: var(--sans);
+  font-size: .92rem;
+  color: var(--ink-soft);
+}
+
+/* Print-only elements (hidden in screen view) */
+.print-only { display: none; }
+
+/* ─────────────────────────────── Print stylesheet (Cmd+P → save as PDF) */
+
+@media print {
+  /* Hide non-content chrome */
+  .rail,
+  .page-head,
+  .foot,
+  .cv-meta,
+  .cv-download { display: none !important; }
+  .rail::after { display: none !important; }
+
+  /* Page setup */
+  @page {
+    size: A4;
+    margin: 16mm 14mm;
+  }
+  html, body { background: #fff !important; color: #111 !important; }
+  body {
+    font-family: var(--sans);
+    font-size: 10pt;
+    line-height: 1.45;
+  }
+  .paper {
+    margin-left: 0 !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+  }
+
+  /* Print header: name + contact, centred */
+  .print-only { display: block; }
+  .print-header {
+    text-align: center;
+    margin: 0 0 .8rem;
+    padding-bottom: .5rem;
+    border-bottom: .75pt solid #222;
+  }
+  .print-name {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 22pt;
+    letter-spacing: -.01em;
+    margin: 0 0 .15rem;
+    color: #111;
+  }
+  .print-contact {
+    font-family: var(--sans);
+    font-size: 8.5pt;
+    color: #444;
+    letter-spacing: .01em;
+  }
+
+  /* Section rules tightened for print */
+  .rule {
+    margin: .9rem 0 .45rem;
+    background: #ccc;
+  }
+  .rule span {
+    background: #fff !important;
+    color: #555 !important;
+    font-size: 7.5pt !important;
+    letter-spacing: .16em !important;
+    padding-right: .6rem;
+    top: -.55rem;
+  }
+
+  /* CV entries — keep together, dial down decoration */
+  .cv-entry {
+    page-break-inside: avoid;
+    padding: .35rem 0 .45rem;
+  }
+  .cv-entry-title { font-size: 10.5pt; color: #111; }
+  .cv-entry-date { font-size: 8.5pt; color: #555; }
+  .cv-entry-place { font-size: 9.5pt; color: #333; }
+  .cv-entry-details li { font-size: 9pt; color: #222; margin: .15rem 0; }
+  .cv-entry-details li::before { color: #888; }
+
+  /* Research areas in print */
+  .areas li { padding: .25rem 0; }
+  .area-name { font-size: 10.5pt; color: #111; }
+  .area-desc { font-size: 9pt; color: #333; line-height: 1.45; margin-top: .1rem; }
+  .kbar { background: #444; width: 12px; }
+
+  /* Skills */
+  dl.cv-skills {
+    page-break-inside: avoid;
+    padding-left: 0;
+    max-width: 100%;
+  }
+  dl.cv-skills dt {
+    width: 110px;
+    font-size: 7.5pt;
+    color: #555;
+  }
+  dl.cv-skills dd {
+    margin-left: 110px;
+    font-size: 9pt;
+    color: #222;
+  }
+
+  /* Strip link decoration */
+  a, a:hover {
+    color: inherit !important;
+    text-decoration: none !important;
+    border-bottom: 0 !important;
+  }
+}
+
 /* ─────────────────────────────────────────── Narrow screens */
 @media (max-width: 920px) {
   .rail {
