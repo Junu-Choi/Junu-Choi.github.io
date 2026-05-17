@@ -1,6 +1,6 @@
 ---
 title: "Three tricks for the Itô Laplacian"
-abstract: "The trace term that appears in Itô's formula is the dominant computational bottleneck in SDE-based generative modelling. This note walks through three ways the literature avoids paying its full linear-in-dimension cost — Hutchinson's stochastic estimator, isotropic diffusion, and Langevin sampling — with derivations, references, and a comparative experiment."
+abstract: "The trace term that appears in Itô's formula is the dominant computational bottleneck in SDE-based generative modelling. This note walks through two methods for paying its linear-in-dimension cost — Hutchinson's stochastic estimator, and isotropic diffusion combined with denoising score matching — and one bypass that reframes the problem so the cost never appears: Langevin sampling. Derivations, references, and a comparative experiment."
 publishedAt: 2026-05-17
 tags: ["stochastic dynamics", "generative modeling", "computational methods"]
 draft: false
@@ -24,11 +24,11 @@ and the second term — half the trace of the diffusion-weighted Hessian — is 
 
 This term is everywhere in SDE-based machine learning. It appears in the Fokker-Planck equation that governs the marginal density $p_t$ of $X_t$, in the continuous-time change-of-variables formula used by continuous normalising flows, and in the implicit score-matching objective once one integrates by parts. Whenever a learning algorithm asks for $\mathcal{L} f$ where $f$ is a neural network with $d$-dimensional input, the trace term becomes the dominant cost: $\nabla^{2} f$ is a $d \times d$ Hessian, and computing its trace exactly requires $O(d)$ Hessian-vector products, i.e. $O(d)$ backward passes. For $d$ in the thousands — image pixels, dense embeddings, particle states — this is prohibitive.
 
-The literature has converged on three ways to dodge the cost. They are not mutually exclusive, and modern systems often combine them.
+There are roughly **two genuinely different methods** for paying this cost — and **one bypass** that sidesteps the question altogether. The two methods are not interchangeable. Method 1 is a numerical trick that runs on top of any SDE; Method 2 is a *modelling choice* that simplifies the SDE itself, after which a denoising identity removes the trace from the loss. The bypass — Langevin dynamics — reframes the problem as sampling, and is a different beast structurally; I treat it separately below.
 
-## Method 1 · Hutchinson's stochastic trace estimator
+## Method 1 · Approximate it: Hutchinson's stochastic trace estimator
 
-The first trick is to replace the deterministic trace with an unbiased Monte-Carlo estimate.
+The first method is to replace the deterministic trace with an unbiased Monte-Carlo estimate.
 
 **Lemma (Hutchinson, 1990).** For any square matrix $A \in \mathbb{R}^{d \times d}$ and any random vector $\xi \in \mathbb{R}^{d}$ with $\mathbb{E}[\xi] = 0$ and $\mathbb{E}[\xi \xi^\top] = I$,
 $$
@@ -51,9 +51,9 @@ i.e. a forward pass through $f$, a backward pass for $\nabla f$, an inner produc
 
 The price is variance: $\widehat{\operatorname{tr}}_N$ is unbiased but its standard deviation falls only as $N^{-1/2}$, and large rank-1 components of $A$ inflate the constant. This is why the next two tricks are still useful when one can afford a structural assumption.
 
-## Method 2 · Constrain the diffusion to be isotropic
+## Method 2 · Simplify it: constrain the diffusion to be isotropic
 
-The second trick is to engineer the SDE so the Laplacian collapses to a scalar.
+The second method is structurally different from the first: rather than computing the trace on a general SDE, **constrain the SDE itself** so the trace either collapses to a scalar Laplacian or disappears from the training objective outright.
 
 If $\sigma(x, t) = \sigma(t)\, I$ — time-dependent but **spatially isotropic** diffusion — then
 $$
@@ -75,9 +75,9 @@ both belong to this isotropic class, which is why DDPM (Ho et al., 2020) and the
 
 **The cost.** Isotropy is a genuine modelling assumption. Geometric or manifold-aware diffusion — where the noise should respect a local metric — cannot be expressed as $\sigma(t)\, I$. In those settings one either generalises the denoising-score-matching identity (cf. De Bortoli et al., 2022 for diffusion on Riemannian manifolds) or falls back to Hutchinson.
 
-## Method 3 · Let Langevin dynamics carry the Laplacian
+## Bypass · Let Langevin dynamics carry the Laplacian
 
-The third trick reframes the question entirely: instead of computing the Laplacian, **add it back as noise**.
+The two methods above either approximate the trace (Method 1) or restructure the SDE to remove the trace from the loss (Method 2). A third route does neither — it **reframes the problem entirely**: instead of computing the Laplacian, add it back as noise.
 
 Consider sampling from a density $\pi(x) \propto \exp(-U(x))$. The overdamped Langevin SDE
 $$
@@ -103,12 +103,13 @@ The cost is Monte-Carlo variance and discretisation error. Total wall-clock depe
 
 *Pending — the comparison below is what will be filled in next.*
 
-**Setup.** I will compare the three methods on a controlled benchmark:
+**Setup.** Only Methods 1 and 2 are directly comparable as trace-estimation procedures, so the experiment is built around them; Method 3 (Langevin) is illustrated separately as a sampling demonstration.
+
 - Target dynamics: an Ornstein-Uhlenbeck process where $\operatorname{tr}(\nabla^{2} f)$ admits a closed-form reference value.
 - Test function $f$: a two-layer MLP $f_\theta : \mathbb{R}^d \to \mathbb{R}$ at $d \in \{10, 100, 1000\}$.
 - Method 1: Hutchinson with $N \in \{1, 4, 16\}$ Rademacher probes.
-- Method 2: exact $\Delta f$ via vmap'd JVPs (only valid under the isotropic assumption).
-- Method 3: implicit Laplacian via Langevin integration (no Hessian).
+- Method 2: exact $\Delta f$ via vmap'd JVPs (valid under the isotropic assumption); also the reference value.
+- Bypass: Langevin Euler-Maruyama on a known target — shown qualitatively, no trace estimate needed.
 - Metrics: wall-clock per gradient step, estimator standard deviation, peak GPU memory.
 
 Hardware: $2 \times$ NVIDIA RTX PRO 6000 Blackwell (96 GiB each), PyTorch 2.x with `torch.func.{grad, vjp, jvp}`. Figures will use the κ-sequential colourmap from the rest of this site so they read identically in print.
@@ -117,11 +118,11 @@ Hardware: $2 \times$ NVIDIA RTX PRO 6000 Blackwell (96 GiB each), PyTorch 2.x wi
 
 (values to be filled in after the experiment; structural summary below.)
 
-|                            | per-step cost  | bias       | applicability                | best fit                                  |
-| -------------------------- | -------------- | ---------- | ---------------------------- | ----------------------------------------- |
-| Hutchinson (Method 1)      | $O(N)$ HVPs    | unbiased   | any $\sigma$                 | density estimation / FFJORD               |
-| Isotropic $\sigma(t)\, I$ (Method 2)  | $O(1)$ (via DSM) | exact      | $\sigma = \sigma(t)\, I$            | score-based diffusion training            |
-| Langevin reframing (Method 3) | $O(1)$         | exact (continuous-time) | sampling problems  | score-based sampling, Bayesian MCMC       |
+|                                          | what it does                          | per-step cost     | applicability        | best fit                            |
+| ---------------------------------------- | ------------------------------------- | ----------------- | -------------------- | ----------------------------------- |
+| **Method 1** · Hutchinson                | unbiased stochastic trace estimate    | $O(N)$ HVPs       | any $\sigma$         | density estimation, FFJORD          |
+| **Method 2** · Isotropic $\sigma(t)\, I$ | trace removed from the loss via DSM   | $O(1)$ (no HVP)   | $\sigma = \sigma(t)\, I$ only | score-based diffusion training      |
+| **Bypass** · Langevin sampling           | Laplacian implicit in white noise     | $O(1)$ (no HVP)   | sampling problems    | score-based sampling, Bayesian MCMC |
 
 ---
 
