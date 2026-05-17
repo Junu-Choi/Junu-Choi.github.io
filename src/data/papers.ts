@@ -32,8 +32,8 @@ export const papers: Paper[] = [
   {
     year: 2026,
     title: "Manuscript under review",
-    authors: "Junu Choi, et al.",
-    venue: "NeurIPS 2026 — submitted",
+    authors: "Junu Choi, Hyunwoo J. Kim†, Youngjoon Hong†",
+    venue: "NeurIPS 2026 — submitted · †equal advising",
     selected: true,
   },
 ];
