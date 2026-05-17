@@ -17,6 +17,8 @@ export const site = {
   externalLinks: [
     { label: "github",  href: "https://github.com/Junu-Choi" },
     { label: "scholar", href: "https://scholar.google.com/" },
-    { label: "arxiv",   href: "https://arxiv.org/" },
+    // arxiv: re-enable after first submission. Use the public author URL,
+    //   https://arxiv.org/a/<author_id>  (e.g. choi_j_47 — find it via
+    //   https://arxiv.org/user/ once a paper is posted).
   ],
 } as const;
