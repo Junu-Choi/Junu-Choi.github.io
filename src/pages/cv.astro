@@ -84,18 +84,6 @@ const expectedHash = "4e62b4fcd27edfdc23251df7002ed399eeb81bd64a6cb76829fc891376
     <CVEntries items={cv.awards}/>
   </section>
 
-  <section>
-    <SectionRule label="Skills"/>
-    <dl class="cv-skills">
-      {Object.entries(cv.skills).map(([k, vs]) => (
-        <>
-          <dt>{k}</dt>
-          <dd>{vs.join(", ")}</dd>
-        </>
-      ))}
-    </dl>
-  </section>
-
   {/*
     Download gate: SHA-256 of a passphrase is compared client-side.
     Not cryptographically strong (anyone can dev-tools the hash and brute-force
