@@ -1,11 +1,17 @@
 export type PaperLink = { label: string; href: string };
 
 export type Paper = {
+  /** Year used both for sorting and inside the venue badge. */
   year: number;
   title: string;
   /** Author list as a single string; the literal "Junu Choi" will be auto-bolded. */
   authors: string;
+  /** Short venue label that goes inside the badge: "ECCV", "NeurIPS", "JMLR", etc. */
   venue: string;
+  /** Free-form status text shown next to the badge (e.g. "under review", "post-rebuttal"). */
+  status?: string;
+  /** Footnote-style annotation for dagger / star marks (e.g. "†corresponding"). */
+  note?: string;
   links?: PaperLink[];
   /** Show on the about page's "Selected" preview. */
   selected?: boolean;
@@ -13,11 +19,8 @@ export type Paper = {
 
 /**
  * Add new papers here. The /papers page lists all entries (newest first);
- * the about page renders only entries with `selected: true`.
- *
- * For papers under review, leave `title` as a placeholder ("Manuscript
- * under review") and update once the venue announces accepted titles.
- * Replace `authors` with the full author list when public.
+ * the about page renders only entries with `selected: true`. The CV page
+ * also pulls from this same array.
  */
 export const papers: Paper[] = [
   {
@@ -26,14 +29,18 @@ export const papers: Paper[] = [
     // once ECCV 2026 acceptance is announced.
     title: "Manuscript under review",
     authors: "Junu Choi, Youngjoon Hong†",
-    venue: "ECCV 2026 — post-rebuttal · †corresponding",
+    venue: "ECCV",
+    status: "under review · post-rebuttal",
+    note: "†corresponding author",
     selected: true,
   },
   {
     year: 2026,
     title: "Manuscript under review",
     authors: "Junu Choi, Hyunwoo J. Kim†, Youngjoon Hong†",
-    venue: "NeurIPS 2026 — submitted · †equal advising",
+    venue: "NeurIPS",
+    status: "under review",
+    note: "†equal advising",
     selected: true,
   },
 ];
