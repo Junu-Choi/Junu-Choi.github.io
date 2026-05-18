@@ -113,22 +113,43 @@ The cost is Monte-Carlo variance and discretisation error. Total wall-clock depe
 
 ## Experiments
 
-*Pending — the comparison below is what will be filled in next.*
+Of the three responses, only the **method** (Hutchinson) produces a numerical estimate of the trace on an arbitrary SDE; the bypasses produce a different object. The experiment is therefore built around comparing Hutchinson against an exact baseline, with the bypasses illustrated separately.
 
-**Setup.** Of the three responses, only the **method** (Hutchinson) produces a numerical estimate of the trace on an arbitrary SDE; the bypasses produce a different object. The experiment is therefore built around comparing Hutchinson against an exact baseline, with the bypasses illustrated qualitatively.
+**Hardware.** All runs on a single NVIDIA RTX PRO 6000 Blackwell (96 GiB, CUDA 13.2) with PyTorch 2.11. Test function: a 3-layer MLP $f_\theta: \mathbb{R}^d \to \mathbb{R}$ with hidden width 256 and tanh activations, $x \sim \mathcal{N}(0, I_d)$. Exact trace via $d$ HVPs against canonical basis vectors; Hutchinson via the double-backprop identity from the previous section.
 
-- Baseline: exact $\operatorname{tr}(\nabla^{2} f)$ via $d$ Hessian-vector products against canonical basis vectors. Used as ground truth for small $d$.
-- Test function $f$: a two-layer MLP $f_\theta : \mathbb{R}^d \to \mathbb{R}$ at $d \in \{10, 32, 100, 316, 1000\}$ with input $x \sim \mathcal{N}(0, I_d)$.
-- Method · Hutchinson with $N \in \{1, 4, 16, 64\}$ Rademacher probes; both wall-clock and the empirical variance $\widehat{\operatorname{Var}}[\widehat{\operatorname{tr}}_N]$ recorded over 100 independent runs.
-- Bypass 1 illustration: a small score network trained by DSM on an isotropic VE SDE, showing that the loss converges with **no Hessian evaluation in the training loop**.
-- Bypass 2 illustration: Euler-Maruyama sampling from a 2D mixture-of-Gaussians via Langevin, showing convergence in distribution without any trace estimate.
-- Metrics: wall-clock per estimate; estimator standard deviation; peak GPU memory.
+### Cost vs. dimension
 
-Hardware: $2 \times$ NVIDIA RTX PRO 6000 Blackwell (96 GiB each), PyTorch 2.x with `torch.func.{grad, vjp, jvp}`. Figures will use the κ-sequential colourmap from the rest of this site so they read identically in print.
+<figure>
+  <img src="/notes/ito-laplacian-tricks/figures/time_vs_dim.png" alt="Wall-clock per trace estimate as a function of input dimension d, comparing exact tr(∇²f) against Hutchinson with N ∈ {1, 4, 16, 64} probes. Both axes log-scaled. The exact curve grows linearly with d while Hutchinson curves are essentially flat in d and scale linearly in N." />
+  <figcaption><strong>Fig. 1.</strong> Per-estimate wall-clock for exact $\operatorname{tr}(\nabla^{2} f)$ and Hutchinson at $N \in \{1, 4, 16, 64\}$ probes. Exact scales linearly with $d$ (8 ms at $d = 10$, 1.28 s at $d = 1000$). Hutchinson is effectively dimension-independent — the cost is dominated by the MLP forward + double-backward and is flat across two decades of $d$. At $d = 1000$ a single-probe estimate is roughly $\mathbf{10^{3}\times}$ faster than the exact baseline.</figcaption>
+</figure>
+
+The plateau of the Hutchinson curves is informative: the HVP cost is set by the *network's* FLOP count (256-wide hidden layers), not by $d$ as long as $d$ is small relative to the network parameter count. Cost scales linearly in $N$ as advertised.
+
+### Estimator variance
+
+<figure>
+  <img src="/notes/ito-laplacian-tricks/figures/variance_vs_N.png" alt="Standard deviation of Hutchinson estimate at d=100 as a function of probe count N, on log-log axes, for Rademacher and Gaussian probes. Both curves lie on the dashed 1/√N reference line and overlap almost exactly." />
+  <figcaption><strong>Fig. 2.</strong> Empirical $\widehat{\operatorname{std}}[\widehat{\operatorname{tr}}_N]$ at $d = 100$, computed from 300 independent estimates. Decay matches the predicted $\propto 1/\sqrt{N}$ exactly; doubling $N$ cuts standard deviation by $\sqrt{2}$.</figcaption>
+</figure>
+
+A practical caveat the theory section understates: for this MLP the two probe distributions are **practically indistinguishable**. The theoretical advantage of Rademacher — variance smaller by $2 \sum_i A_{ii}^{2}$ — is real, but for a generic neural-network Hessian at random input the diagonal contribution is small relative to the Frobenius mass on the off-diagonal, and the gap closes empirically. At $d = 100$ with the true trace at $\approx 0.034$, roughly $N = 100$ probes brings the standard deviation below $1\%$.
+
+### Bypass 1 · DSM training with no Hessian in the loop
+
+<figure>
+  <img src="/notes/ito-laplacian-tricks/figures/bypass_dsm.png" alt="Two panels. Left: DSM training loss over 3000 steps, showing fast convergence with a moving average smoothed curve. Right: scatter plot in 2D showing target mixture-of-Gaussians samples overlaid with samples drawn from a learned score network via Langevin." />
+  <figcaption><strong>Fig. 3.</strong> A small 2-layer score network trained on a 2D three-mode mixture of Gaussians using denoising score matching with isotropic noise $\sigma = 0.5$. <em>Left:</em> the DSM loss converges in $\approx 1{,}500$ steps; the entire training loop is a regression on $-\epsilon/\sigma$ and never evaluates a Hessian. <em>Right:</em> 1500 samples drawn via Langevin from the learned score recover the three modes faithfully.</figcaption>
+</figure>
+
+### Bypass 2 · Langevin sampling from a non-trivial potential
+
+<figure>
+  <img src="/notes/ito-laplacian-tricks/figures/langevin_trajectory.png" alt="Five panels showing scatter plots of 1500 chains at steps 0, 50, 200, 800, 4000, integrated under overdamped Langevin on a double-well plus harmonic potential. The chains start from random scatter and progressively concentrate around the two wells at x_1 = ±1." />
+  <figcaption><strong>Fig. 4.</strong> 1,500 parallel chains integrated by Euler-Maruyama with $\mathrm{d}t = 0.005$ on $U(x_1, x_2) = (x_1^{2} - 1)^{2} + \tfrac{1}{2} x_2^{2}$. The chains start as a wide isotropic Gaussian and equilibrate to the Boltzmann distribution by step 4000, populating both wells $x_1 \approx \pm 1$ with $x_2$ concentrated near zero. At no point does the algorithm evaluate $\nabla^{2} U$ — only $\nabla U$.</figcaption>
+</figure>
 
 ## Tradeoffs
-
-(values to be filled in after the experiment; structural summary below.)
 
 |                                          | what it does                            | preserves the SDE? | gives a trace value? | when it applies                            |
 | ---------------------------------------- | --------------------------------------- | ------------------ | -------------------- | ------------------------------------------ |
