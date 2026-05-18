@@ -395,7 +395,8 @@ ul.notes-list { list-style: none; padding: 0; margin: 0; }
 .notes-entry {
   padding: 1.4rem 0 1.6rem;
   border-top: 1px solid var(--hair);
-  max-width: 82ch;
+  /* entry fills the (fluid) .paper width; child elements carry their own
+     measure caps for readability. */
 }
 .notes-entry:last-child { border-bottom: 1px solid var(--hair); }
 .notes-title {
@@ -440,7 +441,10 @@ ul.notes-list { list-style: none; padding: 0; margin: 0; }
 
 /* ─────────────────────────────── Individual note article */
 
-.note-article { max-width: 82ch; }
+.note-article {
+  /* fills .paper, which is itself fluid; per-element measure caps below
+     keep prose readable while letting figures / code / tables expand. */
+}
 
 .note-head { margin-bottom: 2.5rem; }
 .note-head h1 {
@@ -473,17 +477,20 @@ ul.notes-list { list-style: none; padding: 0; margin: 0; }
   border-left: 2px solid var(--hair);
 }
 
-/* Note body — markdown/MDX rendered content */
+/* Note body — markdown/MDX rendered content.
+   The body itself spans the paper's fluid width; prose elements
+   (p, lists, blockquotes) carry their own measure caps so lines stay
+   readable, while figures / code / tables are free to expand. */
 .note-body {
   font-family: var(--serif);
   font-variation-settings: "opsz" 18;
   font-size: 1.08rem;
   line-height: 1.7;
   color: var(--ink);
-  max-width: 70ch;
 }
 .note-body > * + * { margin-top: 1.1rem; }
-.note-body p { margin: 0; }
+.note-body p { margin: 0; max-width: 70ch; }
+.note-body blockquote { max-width: 70ch; }
 .note-body em { color: var(--accent-strong); }
 .note-body strong { color: var(--ink); font-weight: 600; }
 .note-body a {
@@ -531,10 +538,10 @@ ul.notes-list { list-style: none; padding: 0; margin: 0; }
   color: var(--ink-soft);
 }
 
-/* Lists */
+/* Lists — measure-locked for prose readability */
 .note-body ul, .note-body ol {
   padding-left: 1.6rem;
-  max-width: 68ch;
+  max-width: 70ch;
 }
 .note-body ul li, .note-body ol li {
   margin: .35rem 0;
@@ -604,7 +611,7 @@ ul.notes-list { list-style: none; padding: 0; margin: 0; }
   border-left: 2px solid var(--accent);
   overflow-x: auto;
   margin: 1.2rem 0;
-  max-width: 80ch;
+  /* fills the body width on wide screens; horizontal scroll on small */
 }
 .note-body pre code {
   background: none;
@@ -612,10 +619,9 @@ ul.notes-list { list-style: none; padding: 0; margin: 0; }
   font-size: inherit;
 }
 
-/* Figures */
+/* Figures — fluid: span the full body width on wide screens */
 .note-body figure {
   margin: 1.6rem 0;
-  max-width: 80ch;
 }
 .note-body figure img,
 .note-body figure svg {
@@ -633,15 +639,15 @@ ul.notes-list { list-style: none; padding: 0; margin: 0; }
   margin-top: .55rem;
   padding-left: .6rem;
   line-height: 1.55;
+  max-width: 70ch;   /* caption stays measure-locked for readability */
 }
 
-/* Tables */
+/* Tables — fluid */
 .note-body table {
   border-collapse: collapse;
   margin: 1.2rem 0;
   font-family: var(--sans);
   font-size: .9rem;
-  max-width: 80ch;
   width: 100%;
 }
 .note-body th, .note-body td {

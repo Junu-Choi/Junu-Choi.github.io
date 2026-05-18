@@ -47,7 +47,7 @@ i.e. a forward pass through $f$, a backward pass for $\nabla f$, an inner produc
 
 **Choice of probe distribution.** Among iid distributions with $\mathbb{E}[\xi_i] = 0$ and $\operatorname{Var}(\xi_i) = 1$, Rademacher entries ($\xi_i \in \{-1, +1\}$ with equal probability) minimise the variance of $\xi^\top A\, \xi$ for symmetric $A$ (Hutchinson, 1990; Roosta-Khorasani & Ascher, 2015). Expanding $\xi^\top A\, \xi = \sum_i A_{ii}\, \xi_i^{2} + 2 \sum_{i < j} A_{ij}\, \xi_i \xi_j$, the Rademacher condition $\xi_i^{2} \equiv 1$ makes the **diagonal contribution exact** ($\sum_i A_{ii} = \operatorname{tr}(A)$), so all Monte-Carlo variance comes from the off-diagonal cross terms; with $A = \nabla^2 f$, a Hessian whose diagonal carries most of the signal, this is a real saving. Gaussian probes have a strictly larger variance — by $2 \sum_i A_{ii}^{2}$ — but are convenient when one needs differentiability in $\xi$.
 
-**Where this estimator powers things.** FFJORD (Grathwohl et al., 2019) trained continuous normalising flows at image-scale dimension precisely because Hutchinson's trick lets one estimate the log-determinant trace appearing in the continuous change-of-variables formula. The same estimator underlies sliced score matching (Song et al., 2020) and a number of Hessian-spectrum analyses of neural networks (e.g., Yao et al., 2020).
+**Where this estimator powers things.** FFJORD (Grathwohl et al., 2019) trained continuous normalising flows — the neural-ODE family of Chen et al. (2018) — at image-scale dimension precisely because Hutchinson's trick lets one estimate the log-determinant trace appearing in the continuous change-of-variables formula. The same estimator underlies sliced score matching (Song et al., 2020) and a number of Hessian-spectrum analyses of neural networks (e.g., Yao et al., 2020).
 
 The price is variance: $\widehat{\operatorname{tr}}_N$ is unbiased but its standard deviation falls only as $N^{-1/2}$, and large rank-1 components of $A$ inflate the constant. This is why the next two tricks are still useful when one can afford a structural assumption.
 
@@ -163,7 +163,7 @@ The headline of this note is the conceptual asymmetry between the three response
 
 The experimental reality check sharpens this further. The variance gap between Rademacher and Gaussian probes, which the Hutchinson literature spends considerable effort on, was empirically zero for this MLP — because $\sum_i A_{ii}^{2}$ was empirically zero. The textbook variance bound did not lie, but it had no diagonal mass to bound. Practically: pick the probe distribution that is *convenient* for your application, and budget $N$ instead.
 
-The natural follow-up directions — anisotropic and manifold-aware diffusions, where neither bypass applies and only Hutchinson survives; higher-order solvers that change the wall-clock vs. discretisation-error trade for Bypass 2; structured estimators that exploit known diagonal mass in the score Jacobian — sit on the other side of this note and will be the subject of later ones.
+The natural follow-up directions — anisotropic and manifold-aware diffusions, where neither bypass applies and only Hutchinson survives; higher-order solvers that change the wall-clock vs. discretisation-error trade for Bypass 2; structured estimators that exploit known diagonal mass in the score Jacobian, and in the analogous Jacobian-trace terms that appear in flow matching (Lipman et al., 2023) — sit on the other side of this note and will be the subject of later ones.
 
 ---
 
