@@ -425,7 +425,6 @@ ul.notes-list { list-style: none; padding: 0; margin: 0; }
   color: var(--ink-soft);
   line-height: 1.6;
   margin: .55rem 0 0;
-  max-width: 70ch;
 }
 .notes-tags {
   list-style: none; padding: 0; margin: .55rem 0 0;
@@ -471,7 +470,6 @@ ul.notes-list { list-style: none; padding: 0; margin: 0; }
   font-size: 1.12rem;
   color: var(--ink-soft);
   line-height: 1.6;
-  max-width: 70ch;
   margin: 1.4rem 0 0;
   padding-left: 1rem;
   border-left: 2px solid var(--hair);
@@ -489,8 +487,7 @@ ul.notes-list { list-style: none; padding: 0; margin: 0; }
   color: var(--ink);
 }
 .note-body > * + * { margin-top: 1.1rem; }
-.note-body p { margin: 0; max-width: 70ch; }
-.note-body blockquote { max-width: 70ch; }
+.note-body p { margin: 0; }
 .note-body em { color: var(--accent-strong); }
 .note-body strong { color: var(--ink); font-weight: 600; }
 .note-body a {
@@ -538,10 +535,9 @@ ul.notes-list { list-style: none; padding: 0; margin: 0; }
   color: var(--ink-soft);
 }
 
-/* Lists — measure-locked for prose readability */
+/* Lists */
 .note-body ul, .note-body ol {
   padding-left: 1.6rem;
-  max-width: 70ch;
 }
 .note-body ul li, .note-body ol li {
   margin: .35rem 0;
@@ -639,7 +635,6 @@ ul.notes-list { list-style: none; padding: 0; margin: 0; }
   margin-top: .55rem;
   padding-left: .6rem;
   line-height: 1.55;
-  max-width: 70ch;   /* caption stays measure-locked for readability */
 }
 
 /* Tables — fluid */
