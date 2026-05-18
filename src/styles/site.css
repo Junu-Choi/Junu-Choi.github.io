@@ -1,9 +1,9 @@
 /* Site layout — rail + paper, lifted from the D mockup. */
 
 :root {
-  --serif: "Newsreader", "Iowan Old Style", "Charter", Georgia, serif;
-  --sans:  "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --mono:  "JetBrains Mono", "SF Mono", "Menlo", monospace;
+  --serif: "Roboto Slab", Georgia, "Times New Roman", serif;
+  --sans:  "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif;
+  --mono:  "Roboto Mono", "SF Mono", Menlo, Consolas, monospace;
 
   --rail-w: 240px;
 
@@ -132,7 +132,6 @@ body {
 .masthead { margin-bottom: 3rem; }
 .masthead h1 {
   font-family: var(--serif);
-  font-variation-settings: "opsz" 60;
   font-weight: 500;
   font-size: clamp(2.6rem, 4.2vw, 3.8rem);
   line-height: 1.05;
@@ -154,7 +153,6 @@ body {
 }
 .page-head h1 {
   font-family: var(--serif);
-  font-variation-settings: "opsz" 36;
   font-weight: 500;
   font-size: clamp(1.8rem, 2.6vw, 2.4rem);
   line-height: 1.1;
@@ -165,7 +163,6 @@ body {
 /* About prose */
 .about p {
   font-family: var(--serif);
-  font-variation-settings: "opsz" 18;
   font-size: 1.08rem;
   line-height: 1.65;
   margin: 1.1rem 0;
@@ -198,7 +195,6 @@ body {
 .area-name {
   display: flex; align-items: center;
   font-family: var(--serif);
-  font-variation-settings: "opsz" 20;
   font-size: 1.05rem;
   font-weight: 500;
   color: var(--ink);
@@ -236,7 +232,6 @@ dl.pubs dd {
 }
 .title {
   font-family: var(--serif);
-  font-variation-settings: "opsz" 20;
   font-weight: 500;
   font-size: 1.08rem;
   letter-spacing: -.005em;
@@ -281,7 +276,6 @@ dl.pubs dd {
 /* Empty-state notes (e.g., papers list while in preparation) */
 .note {
   font-family: var(--serif);
-  font-variation-settings: "opsz" 18;
   font-size: 1.04rem;
   color: var(--ink-soft);
   max-width: 65ch;
@@ -326,7 +320,6 @@ dl.pubs dd {
 .cv-entry-title {
   flex: 1;
   font-family: var(--serif);
-  font-variation-settings: "opsz" 20;
   font-weight: 500;
   font-size: 1.06rem;
   letter-spacing: -.005em;
@@ -401,7 +394,6 @@ ul.notes-list { list-style: none; padding: 0; margin: 0; }
 .notes-entry:last-child { border-bottom: 1px solid var(--hair); }
 .notes-title {
   font-family: var(--serif);
-  font-variation-settings: "opsz" 28;
   font-weight: 500;
   font-size: 1.3rem;
   letter-spacing: -.01em;
@@ -420,7 +412,6 @@ ul.notes-list { list-style: none; padding: 0; margin: 0; }
 }
 .notes-abstract {
   font-family: var(--serif);
-  font-variation-settings: "opsz" 18;
   font-size: 1rem;
   color: var(--ink-soft);
   line-height: 1.6;
@@ -448,7 +439,6 @@ ul.notes-list { list-style: none; padding: 0; margin: 0; }
 .note-head { margin-bottom: 2.5rem; }
 .note-head h1 {
   font-family: var(--serif);
-  font-variation-settings: "opsz" 60;
   font-weight: 500;
   font-size: clamp(2rem, 3.4vw, 2.8rem);
   line-height: 1.1;
@@ -465,7 +455,6 @@ ul.notes-list { list-style: none; padding: 0; margin: 0; }
 .note-tag { color: var(--accent); }
 .note-abstract {
   font-family: var(--serif);
-  font-variation-settings: "opsz" 20;
   font-style: italic;
   font-size: 1.12rem;
   color: var(--ink-soft);
@@ -481,7 +470,6 @@ ul.notes-list { list-style: none; padding: 0; margin: 0; }
    readable, while figures / code / tables are free to expand. */
 .note-body {
   font-family: var(--serif);
-  font-variation-settings: "opsz" 18;
   font-size: 1.08rem;
   line-height: 1.7;
   color: var(--ink);
@@ -502,7 +490,6 @@ ul.notes-list { list-style: none; padding: 0; margin: 0; }
 /* Headings inside notes */
 .note-body h2 {
   font-family: var(--serif);
-  font-variation-settings: "opsz" 32;
   font-weight: 500;
   font-size: 1.5rem;
   letter-spacing: -.01em;
@@ -519,7 +506,6 @@ ul.notes-list { list-style: none; padding: 0; margin: 0; }
 }
 .note-body h3 {
   font-family: var(--serif);
-  font-variation-settings: "opsz" 24;
   font-weight: 500;
   font-size: 1.18rem;
   margin: 2rem 0 .55rem;
