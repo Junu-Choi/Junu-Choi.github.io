@@ -2,10 +2,36 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import SectionRule from "../components/SectionRule.astro";
 import CVEntries from "../components/CVEntries.astro";
-import PaperList from "../components/PaperList.astro";
-import { cv } from "../data/cv";
-import { papers } from "../data/papers";
+import { cv, type CVEntry } from "../data/cv";
+import { papers, type Paper } from "../data/papers";
 import { site } from "../config/site";
+
+/**
+ * Render each paper as a CVEntry so the Publications section on /cv
+ * shares typography with Education / Experience / Awards.
+ *   - title:   paper title (placeholder while under review)
+ *   - date:    year (right-aligned, mono)
+ *   - place:   author list (the † notation is preserved verbatim)
+ *   - details: venue line; link list if available
+ * Data still lives in src/data/papers.ts — this is purely a view.
+ */
+function paperToCVEntry(p: Paper): CVEntry {
+  const details: string[] = [p.venue];
+  if (p.links && p.links.length > 0) {
+    details.push(p.links.map((l) => l.label).join(" · "));
+  }
+  return {
+    title: p.title,
+    place: p.authors,
+    date: String(p.year),
+    details,
+  };
+}
+
+const publicationEntries: CVEntry[] = papers
+  .slice()
+  .sort((a, b) => b.year - a.year)
+  .map(paperToCVEntry);
 
 /**
  * SHA-256 of the download passphrase. Default value here is the hash of
@@ -41,10 +67,10 @@ const expectedHash = "4e62b4fcd27edfdc23251df7002ed399eeb81bd64a6cb76829fc891376
     <CVEntries items={cv.education}/>
   </section>
 
-  {papers.length > 0 && (
+  {publicationEntries.length > 0 && (
     <section>
       <SectionRule label="Publications"/>
-      <PaperList/>
+      <CVEntries items={publicationEntries}/>
     </section>
   )}
 
