@@ -216,9 +216,14 @@ body {
 }
 
 /* Papers — Yang-Song-style year sections with venue/grade stickers */
-.pubs-list { padding-left: var(--ind-1); }
+.pubs-list { /* no extra indent; year header carries the section divider */ }
 .pubs-year-group { margin-bottom: 1.8rem; }
+
+/* Year as section header: text on the left, hairline filling the row to the right */
 .pubs-year {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
   font-family: var(--mono);
   font-variant-numeric: tabular-nums;
   color: var(--accent);
@@ -226,8 +231,12 @@ body {
   font-weight: 500;
   letter-spacing: .02em;
   margin: 2.5rem 0 1.1rem;
-  padding-bottom: .35rem;
-  border-bottom: 1px solid var(--hair);
+}
+.pubs-year::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--hair);
 }
 .pubs-year-group:first-child .pubs-year { margin-top: 0; }
 .pubs-entries { display: flex; flex-direction: column; gap: 1.3rem; }

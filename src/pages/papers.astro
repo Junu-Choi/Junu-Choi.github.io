@@ -1,6 +1,5 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import SectionRule from "../components/SectionRule.astro";
 import PaperList from "../components/PaperList.astro";
 import { papers } from "../data/papers";
 ---
@@ -16,10 +15,7 @@ import { papers } from "../data/papers";
       <em>In preparation.</em> Preprints and publications will appear here as they are released.
     </p>
   ) : (
-    <section>
-      <SectionRule label="All"/>
-      <PaperList/>
-    </section>
+    <PaperList/>
   )}
 
 </BaseLayout>
