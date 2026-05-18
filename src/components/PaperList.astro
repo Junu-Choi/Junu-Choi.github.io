@@ -36,7 +36,7 @@ function splitAuthors(authors: string): { text: string; bold: boolean }[] {
             {splitAuthors(p.authors).map((seg) => seg.bold ? <strong>{seg.text}</strong> : <>{seg.text}</>)}
           </div>
           <div class="venue">
-            <span class="venue-badge">{p.venue} {p.year}</span>
+            <span class="venue-badge">{p.venue}</span>
             {p.status && <span class="venue-status">{p.status}</span>}
             {p.note && <span class="venue-note"> · {p.note}</span>}
             {p.links && p.links.length > 0 && (

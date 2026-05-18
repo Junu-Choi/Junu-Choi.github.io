@@ -18,7 +18,9 @@ import { site } from "../config/site";
 function paperToCVEntry(p: Paper): CVEntry {
   // Compose the venue line as plain text so the CV's Publications section
   // stays visually aligned with Education / Experience / Awards.
-  const venueParts = [`${p.venue} ${p.year}`];
+  // Year already lives in the right-aligned date column, so the venue
+  // line only carries the venue abbreviation + status + note.
+  const venueParts = [p.venue];
   if (p.status) venueParts.push(p.status);
   if (p.note)   venueParts.push(p.note);
   const details: string[] = [venueParts.join(" · ")];
