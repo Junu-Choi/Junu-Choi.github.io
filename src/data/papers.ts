@@ -1,14 +1,16 @@
 export type PaperLink = { label: string; href: string };
 
 export type Paper = {
-  /** Year used both for sorting and inside the venue badge. */
+  /** Year used both for sorting and as the section header on /papers. */
   year: number;
   title: string;
   /** Author list as a single string; the literal "Junu Choi" will be auto-bolded. */
   authors: string;
   /** Short venue label that goes inside the badge: "ECCV", "NeurIPS", "JMLR", etc. */
   venue: string;
-  /** Free-form status text shown next to the badge (e.g. "under review", "post-rebuttal"). */
+  /** Optional grade / award shown next to the venue badge: "Oral", "Spotlight", "Highlight", "Best Paper", … */
+  grade?: string;
+  /** Free-form status text (e.g. "under review", "post-rebuttal"). */
   status?: string;
   /** Footnote-style annotation for dagger / star marks (e.g. "†corresponding"). */
   note?: string;

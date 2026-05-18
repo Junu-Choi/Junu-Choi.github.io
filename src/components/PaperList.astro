@@ -10,6 +10,15 @@ const list: Paper[] = (selectedOnly ? papers.filter((p) => p.selected) : papers)
   .slice()
   .sort((a, b) => b.year - a.year);
 
+// Group consecutive papers of the same year (list is sorted desc).
+type Group = { year: number; papers: Paper[] };
+const grouped: Group[] = [];
+for (const p of list) {
+  const last = grouped[grouped.length - 1];
+  if (last && last.year === p.year) last.papers.push(p);
+  else grouped.push({ year: p.year, papers: [p] });
+}
+
 /** Bold the literal "Junu Choi" inside an author string. */
 function splitAuthors(authors: string): { text: string; bold: boolean }[] {
   const me = "Junu Choi";
@@ -25,38 +34,45 @@ function splitAuthors(authors: string): { text: string; bold: boolean }[] {
   return out;
 }
 ---
-{list.length > 0 && (
-  <dl class="pubs">
-    {list.map((p) => (
-      <>
-        <dt>
-          <div class="pub-year">{p.year}</div>
-          <span class="venue-badge">{p.venue}</span>
-        </dt>
-        <dd>
-          <a href="#" class="title">{p.title}</a>
-          <div class="meta">
-            {splitAuthors(p.authors).map((seg) => seg.bold ? <strong>{seg.text}</strong> : <>{seg.text}</>)}
-          </div>
-          {(p.status || p.note || (p.links && p.links.length > 0)) && (
-            <div class="venue">
-              {p.status && <span class="venue-status">{p.status}</span>}
-              {p.note && <span class="venue-note">{p.status ? " · " : ""}{p.note}</span>}
-              {p.links && p.links.length > 0 && (
-                <>
-                  {(p.status || p.note) ? " · " : ""}
-                  {p.links.map((l, i) => (
-                    <>
-                      {i > 0 ? " · " : null}
-                      <a class="quiet" href={l.href}>{l.label}</a>
-                    </>
-                  ))}
-                </>
-              )}
-            </div>
-          )}
-        </dd>
-      </>
+{grouped.length > 0 && (
+  <div class="pubs-list">
+    {grouped.map(({ year, papers: yearPapers }) => (
+      <section class="pubs-year-group">
+        <h2 class="pubs-year">{year}</h2>
+        <div class="pubs-entries">
+          {yearPapers.map((p) => (
+            <article class="pub-entry">
+              <div class="pub-stickers">
+                <span class="venue-badge">{p.venue}</span>
+                {p.grade && <span class="grade-badge">{p.grade}</span>}
+              </div>
+              <div class="pub-content">
+                <a href="#" class="title">{p.title}</a>
+                <div class="meta">
+                  {splitAuthors(p.authors).map((seg) => seg.bold ? <strong>{seg.text}</strong> : <>{seg.text}</>)}
+                </div>
+                {(p.status || p.note || (p.links && p.links.length > 0)) && (
+                  <div class="venue">
+                    {p.status && <span class="venue-status">{p.status}</span>}
+                    {p.note && <span class="venue-note">{p.status ? " · " : ""}{p.note}</span>}
+                    {p.links && p.links.length > 0 && (
+                      <>
+                        {(p.status || p.note) ? " · " : ""}
+                        {p.links.map((l, i) => (
+                          <>
+                            {i > 0 ? " · " : null}
+                            <a class="quiet" href={l.href}>{l.label}</a>
+                          </>
+                        ))}
+                      </>
+                    )}
+                  </div>
+                )}
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
     ))}
-  </dl>
+  </div>
 )}
