@@ -24,7 +24,18 @@ export type Paper = {
  * the about page renders only entries with `selected: true`. The CV page
  * also pulls from this same array.
  */
+// Latest-first within each year. PaperList and the CV publications mapper
+// both year-sort with a stable algorithm, so the order here is preserved.
 export const papers: Paper[] = [
+  {
+    year: 2026,
+    title: "Manuscript under review",
+    authors: "Junu Choi, Hyunwoo J. Kim†, Youngjoon Hong†",
+    venue: "NeurIPS",
+    status: "under review",
+    note: "†equal advising",
+    selected: true,
+  },
   {
     year: 2026,
     // Title withheld during review; switch to "Space–Time Aligned Diffusion Dynamics"
@@ -34,15 +45,6 @@ export const papers: Paper[] = [
     venue: "ECCV",
     status: "under review · post-rebuttal",
     note: "†corresponding author",
-    selected: true,
-  },
-  {
-    year: 2026,
-    title: "Manuscript under review",
-    authors: "Junu Choi, Hyunwoo J. Kim†, Youngjoon Hong†",
-    venue: "NeurIPS",
-    status: "under review",
-    note: "†equal advising",
     selected: true,
   },
 ];
