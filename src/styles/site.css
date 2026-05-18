@@ -218,16 +218,21 @@ body {
 /* Papers */
 dl.pubs { margin: 0; padding-left: var(--ind-1); max-width: 82ch; }
 dl.pubs dt {
-  float: left; clear: left; width: 60px;
+  float: left; clear: left; width: 105px;
+  padding-top: .4rem;
+  padding-right: 1rem;
+}
+.pub-year {
   font-family: var(--mono);
   font-variant-numeric: tabular-nums;
   color: var(--accent);
-  font-size: .82rem; font-weight: 500;
-  padding-top: .4rem;
+  font-size: .82rem;
+  font-weight: 500;
   letter-spacing: .02em;
+  margin-bottom: .45rem;
 }
 dl.pubs dd {
-  margin: 0 0 1.6rem 60px;
+  margin: 0 0 1.6rem 105px;
   padding-bottom: 1.6rem;
 }
 .title {
@@ -247,24 +252,24 @@ dl.pubs dd {
 .meta strong { color: var(--ink); font-weight: 500; }
 .venue {
   font-size: .82rem; color: var(--ink-soft);
-  margin-top: .35rem;
+  margin-top: .3rem;
   padding-left: var(--ind-2);
   letter-spacing: .01em;
-  display: flex; flex-wrap: wrap; align-items: center; gap: .35rem .55rem;
 }
 .venue a.quiet { color: var(--ink-soft); border-bottom: 0; }
 .venue a.quiet:hover { color: var(--accent-strong); }
 
-/* Venue badge — Yang-Song-style sticker, BG_PLANE tint + hairline border */
+/* Venue badge — Yang-Song-style sticker, BG_PLANE tint + hairline border.
+   Sits inside <dt>, directly below the crimson year, as a label for the entry. */
 .venue-badge {
   display: inline-block;
   background: var(--bg-plane);
-  color: var(--ink);
+  color: var(--ink-soft);
   font-family: var(--mono);
-  font-size: .72rem;
+  font-size: .68rem;
   font-weight: 500;
   letter-spacing: .04em;
-  padding: .12rem .6rem;
+  padding: .1rem .55rem;
   border: 1px solid var(--hair);
   border-radius: 999px;
   white-space: nowrap;

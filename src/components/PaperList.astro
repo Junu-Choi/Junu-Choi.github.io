@@ -29,28 +29,32 @@ function splitAuthors(authors: string): { text: string; bold: boolean }[] {
   <dl class="pubs">
     {list.map((p) => (
       <>
-        <dt>{p.year}</dt>
+        <dt>
+          <div class="pub-year">{p.year}</div>
+          <span class="venue-badge">{p.venue}</span>
+        </dt>
         <dd>
           <a href="#" class="title">{p.title}</a>
           <div class="meta">
             {splitAuthors(p.authors).map((seg) => seg.bold ? <strong>{seg.text}</strong> : <>{seg.text}</>)}
           </div>
-          <div class="venue">
-            <span class="venue-badge">{p.venue}</span>
-            {p.status && <span class="venue-status">{p.status}</span>}
-            {p.note && <span class="venue-note"> · {p.note}</span>}
-            {p.links && p.links.length > 0 && (
-              <>
-                {" · "}
-                {p.links.map((l, i) => (
-                  <>
-                    {i > 0 ? " · " : null}
-                    <a class="quiet" href={l.href}>{l.label}</a>
-                  </>
-                ))}
-              </>
-            )}
-          </div>
+          {(p.status || p.note || (p.links && p.links.length > 0)) && (
+            <div class="venue">
+              {p.status && <span class="venue-status">{p.status}</span>}
+              {p.note && <span class="venue-note">{p.status ? " · " : ""}{p.note}</span>}
+              {p.links && p.links.length > 0 && (
+                <>
+                  {(p.status || p.note) ? " · " : ""}
+                  {p.links.map((l, i) => (
+                    <>
+                      {i > 0 ? " · " : null}
+                      <a class="quiet" href={l.href}>{l.label}</a>
+                    </>
+                  ))}
+                </>
+              )}
+            </div>
+          )}
         </dd>
       </>
     ))}
