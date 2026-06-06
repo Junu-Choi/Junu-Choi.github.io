@@ -19,7 +19,6 @@ const isoUpdated = note.data.updatedAt?.toISOString().slice(0, 10);
 
   <article class="note-article">
     <header class="note-head">
-      <div class="eyebrow">notes</div>
       <h1>{note.data.title}</h1>
       <div class="note-meta">
         <time datetime={note.data.publishedAt.toISOString()}>{isoDate}</time>

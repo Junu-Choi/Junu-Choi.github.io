@@ -7,6 +7,10 @@
 
   --rail-w: 240px;
 
+  /* 2D radial "cloud ball" — black core fading concentrically to white rim */
+  --cloud-ball: radial-gradient(circle closest-side,
+    #000 0%, #1c1c1c 22%, #4a4a4a 45%, #8c8c8c 66%, #cfcfcf 85%, #fff 100%);
+
   /* Content-level indentation steps */
   --ind-1: 1.25rem;    /* lists & figures under a section rule (main column) */
   --ind-2: .85rem;     /* sub-info within an item (meta, venue, caption) */
@@ -29,17 +33,6 @@ body {
   background: var(--bg-page);
   overflow-y: auto;
 }
-.rail::after {
-  content: "";
-  position: fixed;
-  top: 50%; left: calc(var(--rail-w) - 1.5px);
-  transform: translateY(-50%);
-  width: 3px;
-  height: clamp(320px, 62vh, 600px);
-  background: var(--ref-dash);
-  border-radius: 1.5px;
-  pointer-events: none;
-}
 .rail-inner {
   padding: 4.5rem 1.7rem 2rem;
   display: flex; flex-direction: column; height: 100%;
@@ -54,6 +47,7 @@ body {
   letter-spacing: .2em;
   text-transform: uppercase;
   color: var(--ink);
+  text-align: center;
 }
 
 .rail-nav {
@@ -70,10 +64,16 @@ body {
 }
 .rail-nav a:hover { color: var(--accent-strong); }
 .rail-nav a.active { color: var(--ink); }
+/* active-nav marker — clean 2D radial cloud: black core fading continuously
+   to white at the rim, perfectly concentric (one shade per radius) */
 .rail-nav a.active::before {
-  content: ""; display: inline-block;
-  width: 14px; height: 1px; background: var(--accent);
-  margin-right: .55rem;
+  content: "";
+  display: inline-block;
+  width: 15px; height: 15px;
+  border-radius: 50%;
+  margin-right: .5rem;
+  flex-shrink: 0;
+  background: var(--cloud-ball);
 }
 
 .rail-section { margin-bottom: 2rem; }
@@ -88,7 +88,7 @@ body {
   padding-left: var(--ind-rail);
 }
 .rail-email {
-  font-family: var(--mono);
+  font-family: var(--sans);
   font-size: .78rem;
   letter-spacing: .005em;
   color: var(--ink-soft);
@@ -106,7 +106,7 @@ body {
 
 .rail-foot {
   margin-top: auto;
-  font-family: var(--mono);
+  font-family: var(--sans);
   font-size: .68rem;
   color: var(--ink-soft); opacity: .7;
   letter-spacing: .02em;
@@ -115,9 +115,8 @@ body {
   display: flex; align-items: center; gap: .5rem;
 }
 .kdot {
-  display: inline-block; width: 6px; height: 6px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--k-2), var(--k-3));
-  box-shadow: 0 0 0 2px rgba(153,42,42,.08);
+  display: inline-block; width: 9px; height: 9px; border-radius: 50%;
+  background: var(--cloud-ball);
 }
 
 /* ─────────────────────────────────────────── Main column */
@@ -128,15 +127,37 @@ body {
   padding: 4.5rem clamp(2rem, 5vw, 5rem) 6rem;
 }
 
-/* Home / about masthead — big serif name */
-.masthead { margin-bottom: 3rem; }
+/* Home masthead — full-width title band running across the top. */
+.masthead {
+  margin-bottom: 2rem;
+}
 .masthead h1 {
   font-family: var(--serif);
   font-weight: 500;
-  font-size: clamp(2.6rem, 4.2vw, 3.8rem);
+  font-size: clamp(2.4rem, 3.8vw, 3.4rem);
   line-height: 1.05;
   letter-spacing: -.025em;
-  margin: 0 0 .7rem;
+  margin: 0 0 .5rem;
+}
+.masthead .role {
+  font-size: .95rem;
+  line-height: 1.5;
+  letter-spacing: .005em;
+  color: var(--ink-soft);
+  margin: .45rem 0 0;
+}
+
+/* Sidebar portrait — sits at the top of the rail, no fill box. */
+.rail-photo {
+  margin: 0 0 1.3rem;
+  width: 100%;
+}
+.rail-photo img {
+  display: block;
+  width: 100%;
+  height: auto;          /* keep the photo's native 682×941 ratio — no crop */
+  border-radius: 3px;
+  border: 1px solid var(--hair);
 }
 .tagline { font-size: .98rem; color: var(--ink-soft); }
 .tagline a { color: var(--ink-soft); border-bottom: 1px solid var(--hair); }
@@ -145,7 +166,7 @@ body {
 /* Sub-page header — smaller, for /papers /notes /cv /projects */
 .page-head { margin-bottom: 2.5rem; }
 .page-head .eyebrow {
-  font-family: var(--mono);
+  font-family: var(--sans);
   font-size: .7rem; letter-spacing: .22em;
   text-transform: uppercase;
   color: var(--ink-soft);
@@ -166,10 +187,11 @@ body {
   font-size: 1.08rem;
   line-height: 1.65;
   margin: 1.1rem 0;
-  max-width: 72ch;
+  max-width: none;       /* lines grow with the window instead of wrapping at a fixed measure */
   color: var(--ink);
 }
 .about em { font-style: italic; color: var(--accent-strong); }
+
 
 /* Section rule — hairline with inset label, anchored left */
 .rule {
@@ -190,7 +212,6 @@ body {
 .areas { list-style: none; padding: 0 0 0 var(--ind-1); margin: 0; }
 .areas li {
   padding: .85rem 0;
-  max-width: 78ch;
 }
 .area-name {
   display: flex; align-items: center;
@@ -200,37 +221,32 @@ body {
   color: var(--ink);
   letter-spacing: -.005em;
 }
-.kbar {
-  display: inline-block; width: 18px; height: 2px;
-  margin-right: .85rem;
-  background: linear-gradient(to right, var(--k-2), var(--k-3));
-  border-radius: 1px;
-  flex-shrink: 0;
-}
 .area-desc {
   font-size: .92rem;
   color: var(--ink-soft);
   margin-top: .2rem;
-  margin-left: calc(18px + .85rem);
   line-height: 1.5;
 }
 
 /* Papers — Yang-Song-style year sections with venue/grade stickers */
 .pubs-list { /* no extra indent; year header carries the section divider */ }
 .pubs-year-group { margin-bottom: 1.8rem; }
+/* selected-papers list (home) indented to sit under the section rule */
+.pubs-list--inset { padding-left: var(--ind-1); }
 
 /* Year as section header: text on the left, hairline filling the row to the right */
 .pubs-year {
   display: flex;
   align-items: center;
   gap: 1rem;
-  font-family: var(--mono);
+  font-family: var(--sans);
   font-variant-numeric: tabular-nums;
-  color: var(--accent);
   font-size: 1.3rem;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: .02em;
   margin: 2.5rem 0 1.1rem;
+  /* silver-grey */
+  color: #8a9097;
 }
 .pubs-year::after {
   content: "";
@@ -280,18 +296,17 @@ body {
 .venue a.quiet { color: var(--ink-soft); border-bottom: 0; }
 .venue a.quiet:hover { color: var(--accent-strong); }
 
-/* Venue badge — Yang-Song-style sticker, BG_PLANE tint + hairline border. */
+/* Venue badge — solid dark sticker, white label, corners barely rounded. */
 .venue-badge {
   display: inline-block;
-  background: var(--bg-plane);
-  color: var(--ink-soft);
-  font-family: var(--mono);
+  background: var(--ink);
+  color: #fff;
+  font-family: var(--sans);
   font-size: .7rem;
   font-weight: 500;
   letter-spacing: .04em;
-  padding: .12rem .6rem;
-  border: 1px solid var(--hair);
-  border-radius: 999px;
+  padding: .14rem .55rem;
+  border-radius: 3px;
   white-space: nowrap;
 }
 /* Grade / award badge (Oral, Spotlight, Best Paper, …) — crimson tint to signal achievement. */
@@ -299,7 +314,7 @@ body {
   display: inline-block;
   background: var(--accent-soft-bg);
   color: var(--accent);
-  font-family: var(--mono);
+  font-family: var(--sans);
   font-size: .7rem;
   font-weight: 500;
   letter-spacing: .04em;
@@ -315,17 +330,16 @@ body {
 .venue-note { color: var(--ink-soft); }
 
 /* Figure */
-.fig { margin: 0; padding-left: var(--ind-1); max-width: 82ch; }
+.fig { margin: 0; padding-left: var(--ind-1); }
 .fig img { width: 100%; height: 28px; display: block; border-radius: 1px; }
 .fig figcaption {
   font-size: .85rem; color: var(--ink-soft);
   margin-top: .7rem;
   padding-left: var(--ind-2);
   line-height: 1.55;
-  max-width: 70ch;
 }
 .figlabel {
-  font-family: var(--mono);
+  font-family: var(--sans);
   font-size: .72rem;
   color: var(--accent);
   letter-spacing: .04em;
@@ -338,7 +352,6 @@ body {
   font-family: var(--serif);
   font-size: 1.04rem;
   color: var(--ink-soft);
-  max-width: 65ch;
   margin: 1.2rem 0;
 }
 .note em { color: var(--accent-strong); font-style: italic; }
@@ -348,7 +361,7 @@ body {
 .cv-meta {
   display: flex; align-items: baseline; gap: 1.6rem;
   margin-top: .9rem;
-  font-family: var(--mono);
+  font-family: var(--sans);
   font-size: .8rem;
   color: var(--ink-soft);
   letter-spacing: .02em;
@@ -371,7 +384,6 @@ body {
 .cv-list { list-style: none; padding: 0 0 0 var(--ind-1); margin: 0; }
 .cv-entry {
   padding: .9rem 0 1.05rem;
-  max-width: 82ch;
 }
 .cv-entry-head {
   display: flex; align-items: baseline; gap: 1rem;
@@ -386,7 +398,7 @@ body {
   color: var(--ink);
 }
 .cv-entry-date {
-  font-family: var(--mono);
+  font-family: var(--sans);
   font-variant-numeric: tabular-nums;
   color: var(--accent);
   font-size: .82rem;
@@ -402,7 +414,6 @@ body {
   list-style: none;
   padding: 0 0 0 var(--ind-2);
   margin: .4rem 0 0;
-  max-width: 76ch;
 }
 .cv-entry-details li {
   font-size: .9rem;
@@ -423,11 +434,10 @@ body {
 dl.cv-skills {
   margin: 0;
   padding-left: var(--ind-1);
-  max-width: 80ch;
 }
 dl.cv-skills dt {
   float: left; clear: left; width: 140px;
-  font-family: var(--mono);
+  font-family: var(--sans);
   font-size: .76rem;
   font-weight: 500;
   color: var(--accent);
@@ -464,7 +474,7 @@ ul.notes-list { list-style: none; padding: 0; margin: 0; }
 .notes-title:hover { color: var(--accent-strong); }
 .notes-date {
   display: block;
-  font-family: var(--mono);
+  font-family: var(--sans);
   font-size: .78rem;
   color: var(--ink-soft);
   letter-spacing: .02em;
@@ -480,7 +490,7 @@ ul.notes-list { list-style: none; padding: 0; margin: 0; }
 .notes-tags {
   list-style: none; padding: 0; margin: .55rem 0 0;
   display: flex; flex-wrap: wrap; gap: .4rem;
-  font-family: var(--mono);
+  font-family: var(--sans);
   font-size: .72rem;
   color: var(--ink-soft);
   letter-spacing: .04em;
@@ -506,7 +516,7 @@ ul.notes-list { list-style: none; padding: 0; margin: 0; }
   margin: 0 0 .55rem;
 }
 .note-meta {
-  font-family: var(--mono);
+  font-family: var(--sans);
   font-size: .76rem;
   color: var(--ink-soft);
   letter-spacing: .02em;
@@ -617,7 +627,7 @@ ul.notes-list { list-style: none; padding: 0; margin: 0; }
   content: counter(ol-num) ".";
   position: absolute;
   left: 0;
-  font-family: var(--mono);
+  font-family: var(--sans);
   font-variant-numeric: tabular-nums;
   color: var(--accent);
   font-size: .9em;
@@ -636,7 +646,7 @@ ul.notes-list { list-style: none; padding: 0; margin: 0; }
 
 /* Code — inline and blocks */
 .note-body code {
-  font-family: var(--mono);
+  font-family: var(--sans);
   font-size: .92em;
   background: var(--bg-panel);
   padding: .1em .35em;
@@ -644,7 +654,7 @@ ul.notes-list { list-style: none; padding: 0; margin: 0; }
   color: var(--ink);
 }
 .note-body pre {
-  font-family: var(--mono);
+  font-family: var(--sans);
   font-size: .85rem;
   line-height: 1.55;
   background: var(--bg-panel);
@@ -698,7 +708,7 @@ ul.notes-list { list-style: none; padding: 0; margin: 0; }
   vertical-align: top;
 }
 .note-body th {
-  font-family: var(--mono);
+  font-family: var(--sans);
   font-size: .76rem;
   letter-spacing: .08em;
   text-transform: uppercase;
@@ -729,8 +739,7 @@ ul.notes-list { list-style: none; padding: 0; margin: 0; }
   margin-top: 4rem;
   padding-top: 1.2rem;
   border-top: 1px solid var(--hair);
-  max-width: 70ch;
-  font-family: var(--mono);
+  font-family: var(--sans);
   font-size: .82rem;
 }
 .note-foot a {
@@ -875,6 +884,8 @@ ul.notes-list { list-style: none; padding: 0; margin: 0; }
   }
   .rail::after { display: none; }
   .rail-inner { padding: 2rem; height: auto; }
+  .rail-photo { max-width: 132px; margin-bottom: 1rem; }
+  .rail-name { text-align: left; }
   .rail-foot { margin-top: 1.5rem; }
   .paper {
     margin-left: 0;

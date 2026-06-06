@@ -35,7 +35,7 @@ function splitAuthors(authors: string): { text: string; bold: boolean }[] {
 }
 ---
 {grouped.length > 0 && (
-  <div class="pubs-list">
+  <div class:list={["pubs-list", selectedOnly && "pubs-list--inset"]}>
     {grouped.map(({ year, papers: yearPapers }) => (
       <section class="pubs-year-group">
         <h2 class="pubs-year">{year}</h2>
