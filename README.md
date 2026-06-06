@@ -1,10 +1,8 @@
 # junu-site
 
-Personal academic website for **Junu Choi** — graduate student, IPAI, Seoul National University.
+Source for a personal academic website.
 
-Live at **https://junu-choi.github.io**.
-
-Built with [Astro](https://astro.build/), with MDX research notes and KaTeX math rendering. Deployed to GitHub Pages via GitHub Actions on every push to `main` (see `.github/workflows/deploy.yml`).
+Built with [Astro](https://astro.build/), with MDX notes and KaTeX math rendering. Deployed to GitHub Pages via GitHub Actions on every push to `main` (see `.github/workflows/deploy.yml`).
 
 ## Structure
 
