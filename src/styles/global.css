@@ -1,33 +1,40 @@
-/* Palette — derived from the matplotlib curvature colormap (CURV_CMAP). */
+/* Palette — prussian ink on cool paper, with a dark navy rail. */
 
 :root {
-  /* Ink family */
-  --ink:        #17181A;   /* primary text */
-  --ink-soft:   #4B5058;   /* secondary text */
-  --hair:       #C9CCD1;   /* hairline rules */
+  /* Ink family — cool neutrals */
+  --ink:        #191C1E;   /* primary text */
+  --ink-soft:   #4E555B;   /* secondary text */
+  --hair:       #CFD4CE;   /* hairline rules */
 
   /* Plane / paper */
-  --bg-plane:   #F4EFE7;   /* warm paper tint — used on panels, not full page */
-  --bg-page:    #FAFAF6;   /* warm off-white — main page background */
-  --bg-panel:   #F4EFE7;   /* alias for paper tint when used as a panel */
-  --bg-sunken:  #EFE9DD;   /* slightly deeper tint for layered panels */
+  --bg-plane:   #EBEEE9;   /* cool paper tint — used on panels, not full page */
+  --bg-page:    #F5F6F3;   /* cool off-white — main page background */
+  --bg-panel:   #EBEEE9;   /* alias for paper tint when used as a panel */
+  --bg-sunken:  #E2E6E0;   /* slightly deeper tint for layered panels */
 
   /* Endpoints / reference */
-  --source:     #17181A;
+  --source:     #191C1E;
   --target:     #8C9097;
-  --ref-dash:   #B2B6BB;
+  --ref-dash:   #B2B5BB;
 
-  /* kappa-sequential stops (paper → peach → terracotta → deep red → crimson) */
-  --k-0:        #EFE7DB;
-  --k-1:        #E2B89A;
-  --k-2:        #C8704F;
-  --k-3:        #992A2A;
-  --k-4:        #4A0E16;
+  /* kappa-sequential stops (paper → mist → steel → prussian → midnight) */
+  --k-0:        #E3E9EF;
+  --k-1:        #BCCBDC;
+  --k-2:        #7E97B0;
+  --k-3:        #33567E;
+  --k-4:        #152740;
 
-  /* Semantic accents pulled from the deep end of the cmap */
-  --accent:           #992A2A;
-  --accent-strong:    #4A0E16;
-  --accent-soft-bg:   #EFE7DB;
+  /* Semantic accents pulled from the deep end of the ramp */
+  --accent:           #33567E;
+  --accent-strong:    #1F3A59;
+  --accent-soft-bg:   #E3E9EF;
+
+  /* Left rail — dark navy panel with its own ink scale */
+  --rail-bg:     #1B2430;
+  --rail-ink:    #97A1AC;   /* default rail text */
+  --rail-bright: #EDF0F2;   /* name, active nav, hover */
+  --rail-dim:    #6E7885;   /* labels, footer */
+  --rail-hair:   #313B47;   /* borders inside the rail */
 }
 
 *, *::before, *::after { box-sizing: border-box; }
