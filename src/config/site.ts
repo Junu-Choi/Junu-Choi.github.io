@@ -5,7 +5,7 @@ export const site = {
   email: "junu.choi.research@gmail.com",
   emailDisplay: "junu.choi.research",
   url: "https://junu-choi.github.io",
-  lastUpdated: "2026 May",
+  lastUpdated: "2026 July",
 
   nav: [
     { label: "about",  href: "/" },
