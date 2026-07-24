@@ -5,18 +5,13 @@ export type ResearchArea = {
 
 export const researchAreas: ResearchArea[] = [
   {
-    name: "Stochastic Dynamics",
+    name: "Generative Dynamics",
     description:
-      "SDE, SPDE, and stochastic analysis — mathematical structure and applications of dynamics under noise.",
+      "Design of the dynamics behind generative models — diffusion, flows, stochastic interpolants: which process to run, along which path, and how to sample from it.",
   },
   {
-    name: "Deep Geometric Analysis",
+    name: "Optimal Transport & Geometry",
     description:
-      "Curvature, optimal transport, and the geometry of high-dimensional data and neural representations.",
-  },
-  {
-    name: "Generative Modeling",
-    description:
-      "Foundations and design of generative models — diffusion, flow, score- and energy-based, likelihood-based, and beyond — from theoretical structure to controllable generation.",
+      "Wasserstein geometry, couplings, and curvature — the transport structure that organises high-dimensional generative paths.",
   },
 ];

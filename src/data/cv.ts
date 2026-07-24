@@ -15,7 +15,7 @@ export type CVEntry = {
 export type CVSection = readonly CVEntry[];
 
 export const cv = {
-  lastUpdated: "May 2026",
+  lastUpdated: "July 2026",
 
   education: [
     {
@@ -28,6 +28,10 @@ export const cv = {
       title: "B.S. (Double Major), School of Computing × Mathematical Sciences",
       place: "Korea Advanced Institute of Science and Technology",
       date: "2017 – 2025",
+      details: [
+        "On leave 2020 – 2024 — industry R&D at Humelo, Inc., including two years of alternative military service.",
+        "Led a team project on speculative-decoding acceleration — feature-level speculation combined with knowledge distillation.",
+      ],
     },
   ] satisfies CVSection,
 
@@ -35,6 +39,16 @@ export const cv = {
   // CV, /papers tab, and home page in lockstep. See cv.astro.
 
   experience: [
+    {
+      title: "Graduate Researcher",
+      place: "Seoul National University",
+      date: "Sep 2025 – present",
+      details: [
+        "Design of generative dynamics — to be published.",
+        "Transport-map–based inverse problem solver — to be published.",
+        "Confined generative dynamics and generative modeling for climate — to be published.",
+      ],
+    },
     {
       title: "Undergraduate Researcher",
       place: "Visual AI Group, KAIST",
@@ -53,16 +67,8 @@ export const cv = {
       ],
     },
     {
-      title: "Team Project Lead",
-      place: "KAIST · School of Computing",
-      date: "Mar – Jun 2024",
-      details: [
-        "Led a small team in accelerating speculative decoding via feature-distribution speculation and intermediate-feature-level decoding; combined knowledge distillation with sparse rejection.",
-      ],
-    },
-    {
       title: "AI Researcher (Speech & Multimodal)",
-      place: "Humelo, Inc.",
+      place: "Humelo, Inc. — incl. two years of alternative military service (industrial technical personnel)",
       date: "Sep 2020 – Jan 2024",
       details: [
         "Production text-to-speech and voice-conversion systems across multiple product lines.",
