@@ -1,15 +1,15 @@
 /* Site layout — rail + paper, lifted from the D mockup. */
 
 :root {
-  --serif: "Spectral", "Iowan Old Style", Charter, Georgia, "Times New Roman", serif;
-  --sans:  "Source Sans 3", "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --serif: "Lora", "Iowan Old Style", Charter, Georgia, "Times New Roman", serif;
+  --sans:  "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --mono:  "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
 
   --rail-w: 240px;
 
-  /* 2D radial "cloud ball" — black core fading concentrically to white rim */
+  /* 2D radial "cloud ball" — white core fading concentrically into the dark rail */
   --cloud-ball: radial-gradient(circle closest-side,
-    #000 0%, #1c1c1c 22%, #4a4a4a 45%, #8c8c8c 66%, #cfcfcf 85%, #fff 100%);
+    #fff 0%, #e6eaee 25%, var(--rail-ink) 55%, var(--rail-hair) 82%, var(--rail-bg) 100%);
 
   /* Content-level indentation steps */
   --ind-1: 1.25rem;    /* lists & figures under a section rule (main column) */
@@ -19,7 +19,6 @@
 
 body {
   font-family: var(--sans);
-  font-feature-settings: "ss01", "cv11";
   font-size: 16px;
   line-height: 1.65;
   color: var(--ink);
@@ -30,13 +29,13 @@ body {
 .rail {
   position: fixed; top: 0; left: 0;
   width: var(--rail-w); height: 100vh;
-  background: var(--bg-page);
+  background: var(--rail-bg);
   overflow-y: auto;
 }
 .rail-inner {
   padding: 4.5rem 1.7rem 2rem;
   display: flex; flex-direction: column; height: 100%;
-  font-size: .82rem; color: var(--ink-soft);
+  font-size: .82rem; color: var(--rail-ink);
 }
 
 .rail-brand { margin-bottom: 2.4rem; }
@@ -46,7 +45,7 @@ body {
   font-weight: 500;
   letter-spacing: .2em;
   text-transform: uppercase;
-  color: var(--ink);
+  color: var(--rail-bright);
   text-align: center;
 }
 
@@ -57,13 +56,13 @@ body {
   padding-left: var(--ind-rail);
 }
 .rail-nav a {
-  color: var(--ink-soft); border-bottom: 0;
+  color: var(--rail-ink); border-bottom: 0;
   letter-spacing: .02em;
   display: inline-flex; align-items: center;
   width: fit-content;
 }
-.rail-nav a:hover { color: var(--accent-strong); }
-.rail-nav a.active { color: var(--ink); }
+.rail-nav a:hover { color: var(--rail-bright); }
+.rail-nav a.active { color: var(--rail-bright); }
 /* active-nav marker — clean 2D radial cloud: black core fading continuously
    to white at the rim, perfectly concentric (one shade per radius) */
 .rail-nav a.active::before {
@@ -79,39 +78,39 @@ body {
 .rail-section { margin-bottom: 2rem; }
 .rail-label {
   font-size: .68rem; letter-spacing: .18em; text-transform: uppercase;
-  color: var(--ink-soft); opacity: .75;
+  color: var(--rail-dim);
   margin-bottom: .55rem;
 }
 .rail-meta {
   line-height: 1.55;
-  color: var(--ink-soft);
+  color: var(--rail-ink);
   padding-left: var(--ind-rail);
 }
 .rail-email {
   font-family: var(--sans);
   font-size: .78rem;
   letter-spacing: .005em;
-  color: var(--ink-soft);
+  color: var(--rail-ink);
   border-bottom: 0;
 }
-.rail-email:hover { color: var(--accent-strong); }
+.rail-email:hover { color: var(--rail-bright); }
 
 .rail-links {
   list-style: none; margin: 0;
   padding: 0 0 0 var(--ind-rail);
   display: flex; flex-direction: column; gap: .35rem;
 }
-.rail-links a { color: var(--ink-soft); border-bottom: 0; }
-.rail-links a:hover { color: var(--accent-strong); }
+.rail-links a { color: var(--rail-ink); border-bottom: 0; }
+.rail-links a:hover { color: var(--rail-bright); }
 
 .rail-foot {
   margin-top: auto;
   font-family: var(--sans);
   font-size: .68rem;
-  color: var(--ink-soft); opacity: .7;
+  color: var(--rail-dim);
   letter-spacing: .02em;
   padding-top: 1.5rem;
-  border-top: 1px dashed var(--hair);
+  border-top: 1px dashed var(--rail-hair);
   display: flex; align-items: center; gap: .5rem;
 }
 .kdot {
@@ -155,9 +154,9 @@ body {
 .rail-photo img {
   display: block;
   width: 100%;
-  height: auto;          /* keep the photo's native 682×941 ratio — no crop */
+  height: auto;          /* keep the photo's native 800×1103 ratio — no crop */
   border-radius: 3px;
-  border: 1px solid var(--hair);
+  border: 1px solid var(--rail-hair);
 }
 .tagline { font-size: .98rem; color: var(--ink-soft); }
 .tagline a { color: var(--ink-soft); border-bottom: 1px solid var(--hair); }
@@ -184,7 +183,7 @@ body {
 /* About prose */
 .about p {
   font-family: var(--serif);
-  font-size: 1.08rem;
+  font-size: 1.14rem;
   line-height: 1.65;
   margin: 1.1rem 0;
   max-width: none;       /* lines grow with the window instead of wrapping at a fixed measure */
@@ -245,8 +244,7 @@ body {
   font-weight: 600;
   letter-spacing: .02em;
   margin: 2.5rem 0 1.1rem;
-  /* silver-grey */
-  color: #8a9097;
+  color: var(--target);
 }
 .pubs-year::after {
   content: "";
@@ -540,7 +538,7 @@ ul.notes-list { list-style: none; padding: 0; margin: 0; }
    readable, while figures / code / tables are free to expand. */
 .note-body {
   font-family: var(--serif);
-  font-size: 1.08rem;
+  font-size: 1.14rem;
   line-height: 1.7;
   color: var(--ink);
 }
@@ -880,7 +878,7 @@ ul.notes-list { list-style: none; padding: 0; margin: 0; }
 @media (max-width: 920px) {
   .rail {
     position: static; width: 100%; height: auto;
-    border-right: 0; border-bottom: 1px solid var(--hair);
+    border-right: 0; border-bottom: 1px solid var(--rail-hair);
   }
   .rail::after { display: none; }
   .rail-inner { padding: 2rem; height: auto; }
