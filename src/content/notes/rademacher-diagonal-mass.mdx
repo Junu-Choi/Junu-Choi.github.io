@@ -1,0 +1,134 @@
+---
+title: "Rademacher's vanishing advantage: the diagonal mass of neural Hessians"
+abstract: "In Hutchinson's trace estimator, the entire variance gap between Rademacher and Gaussian probes is carried by a single scalar: the fraction ρ of the squared Frobenius norm that sits on the diagonal. For neural-network Hessians at random initialisation, ρ is generically a 1/d effect — the textbook preference for Rademacher probes evaporates precisely in the high-dimensional regime where stochastic trace estimation is needed at all. Training is the interesting exception: fitting a target with additive structure drives ρ from 0.03 to 0.89, handing Rademacher a genuine 9× probe saving. Probe choice is not a property of the estimator; it is a property of the function being differentiated."
+publishedAt: 2026-07-17
+tags: ["trace estimation", "computational methods", "neural networks"]
+draft: false
+---
+
+## One scalar carries the whole question
+
+Trace terms are ubiquitous in SDE-based machine learning: the second-order part of an Itô generator, the divergence in the instantaneous change-of-variables formula of continuous normalising flows (Grathwohl et al., 2019), the Jacobian trace in sliced score matching (Song et al., 2020). When the function is a neural network on $\mathbb{R}^d$, exact evaluation of $\operatorname{tr}(\nabla^2 f)$ costs $d$ Hessian–vector products, and one reaches for **Hutchinson's estimator** (Hutchinson, 1990): for any random probe $\xi$ with $\mathbb{E}[\xi] = 0$ and $\mathbb{E}[\xi\xi^\top] = I$,
+$$
+\operatorname{tr}(A) \;=\; \mathbb{E}\!\left[\xi^\top\! A\,\xi\right],
+\qquad
+\widehat{\operatorname{tr}}_N \;=\; \frac{1}{N}\sum_{n=1}^{N} \xi_n^\top\! A\,\xi_n,
+$$
+each term costing one Hessian–vector product regardless of $d$.
+
+The literature's standing advice is to take $\xi$ Rademacher ($\xi_i \in \{\pm 1\}$ uniformly), which minimises the variance among i.i.d. unit-variance probes (Hutchinson, 1990; Avron & Toledo, 2011). The comparison with Gaussian probes is exact. For symmetric $A$,
+$$
+\mathrm{Var}_{\mathrm{Gauss}}\!\left[\xi^\top\! A\,\xi\right] = 2\,\lVert A\rVert_F^2,
+\qquad
+\mathrm{Var}_{\mathrm{Rad}}\!\left[\xi^\top\! A\,\xi\right] = 2\Big(\lVert A\rVert_F^2 - \textstyle\sum_i A_{ii}^2\Big),
+$$
+since $\xi_i^2 \equiv 1$ renders the diagonal contribution deterministic. Defining the **diagonal-mass ratio**
+$$
+\rho(A) \;=\; \frac{\sum_i A_{ii}^2}{\lVert A \rVert_F^2} \;\in\; [0, 1],
+$$
+the entire comparison collapses to one identity:
+$$
+\frac{\mathrm{Var}_{\mathrm{Rad}}}{\mathrm{Var}_{\mathrm{Gauss}}} \;=\; 1 - \rho(A).
+$$
+Every claim about probe choice is a claim about $\rho$. At $\rho = 1$ (diagonal $A$) the Rademacher estimator is *deterministic* — a single probe returns the trace exactly. At $\rho = O(1/d)$ the two probe families are practically indistinguishable. The question this note asks is: **where on this axis do neural Hessians actually live — and does training move them?**
+
+## An exactly solvable family
+
+To see the identity bite, take a family whose Hessian is available in closed form. Let
+$$
+f_\lambda(x) \;=\; \sum_{i=1}^{d} c_i \tanh(h_i),
+\qquad
+h = M_\lambda x,
+\qquad
+M_\lambda = (1-\lambda)\, I + \lambda\, W,
+$$
+with $W_{ij} \sim \mathcal{N}(0, 1/d)$ and $c_i \sim \mathcal{N}(0,1)$ fixed. Then
+$$
+\nabla^2 f_\lambda \;=\; M_\lambda^\top \,\mathrm{diag}\!\big(c_i\, g''(h_i)\big)\, M_\lambda,
+\qquad g = \tanh,
+$$
+so $\lambda$ interpolates between an exactly diagonal Hessian ($\lambda = 0$: an additive function) and a dense one ($\lambda = 1$: fully mixed coordinates), with $\rho(\lambda)$ computable exactly along the way.
+
+<figure>
+  <img src="/notes/rademacher-diagonal-mass/figures/hessians.png" alt="Three heatmaps of the absolute Hessian of the mixing family at lambda = 0, 0.5 and 1, for d = 48. At lambda 0 all mass is on the diagonal; at lambda 0.5 the diagonal is still visible over an emerging off-diagonal background; at lambda 1 the matrix is dense with no visible diagonal." />
+  <figcaption><strong>Figure 1.</strong> $|\nabla^2 f_\lambda|$ for $d = 48$. As $\lambda$ moves from $0$ to $1$ the coordinates mix and the Frobenius mass migrates off the diagonal: $\rho$ falls from $1$ to $\approx 0.055$.</figcaption>
+</figure>
+
+The distributional picture at the two endpoints is the fastest way to internalise the identity:
+
+<figure>
+  <img src="/notes/rademacher-diagonal-mass/figures/probes.png" alt="Two histogram panels of single-probe Hutchinson estimates. Left, lambda = 0: the Gaussian estimate is a wide distribution around the true trace while the Rademacher estimate is a single spike exactly at the trace. Right, lambda = 1: the Rademacher and Gaussian histograms coincide." />
+  <figcaption><strong>Figure 2.</strong> Single-probe estimates $\xi^\top\! A_\lambda\, \xi$ over $4\times10^4$ draws; the dashed line marks $\operatorname{tr} A_\lambda$. <em>Left</em> ($\lambda = 0$): with a diagonal Hessian the Rademacher estimate is deterministic — all mass sits in a spike at the exact trace — while the Gaussian estimate is spread over a wide interval. <em>Right</em> ($\lambda = 1$): with the mass off-diagonal the two distributions are indistinguishable.</figcaption>
+</figure>
+
+Sweeping $\lambda$ confirms the identity quantitatively — measured variance ratios sit on the curve $1 - \rho(A_\lambda)$ to within Monte-Carlo error (maximum deviation $0.03$ at $4\times10^4$ probes, $8$ seeds):
+
+<figure>
+  <img src="/notes/rademacher-diagonal-mass/figures/identity.png" alt="Measured Rademacher-to-Gaussian variance ratio against lambda, shown as dots with error bars, lying on top of the theoretical curve 1 minus rho of A lambda, shown as a line with a narrow band." />
+  <figcaption><strong>Figure 3.</strong> The variance identity along the family: empirical ratio $\mathrm{Var}_{\mathrm{Rad}}/\mathrm{Var}_{\mathrm{Gauss}}$ (dots, $8$ seeds) against the exact $1 - \rho(A_\lambda)$ (line; band is the seed-to-seed spread). Rademacher's advantage is a monotone function of diagonal mass and of nothing else.</figcaption>
+</figure>
+
+## Neural Hessians carry $O(1/d)$ diagonal mass
+
+Where does a *generic* neural Hessian sit? For an MLP — affine layers followed by elementwise nonlinearities — the Hessian decomposes exactly as a sum over layers,
+$$
+\nabla^2 f \;=\; \sum_{\ell} J_\ell^\top D_\ell\, J_\ell,
+\qquad
+J_\ell = \frac{\partial z_\ell}{\partial x},
+\qquad
+D_\ell = \mathrm{diag}\!\big(u_\ell \odot \sigma''(z_\ell)\big),
+$$
+where $z_\ell$ are the layer-$\ell$ pre-activations, $u_\ell$ the backpropagated signal, and each $J_\ell$ an input-to-layer Jacobian with dense, delocalised rows. Entries $H_{ij} = \sum_{\ell, k} (D_\ell)_k (J_\ell)_{ki} (J_\ell)_{kj}$ then have comparable magnitude for all $(i,j)$ — the diagonal is special only through fourth-moment factors of order one. With $d$ diagonal entries against $d^2$ total,
+$$
+\rho(\nabla^2 f) \;\asymp\; \frac{c_{\mathrm{act}}}{d},
+$$
+with $c_{\mathrm{act}} = O(1)$ depending on the activation. (ReLU networks are excluded for a boring reason: they are piecewise linear in $x$, so $\nabla^2 f = 0$ almost everywhere and the trace question is empty.)
+
+The scaling holds cleanly in practice. For three-layer MLPs of width $256$ at standard initialisation, $x \sim \mathcal{N}(0, I_d)$, the fitted log–log slopes of $\rho$ against $d$ are $-0.92$ (tanh), $-0.97$ (GELU), $-0.95$ (softplus) — all within a tenth of the predicted $-1$:
+
+<figure>
+  <img src="/notes/rademacher-diagonal-mass/figures/scaling.png" alt="Left panel: log-log plot of the diagonal-mass ratio rho against input dimension d from 8 to 512, for tanh, GELU and softplus MLPs; all three activation curves decay parallel to a dashed 1/d guide line, with per-seed scatter shown as faint dots. Right panel: rho along 6000 training steps for two targets; the separable target curve rises sharply around step 1500 to about 0.9 and plateaus, while the generic teacher curve stays near 0.07 to 0.14 throughout." />
+  <figcaption><strong>Figure 4.</strong> <em>Left</em>: $\rho(\nabla^2 f)$ against input dimension for random MLPs ($8$ seeds each; faint dots are individual seeds, the dashed guide is $\propto 1/d$). At $d = 8$ the diagonal carries $15$–$26\%$ of the mass; by $d = 512$ it carries $0.3$–$0.5\%$. <em>Right</em>: $\rho$ along training at $d = 64$ (tanh, width $256$, Adam, batch $256$; $\rho$ averaged over $6$ fixed test points; the dashed line is the mean over random initialisations). Fitting an additive target reorganises the Hessian to near-diagonal, $\rho \to 0.89$; fitting a generic teacher does not.</figcaption>
+</figure>
+
+The practical content of the left panel: at $d = 512$ choosing Rademacher over Gaussian reduces estimator variance by less than half a percent. The textbook advantage is a $1/d$ effect — it is largest exactly where exact $O(d)$ evaluation was affordable anyway, and it vanishes in the regime that motivated stochastic estimation in the first place.
+
+## Training can create diagonal mass
+
+Random initialisation is only half the story; the Hessian that matters is the one of the *trained* function. The right panel of Figure 4 tracks $\rho$ during training of the same tanh MLP ($d = 64$) on two regression targets:
+
+- a **generic teacher** — a random MLP of the same architecture. The student fits it essentially exactly ($R^2 = 0.99$), and $\rho$ drifts between $0.03$ and $0.14$: no diagonal structure, because the target has none.
+- a **separable target** $y(x) = d^{-1/2} \sum_j \sin(1.5\, x_j)$, whose true Hessian is exactly diagonal. As the fit improves ($R^2 = 0.83$ at $6{,}000$ steps), $\rho$ climbs from $0.03$ to $0.89$ in a sharp transition around the point where the network discovers the additive structure.
+
+At $\rho = 0.89$ the variance ratio is $0.11$: Rademacher now needs **nine times fewer probes** than Gaussian for the same accuracy. Nothing about the estimator changed — the *function* acquired the structure that the probe family exploits. This is the correct frame for probe choice: $\rho$ is a property of what the network has learned. Networks trained on targets with additive or near-additive structure across input coordinates earn a real Rademacher dividend; networks computing generically entangled functions of their inputs do not.
+
+## Practical rules
+
+Three consequences, in decreasing order of generality.
+
+1. **At scale, choose the probe by convenience, not variance.** For generic high-dimensional Hessians the gap is $O(1/d)$; take Gaussian probes when differentiability in $\xi$ matters, Rademacher otherwise, and spend the attention on the probe budget $N$, where the payoff is $1/N$ rather than $1/d$.
+
+2. **$\rho$ is cheaply measurable when it matters.** $\lVert A \rVert_F^2 = \mathbb{E}\,\lVert A\xi \rVert^2$ is available from the same matrix–vector products as the trace itself, and the diagonal is stochastically estimable via $\mathbb{E}[\xi \odot A\xi] = \operatorname{diag}(A)$ (Bekas et al., 2007). A handful of probes decides whether your problem has a diagonal dividend before you commit to a probe family.
+
+3. **Variance reduction is orthogonal to probe choice.** Modern estimators — Hutch++ (Meyer et al., 2021), XTrace (Epperly et al., 2024) — attack the *low-rank* part of the spectrum by deflation and improve the $N^{-1/2}$ rate itself; sharper tail bounds for a fixed family are in Roosta-Khorasani & Ascher (2015). Diagonal mass is a different axis: deflation cannot manufacture it, and when training has created it (case 2 above), plain Rademacher already collects the prize.
+
+## Closing
+
+The variance gap between Rademacher and Gaussian probes is not folklore to be settled by benchmark; it is the single scalar $1 - \rho$, computable and estimable. For neural Hessians at initialisation, $\rho \asymp 1/d$ across activations, so the probe debate is immaterial precisely where Hutchinson estimation is indispensable — the trace terms of Itô generators, CNF log-densities, and score-matching objectives at realistic dimension. The exception is structural, not statistical: training on targets with additive structure concentrates Hessian mass back onto the diagonal, and only then does the choice of probe pay. Ask what your function looks like, not what the textbook prefers.
+
+The evidence here is for fully-connected networks. Architectures whose Jacobians are not delocalised — convolutions with their weight sharing and locality, attention with its input-dependent mixing — could distribute diagonal mass differently, and deserve the same one-line measurement before the same conclusion is assumed.
+
+*Figures and quoted numbers reproduce from `scripts/notes/rademacher-diagonal-mass/make_figures.py` in the site repository (CPU, about a minute; PyTorch 2.4, float64).*
+
+---
+
+## References
+
+1. Avron, H., & Toledo, S. (2011). *Randomized algorithms for estimating the trace of an implicit symmetric positive semi-definite matrix.* **Journal of the ACM**, 58(2), 1–34.
+2. Bekas, C., Kokiopoulou, E., & Saad, Y. (2007). *An estimator for the diagonal of a matrix.* **Applied Numerical Mathematics**, 57(11–12), 1214–1229.
+3. Epperly, E. N., Tropp, J. A., & Webber, R. J. (2024). *XTrace: Making the most of every sample in stochastic trace estimation.* **SIAM Journal on Matrix Analysis and Applications**, 45(1), 1–23.
+4. Grathwohl, W., Chen, R. T. Q., Bettencourt, J., Sutskever, I., & Duvenaud, D. (2019). *FFJORD: Free-form Continuous Dynamics for Scalable Reversible Generative Models.* **ICLR 2019**.
+5. Hutchinson, M. F. (1990). *A stochastic estimator of the trace of the influence matrix for Laplacian smoothing splines.* **Communications in Statistics — Simulation and Computation**, 19(2), 433–450.
+6. Meyer, R. A., Musco, C., Musco, C., & Woodruff, D. P. (2021). *Hutch++: Optimal stochastic trace estimation.* **SIAM Symposium on Simplicity in Algorithms (SOSA)**.
+7. Roosta-Khorasani, F., & Ascher, U. (2015). *Improved bounds on sample size for implicit matrix trace estimators.* **Foundations of Computational Mathematics**, 15(5), 1187–1212.
+8. Song, Y., Garg, S., Shi, J., & Ermon, S. (2020). *Sliced Score Matching: A Scalable Approach to Density and Score Estimation.* **UAI 2020**.
