@@ -1,0 +1,234 @@
+---
+import demo from '../../public/notes/tempering-a-transport-map/demo.json';
+const initial = demo.frames[demo.defaultIndex];
+const fixed = demo.static;
+const tickX = (x: number) => 32 + (x + 3) * 232 / 6;
+const tickY = (y: number) => 244 - (y + 3) * 232 / 6;
+const signed = (n: number) => `${n < -0.0005 ? '−' : n > 0.0005 ? '+' : ''}${Math.abs(n).toFixed(2)}`;
+---
+
+<section class="transport-demo" data-transport-demo data-source="/notes/tempering-a-transport-map/demo.json" aria-label="Interactive example: one posterior, different input laws">
+  <div class="transport-controls">
+    <div class="control-heading">
+      <label for="ptm-conditioning">Map conditioning</label>
+      <output for="ptm-conditioning">γ = <span data-gamma>{initial.gamma.toFixed(2)}</span></output>
+    </div>
+    <input id="ptm-conditioning" type="range" min="0" max={demo.frames.length - 1} step="1" value={demo.defaultIndex} aria-valuetext={`Conditioning weight ${initial.gamma.toFixed(3)}`} aria-describedby="ptm-slider-hint" disabled />
+    <div class="control-scale" aria-hidden="true"><span>0.25 · weak conditioning</span><span>1 · full conditioning</span></div>
+    <p id="ptm-slider-hint">One target. One noise level. Only the map changes.</p>
+  </div>
+
+  <p class="loading-status" data-load-status role="status" hidden></p>
+  <noscript><p class="static-notice">Static view at γ = 0.25. Enable JavaScript to move the slider.</p></noscript>
+
+  <div class="transport-legend" aria-label="Figure legend">
+    <span><i class="key-target" aria-hidden="true"></i>Target posterior</span>
+    <span class="gaussian-label"><i class="key-gaussian" aria-hidden="true"></i>Gaussian rematching</span>
+    <span class="matched-label"><i class="key-matched" aria-hidden="true"></i>Exact rematching</span>
+  </div>
+
+  <div class="transport-panels">
+    <figure class="transport-panel">
+      <div class="panel-heading"><h2>Volume</h2><p>How the map deforms space</p></div>
+      <svg viewBox="0 0 280 280" role="img" aria-labelledby="ptm-volume-title ptm-volume-desc">
+        <title id="ptm-volume-title">Volume change of the transport map</title>
+        <desc id="ptm-volume-desc">Equal input cells, shown in light grey, map to unequal blue cells. The highlighted cell has {initial.areaRatio.toFixed(2)} times its input area at conditioning weight {initial.gamma}.</desc>
+        <path d={fixed.volumeSource} class="source-grid" />
+        <path d={fixed.cellSource} class="source-cell" />
+        <path d={initial.volumeCell} class="mapped-cell" data-volume-cell />
+        <path d={initial.volumeGrid} class="mapped-grid" data-volume-grid />
+        <path d="M32,244H264" class="plot-axis" />
+        {[-2, 0, 2].map(x => <text x={tickX(x)} y="259" text-anchor="middle" class="plot-tick">{x}</text>)}
+        <text x="148" y="276" text-anchor="middle" class="plot-label">Observed coordinate</text>
+      </svg>
+      <div class="panel-readout"><span>Mapped / input area</span><strong><span data-area>{initial.areaRatio.toFixed(2)}</span>×</strong></div>
+      <figcaption>Grey: input grid. Blue: mapped grid. Ratio for the highlighted cell.</figcaption>
+    </figure>
+
+    <figure class="transport-panel">
+      <div class="panel-heading"><h2>Conditioning</h2><p>Which input the map needs</p></div>
+      <svg viewBox="0 0 280 280" role="img" aria-labelledby="ptm-input-title ptm-input-desc">
+        <title id="ptm-input-title">Input distributions along the observed coordinate</title>
+        <desc id="ptm-input-desc">The dashed rust curve is the fixed Gaussian-rematching input. The solid teal curve is the input required to reach the same posterior at conditioning weight {initial.gamma}.</desc>
+        <path d="M32,12V244H264" class="plot-axis" />
+        <text x="32" y="8" class="plot-label">Density</text>
+        <text x="25" y="248" text-anchor="end" class="plot-tick">0</text>
+        <text x="25" y="20" text-anchor="end" class="plot-tick">{fixed.inputDensityMax.toFixed(1)}</text>
+        <path d={fixed.inputGaussian} class="gaussian-density" />
+        <path d={initial.inputRequired} class="matched-density" data-required-input />
+        {[-4, 0, 4].map(x => <text x={32 + (x + 4.5) * 232 / 9} y="259" text-anchor="middle" class="plot-tick">{x}</text>)}
+        <text x="148" y="276" text-anchor="middle" class="plot-label">Observed input coordinate</text>
+      </svg>
+      <div class="panel-readout"><span>Required mean shift</span><strong data-mean-shift>{signed(initial.inputMeanShift ?? 0)}</strong></div>
+      <figcaption>Teal is the compatible input law; rust is posterior plus Gaussian noise.</figcaption>
+    </figure>
+
+    <figure class="transport-panel">
+      <div class="panel-heading"><h2>Samples</h2><p>Both inputs, through the same map</p></div>
+      <svg viewBox="0 0 280 280" role="img" aria-labelledby="ptm-samples-title ptm-samples-desc">
+        <title id="ptm-samples-title">Output samples compared with the fixed target posterior</title>
+        <desc id="ptm-samples-desc">Rust rings use Gaussian rematching; teal dots use exact rematching. The target's 50 and 90 percent contours stay fixed. Gaussian rematching has a {(initial.tv * 100).toFixed(1)} percent total-variation gap; exact rematching has zero gap.</desc>
+        <path d="M32,12V244H264" class="plot-axis" />
+        {fixed.targetContours.map(d => <path d={d} class="target-contour" />)}
+        <path d={initial.samplesGaussian} class="gaussian-samples" data-gaussian-samples />
+        <path d={fixed.samplesMatched} class="matched-samples" />
+        {[-2, 0, 2].map(x => <text x={tickX(x)} y="259" text-anchor="middle" class="plot-tick">{x}</text>)}
+        {[-2, 0, 2].map(y => <text x="25" y={tickY(y) + 4} text-anchor="end" class="plot-tick">{y}</text>)}
+        <text x="148" y="276" text-anchor="middle" class="plot-label">Observed coordinate</text>
+        <text transform="translate(10 128) rotate(-90)" text-anchor="middle" class="plot-label">Unobserved</text>
+      </svg>
+      <div class="panel-readout"><span>Distribution gap <abbr title="Total variation distance">(TV)</abbr></span><strong><span class="gaussian-label" data-gap>{(initial.tv * 100).toFixed(1)}%</span><span class="readout-arrow" aria-label="versus"> / </span><span class="matched-label">0%</span></strong></div>
+      <figcaption>Same random draws throughout. Target contours enclose 50% and 90% probability.</figcaption>
+    </figure>
+  </div>
+
+  <p class="transport-observation" data-observation>Changing the input keeps the output on target, even when the map is only partly conditioned.</p>
+  <p class="transport-scope">Exact, one-step mixture example with a known target. The teal samples illustrate compatibility; they are not results from the numerical image sampler.</p>
+  <p class="sr-only" data-transport-status role="status" aria-live="polite"></p>
+</section>
+
+<script>
+  interface Frame {
+    gamma: number;
+    volumeGrid: string;
+    volumeCell: string;
+    inputRequired: string;
+    samplesGaussian: string;
+    areaRatio: number;
+    inputMeanShift: number;
+    tv: number;
+  }
+
+  for (const root of document.querySelectorAll<HTMLElement>('[data-transport-demo]')) {
+    const range = root.querySelector<HTMLInputElement>('input[type="range"]')!;
+    const loading = root.querySelector<HTMLElement>('[data-load-status]')!;
+    const text = (selector: string, value: string) => { root.querySelector(selector)!.textContent = value; };
+    const setPath = (selector: string, value: string) => { root.querySelector(selector)!.setAttribute('d', value); };
+    const signed = (n: number) => `${n < -0.0005 ? '−' : n > 0.0005 ? '+' : ''}${Math.abs(n).toFixed(2)}`;
+
+    async function setup() {
+      try {
+        const response = await fetch(root.dataset.source!);
+        if (!response.ok) throw new Error(`Data unavailable: ${response.status}`);
+        const { frames } = await response.json() as { frames: Frame[] };
+        if (frames.length !== Number(range.max) + 1 || !Number.isFinite(frames[0]?.inputMeanShift)) throw new Error('Invalid figure data');
+        let queued = false;
+        const render = () => {
+          const frame = frames[Number(range.value)];
+          text('[data-gamma]', frame.gamma.toFixed(3).replace(/0$/, ''));
+          range.setAttribute('aria-valuetext', `Conditioning weight ${frame.gamma.toFixed(3)}`);
+          setPath('[data-volume-grid]', frame.volumeGrid);
+          setPath('[data-volume-cell]', frame.volumeCell);
+          setPath('[data-required-input]', frame.inputRequired);
+          setPath('[data-gaussian-samples]', frame.samplesGaussian);
+          text('[data-area]', frame.areaRatio.toFixed(2));
+          text('[data-mean-shift]', signed(frame.inputMeanShift));
+          text('[data-gap]', `${(frame.tv * 100).toFixed(1)}%`);
+          text('[data-observation]', frame.gamma === 1
+            ? 'At full conditioning, Gaussian rematching already supplies the right input. The two curves and sample sets coincide.'
+            : 'Changing the input keeps the output on target, even when the map is only partly conditioned.');
+          text('#ptm-volume-desc', `At conditioning weight ${frame.gamma}, the highlighted cell has ${frame.areaRatio.toFixed(2)} times its input area. Grey is the input grid; blue is the mapped grid.`);
+          text('#ptm-input-desc', `At conditioning weight ${frame.gamma}, the required input mean shifts by ${signed(frame.inputMeanShift)} relative to Gaussian rematching. The dashed rust input stays fixed; the solid teal input changes.`);
+          text('#ptm-samples-desc', `At conditioning weight ${frame.gamma}, rust rings use Gaussian rematching with a ${(frame.tv * 100).toFixed(1)} percent total-variation gap. Teal dots use exact rematching with zero gap. Target contours stay fixed.`);
+          queued = false;
+        };
+        range.addEventListener('input', () => {
+          if (!queued) { queued = true; requestAnimationFrame(render); }
+        });
+        range.addEventListener('change', () => {
+          render();
+          const frame = frames[Number(range.value)];
+          text('[data-transport-status]', `All three panels updated. Conditioning ${frame.gamma}. Cell area ${frame.areaRatio.toFixed(2)} times input. Gaussian output gap ${(frame.tv * 100).toFixed(1)} percent; exact matched output gap zero.`);
+        });
+        render();
+        range.disabled = false;
+        loading.hidden = true;
+      } catch {
+        loading.hidden = false;
+        loading.textContent = 'The interactive data could not load. This is the static view at γ = 0.25; reload to try again.';
+      }
+    }
+    setup();
+  }
+</script>
+
+<style>
+  .transport-demo { --matched: #196d67; --gaussian: #99512f; margin: 32px 0; padding: 0 22px 22px; border-left: 2px solid var(--paper-ink); background: var(--paper-tint); color: var(--paper-ink); font: 14px/1.6 var(--sans); }
+  .transport-controls { position: sticky; top: 0; z-index: 2; background: var(--paper-tint); padding: 20px 0 15px; border-bottom: 1px solid var(--paper-rule); }
+  .control-heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .control-heading label { font: 600 15px/1.4 var(--display); }
+  .control-heading output { font-size: 15px; font-variant-numeric: tabular-nums; }
+  input[type="range"] { display: block; appearance: none; -webkit-appearance: none; width: 100%; margin: 10px 0 0; height: 28px; background: transparent; cursor: ew-resize; accent-color: var(--paper-ink); }
+  input[type="range"]::-webkit-slider-runnable-track { height: 3px; border-radius: 2px; background: #aab2c0; }
+  input[type="range"]::-moz-range-track { height: 3px; border-radius: 2px; background: #aab2c0; }
+  input[type="range"]::-webkit-slider-thumb { appearance: none; -webkit-appearance: none; width: 18px; height: 18px; margin-top: -7.5px; border-radius: 50%; background: var(--paper-ink); border: 3px solid var(--paper-tint); box-shadow: 0 0 0 1px var(--paper-ink); }
+  input[type="range"]::-moz-range-thumb { width: 12px; height: 12px; border-radius: 50%; background: var(--paper-ink); border: 3px solid var(--paper-tint); box-shadow: 0 0 0 1px var(--paper-ink); }
+  input:disabled { opacity: .45; cursor: wait; }
+  .control-scale { display: flex; justify-content: space-between; gap: 12px; font-size: 11px; color: #596474; }
+  #ptm-slider-hint { font-size: 12px; color: #596474; margin-top: 9px; }
+  .transport-legend { display: flex; flex-wrap: wrap; gap: 8px 22px; padding: 20px 0 16px; font-size: 11px; }
+  .transport-legend > span { display: inline-flex; align-items: center; gap: 7px; }
+  .transport-legend i { display: inline-block; flex: none; }
+  .key-target { width: 16px; border-top: 1px dashed var(--paper-ink); }
+  .key-gaussian { width: 8px; height: 8px; border: 1.5px solid var(--gaussian); border-radius: 50%; }
+  .key-matched { width: 7px; height: 7px; background: var(--matched); border-radius: 50%; }
+  .gaussian-label { color: var(--gaussian); }
+  .matched-label { color: var(--matched); }
+  .transport-panels { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+  .transport-demo .transport-panel { min-width: 0; margin: 0; }
+  .transport-demo h2 { font: 600 15px/1.4 var(--display); letter-spacing: -.025em; margin: 0; color: var(--paper-ink); }
+  .panel-heading p { font-size: 11px; color: #596474; margin: 5px 0 0; }
+  .panel-heading { min-height: 54px; }
+  svg { display: block; width: 100%; overflow: visible; }
+  svg path { vector-effect: non-scaling-stroke; }
+  .source-grid { fill: none; stroke: #b7bec8; stroke-width: .6; stroke-dasharray: 2 3; }
+  .source-cell { fill: #c9d0da; fill-opacity: .4; stroke: #7c889d; stroke-width: .6; }
+  .mapped-grid { fill: none; stroke: #3f6793; stroke-width: .85; }
+  .mapped-cell { fill: #3f6793; fill-opacity: .45; stroke: var(--paper-ink); stroke-width: .9; }
+  .plot-axis { fill: none; stroke: #b7bec8; stroke-width: .65; }
+  .plot-tick { fill: #596474; font: 11px var(--sans); }
+  .plot-label { fill: #596474; font: 11px var(--sans); }
+  .gaussian-density { fill: none; stroke: var(--gaussian); stroke-width: 1.4; stroke-dasharray: 4 3; }
+  .matched-density { fill: none; stroke: var(--matched); stroke-width: 1.7; }
+  .target-contour { fill: #16213e; fill-opacity: .025; stroke: #5b667c; stroke-width: .8; stroke-dasharray: 3 3; }
+  .gaussian-samples { fill: none; stroke: var(--gaussian); stroke-width: .8; opacity: .6; }
+  .matched-samples { fill: var(--matched); fill-opacity: .65; stroke: none; }
+  .panel-readout { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 8px; margin-top: 17px; padding-top: 12px; border-top: 1px solid var(--paper-rule); }
+  .panel-readout > span { color: #596474; font-size: 11px; }
+  .panel-readout strong { font: 500 17px/1.5 var(--sans); font-variant-numeric: tabular-nums; }
+  .panel-readout abbr { text-decoration: none; }
+  .readout-arrow { color: #596474; font-size: 12px; }
+  .transport-demo figcaption { font: 11px/1.6 var(--sans); color: #596474; margin-top: 7px; }
+  .transport-observation { border-top: 1px solid var(--paper-rule); margin-top: 24px; padding-top: 17px; font-size: 14px; max-width: 690px; min-height: 63px; }
+  .transport-scope { color: #596474; font-size: 11px; line-height: 1.65; margin-top: 9px; max-width: 690px; }
+  .loading-status, .static-notice { color: #596474; font-size: 12px; padding-top: 12px; }
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+  @media (min-width: 1180px) {
+    .transport-demo { margin-inline: -100px; }
+  }
+  @media (max-width: 800px) {
+    .transport-panels { grid-template-columns: 1fr; gap: 26px; }
+    .transport-panel + .transport-panel { border-top: 1px solid var(--paper-rule); padding-top: 23px; }
+    .transport-demo h2 { font-size: 17px; }
+    .panel-heading p { font-size: 12px; }
+    .panel-heading { min-height: auto; }
+    svg { max-width: 370px; margin: 18px auto 0; }
+    .panel-readout { margin-top: 15px; }
+    .transport-demo figcaption { max-width: 420px; }
+    .transport-observation { min-height: 0; }
+  }
+  @media (max-width: 430px) {
+    .transport-demo { padding-inline: 15px; }
+    .transport-legend { gap: 8px 14px; }
+    .control-heading label { font-size: 14px; }
+    #ptm-slider-hint { font-size: 11px; }
+  }
+  @media print {
+    .transport-demo { margin-inline: 0; }
+    .transport-controls { position: static; }
+    .transport-panels { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .transport-panel { break-inside: avoid; }
+    .transport-panel + .transport-panel { border-top: 0; padding-top: 0; }
+    .loading-status { display: none; }
+  }
+</style>
