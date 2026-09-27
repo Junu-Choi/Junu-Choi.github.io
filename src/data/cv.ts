@@ -47,9 +47,8 @@ export const cv = {
       place: "Seoul National University",
       date: "Sep 2025 – present",
       details: [
-        "Design of generative dynamics — to be published.",
-        "Transport-map–based inverse problem solver — to be published.",
-        "Confined generative dynamics and generative modeling for climate — to be published.",
+        "RED attention: routed encode–decode attention for efficient global weather forecasting — to be published.",
+        "Min-energy Transport Matching: transport maps and minimum-energy stochastic dynamics for posterior sampling — to be published.",
       ],
     },
     {

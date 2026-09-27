@@ -47,12 +47,9 @@
 .section-heading h2 { font: 600 15px/1.4 var(--display); letter-spacing: -.02em; }
 .section-index { font: 10px var(--mono); color: var(--accent); margin-right: 25px; vertical-align: 1px; }
 .section-heading > .text-link { font-size: 12px; border-bottom: 0; min-height: 30px; }
-.areas { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 35px 60px; padding: 0; margin: 0; }
-.areas > li { position: relative; padding: 6px 0 10px 62px; }
-.areas > li:nth-child(even) { border-left: 1px solid var(--hair); padding-left: 45px; }
+.areas { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 35px 70px; padding: 0; margin: 0; }
+.areas > li { padding: 6px 0 10px; }
 .areas > li:nth-child(n + 3) { border-top: 1px solid var(--hair); padding-top: 32px; }
-.area-symbol { width: 80px; height: 58px; display: block; color: var(--blue); margin-bottom: 16px; }
-.areas > li:nth-child(even) .area-symbol { color: var(--teal); }
 .area-name { font-weight: 550; font-size: 21px; line-height: 1.35; letter-spacing: -.04em; margin-bottom: 12px; }
 .area-desc { color: var(--ink-soft); font-size: 14px; max-width: 420px; line-height: 1.75; }
 .area-experience { list-style: none; margin: 17px 0 0; padding: 0; }
@@ -198,8 +195,6 @@
   .hero-description { font-size: 15px; }
   .portrait-statement { font-size: 19px; }
   .areas { gap: 30px; }
-  .areas > li { padding-left: 0; }
-  .areas > li:nth-child(even) { padding-left: 30px; }
   .publication-preview { padding-inline: 28px; }
   .geometry-panels { gap: 23px; }
   .featured-note { padding-left: 0; grid-template-columns: 140px 1fr 24px; gap: 25px; }
@@ -229,11 +224,11 @@
   .section-heading h2 { font-size: 14px; }
   .section-index { margin-right: 13px; font-size: 9px; }
   .section-heading > .text-link { font-size: 11px; gap: 10px; }
-  .areas { gap: 25px; }
-  .areas > li:nth-child(even) { padding-left: 24px; }
+  .areas { grid-template-columns: 1fr; gap: 25px; }
+  .areas > li { padding: 0; }
+  .areas > li:nth-child(n + 2) { border-top: 1px solid var(--hair); padding-top: 25px; }
   .area-name { font-size: 18px; }
-  .area-desc { font-size: 13px; line-height: 1.7; }
-  .area-symbol { width: 75px; height: 54px; }
+  .area-desc { font-size: 14px; line-height: 1.7; }
   .home-section + .home-section { margin-top: 40px; }
   .featured-note { grid-template-columns: 1fr 25px; gap: 15px; padding-top: 3px; }
   .featured-note-meta { grid-column: 1 / -1; flex-direction: row; justify-content: space-between; padding-right: 0; }
@@ -277,14 +272,6 @@
   .hero-portrait { grid-template-columns: 112px 1fr; gap: 20px; }
   .portrait-statement { font-size: 16px; }
   .portrait-affiliation { font-size: 10px; margin-top: 10px; }
-  .areas { grid-template-columns: 1fr; gap: 25px; }
-  .areas > li { display: grid; grid-template-columns: 65px 1fr; gap: 10px 20px; padding: 0; }
-  .areas > li:nth-child(n + 2) { border-left: 0; border-top: 1px solid var(--hair); padding: 27px 0 0; }
-  .area-symbol { grid-row: span 2; width: 65px; height: 47px; margin: 0; }
-  .area-name { margin: 0; }
-  .area-desc { grid-column: 2; }
-  .area-experience { grid-column: 2; margin-top: 3px; }
-  .area-experience a { font-size: 11px; gap: 8px; }
   .preview-heading h2 { font-size: 25px; }
   .publication-preview { padding-inline: 16px; }
 }
