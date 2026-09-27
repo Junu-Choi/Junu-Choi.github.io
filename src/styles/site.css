@@ -133,6 +133,12 @@
 .note-body .katex { font-size: 1.05em; }
 .note-body hr { border: 0; border-top: 1px solid var(--hair); margin-block: 30px; }
 .note-body .note-evidence { font-size: 12px; line-height: 1.7; color: var(--ink-soft); border-top: 1px solid var(--hair); padding-top: 20px; }
+.note-methods { border-block: 1px solid var(--paper-rule); padding-block: 17px; }
+.note-methods > summary { cursor: pointer; color: var(--paper-ink); font: 500 14px/1.6 var(--display); }
+.note-methods > summary::marker { color: var(--ink-soft); font-size: 11px; }
+.note-methods[open] > summary { margin-bottom: 24px; }
+.note-methods > p + p { margin-top: 18px; }
+.note-methods > p { font-size: 15px; }
 .note-foot { margin-top: 35px; }
 .note-foot a { color: var(--accent); font-size: 12px; display: inline-flex; min-height: 44px; align-items: center; }
 

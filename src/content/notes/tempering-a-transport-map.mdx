@@ -1,0 +1,83 @@
+---
+title: "Same posterior, different input laws"
+abstract: "Changing a transport map’s conditioning changes the input distribution it needs to reach the same posterior."
+publishedAt: 2026-09-27
+tags: ["posterior sampling", "transport maps"]
+draft: false
+---
+
+import TransportTempering from '../../components/TransportTempering.astro';
+
+<TransportTempering />
+
+## What to notice
+
+**The map changes space.** Equal input cells acquire unequal areas. This deformation is part of the map, not an error by itself.
+
+**The map needs a compatible input.** With the target held fixed, changing the map’s conditioning changes that input law. Keeping Gaussian rematching fixed can leave a distribution gap.
+
+**Rematching acts on the input.** In this exact example, adjusting the input keeps the output at the same posterior. At full conditioning, the Gaussian input is already compatible; no additional correction is needed.
+
+This is the idea behind **Posterior Transport Matching**: pair the transport map with input dynamics that account for its geometry and conditioning.
+
+<details className="note-methods">
+<summary>The calculation</summary>
+
+### One fixed target
+
+The two prior coordinates are independent, each with density
+
+$$
+r(z)=0.4\,\mathcal N(z;-1.3,0.35^2)
+      +0.6\,\mathcal N(z;1.3,0.45^2).
+$$
+
+Thus $p_0(z_1,z_2)=r(z_1)r(z_2)$. We observe only the first coordinate, with $y=0.25$ and observation standard deviation $0.3$. Let $E(z)=(z_1-y)^2/(2\cdot0.3^2)$. The slider changes the likelihood weight in $\pi_\gamma\propto p_0e^{-\gamma E}$ from $\gamma=0.25$ to $1$, but **the output target is always $\pi_1$**. The noise variance stays at $\tau=0.8$.
+
+Here, *conditioning* means how much likelihood information is represented in the map. It does not mean a matrix condition number. Tempering changes the map’s reference distribution; it does not change the target used to assess the output.
+
+### A known map and its required input
+
+Write $H_\tau\pi=\pi*\mathcal N(0,\tau I)$. For each coordinate, the map is
+
+$$
+\Psi_\tau^\gamma(x)
+=F_{\pi_\gamma}^{-1}\!\left(F_{H_\tau\pi_\gamma}(x)\right),
+$$
+
+where $F$ denotes the corresponding one-dimensional CDF. The unobserved coordinate always uses its prior marginal. This gives an invertible, coordinatewise probability-flow map in this separable example.
+
+We compare two input laws:
+
+$$
+q_{\rm G}=H_\tau\pi_1,
+\qquad
+q_{\rm match}^\gamma=(\Psi_\tau^\gamma)^{-1}_{\#}\pi_1.
+$$
+
+The first is the law obtained by adding Gaussian noise to a draw from the target. The second is constructed to satisfy $(\Psi_\tau^\gamma)_{\#}q_{\rm match}^\gamma=\pi_1$. This is a **single-step compatibility check starting at the target**, not a sampling run from an arbitrary initialization. At $\gamma=1$, the two input laws coincide.
+
+The required-input density follows from change of variables:
+
+$$
+q_{\rm match}^\gamma(x)
+=\pi_1\!\left(\Psi_\tau^\gamma(x)\right)
+\left|\det J\Psi_\tau^\gamma(x)\right|.
+$$
+
+This is how conditioning and volume enter the same calculation. In the middle panel, only the observed-coordinate input marginal is shown; the other coordinate is unchanged. The reported mean shift is relative to $q_{\rm G}$.
+
+### What is measured
+
+The volume panel maps equal rectangles and reports the highlighted cell’s area divided by its input area. The output gap is total variation, $\frac12\int|p-\pi_1|$, evaluated from the distributions, not estimated from the displayed dots. An invertible map preserves total variation, so we also check this gap independently in input and output coordinates.
+
+All 31 slider positions use the same 160 pairs of random quantiles, with seed 260927. All generated points are shown; the axes and the target’s 50% and 90% highest-density contours stay fixed. The teal samples stay in place because the same quantiles are rematched to the same target at every setting.
+
+The known target makes exact rematching possible here. PTM’s numerical sampler approximates rematching; this illustration does not establish an exactness or performance guarantee for that approximation.
+
+</details>
+
+<div className="note-evidence">
+  Related manuscript: <a href="/papers/#ptm">Posterior Transport Matching for Inverse Problems</a>.<br />
+  Reproduce: <a href="https://github.com/Junu-Choi/Junu-Choi.github.io/blob/main/scripts/notes/tempering-a-transport-map/make_demo.py">calculation code</a> · <a href="/notes/tempering-a-transport-map/demo.json">figure data</a> · <a href="/notes/tempering-a-transport-map/verification.json">numerical checks</a>.
+</div>

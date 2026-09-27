@@ -1,0 +1,16 @@
+{
+  "generatorSha256": "01ee85b312c832a4a4a39257812db82080e963e2e9b1ea8e0731461a103861a9",
+  "checks": {
+    "matched_sample_error": 2.609024107869118e-15,
+    "required_input_mass_error": 2.0635715358707785e-12,
+    "jacobian_relative_error": 2.651691388688704e-08,
+    "cell_area_relative_error": 3.2822912243467495e-15,
+    "tv_coordinate_invariance_error": 4.3888702117023115e-08,
+    "cdf_round_trip_error": 3.3306690738754696e-16
+  },
+  "frames": 31,
+  "targetMassWithinPlot": 0.9999543960678772,
+  "endpointTV": 0.0,
+  "defaultTV": 0.3921307,
+  "scope": "Independent two-coordinate mixture prior. Observe coordinate 1. One exact map/rematching step with a known target; no finite PTM sampler or trained model."
+}
