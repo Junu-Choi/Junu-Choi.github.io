@@ -35,15 +35,17 @@ Requires Node `>=22.12.0`.
 The palette follows PTM Figure 2: blue `#2878B5` distribution contours, teal
 `#238A83` paths, charcoal `#30363E` geometry, and a small rust `#C16A43` accent.
 Manrope headings and IBM Plex Sans body text sit on a light, spacious grid.
-The home page uses a cool gray `#EEF2F5` background, slate `#2C3947` text, and
-off-white cards. The name, affiliation, and short introduction share a centered
+The home page shares the Papers page's white background, navy `#16213E` headings,
+and pale `#F6F6F7` panels. Shared `--paper-*` colors keep both pages aligned;
+Selected papers repeats the manuscript preview's navy left rule. The name,
+affiliation, and short introduction share a centered
 profile block with a separate portrait. On mobile, the introduction spans the
 width below the name and photo; no separate About section interrupts the research.
 
 `ResearchMap.astro` presents four research cards in one desktop row, or a 2×2 grid
 on smaller screens. Each has a short statement of the work. Selecting a card
 reveals its project previews below, linked by restrained SVG branches. A selected
-topic uses a dark slate-blue background. The connector geometry updates with
+topic uses a pale navy tint and a navy left rule. The connector geometry updates with
 layout and font changes; on narrow screens it routes around other cards and uses
 one outside rail for stacked work. “All research” shows a compact grid of all seven
 projects, with titles, affiliations, and forthcoming status. Selecting a topic
@@ -68,6 +70,8 @@ The subsequent centered-name design with folded topics is preserved on
 `backup/home-folded-overview-20260927` at `551b236`.
 The connected-card layout before these content updates is preserved on
 `backup/home-research-cards-20260927` at `28d121e`.
+The cool-gray palette before the Papers color alignment is preserved on
+`backup/home-before-paper-tint-20260927` at `f0de424`.
 Revert the corresponding home-layout commit on `main` to restore a prior design
 without rewriting history.
 
@@ -96,7 +100,7 @@ Reference directions: [Peter Holderrieth](https://www.peterholderrieth.com/)
 for readable academic structure and direct research links,
 [Michael Albergo](https://malbergo.me/) for personal identity with limited content,
 and [NVIDIA Research](https://www.nvidia.com/en-us/research/) for heading hierarchy
-and spacing. The compact profile, cool background, and connected research cards
+and spacing. The compact profile, restrained tints, and connected research cards
 form this site's own arrangement. No third-party artwork
 is reused.
 

@@ -1,15 +1,12 @@
 /* A personal introduction above four research areas and their connected work. */
 body.home-theme {
-  --bg-page: #eef2f5;
-  --surface: #eef2f5;
-  --ink: #2c3947;
-  --ink-soft: #586979;
-  --hair: #cbd5de;
-  --accent: #365e7b;
-  --teal: #365e7b;
-  --card: #f8fafc;
-  --selected: #304c63;
-  --connection: #8ea4b6;
+  --hair: var(--paper-rule);
+  --accent: var(--paper-ink);
+  --teal: var(--paper-ink);
+  --card: var(--paper-tint);
+  --card-hover: #f0f1f4;
+  --selected: #e9ebef;
+  --connection: #a7b0c1;
 }
 .home-theme .container { width: min(1100px, calc(100% - 104px)); }
 .home-theme .site-header { border: 0; }
@@ -22,6 +19,7 @@ body.home-theme {
 
 .identity { display: grid; grid-template-columns: minmax(0, 1fr) 132px; align-items: center; gap: 68px; max-width: 750px; margin-inline: auto; padding-block: 62px 68px; }
 .identity-copy h1 { font: 400 clamp(60px, 6.4vw, 82px)/1.1 var(--display); letter-spacing: -.06em; word-spacing: .07em; }
+.identity-copy h1, .area-name, .work-card h3, .selected-manuscript h3 { color: var(--paper-ink); }
 .identity-affiliation { color: var(--ink-soft); font-size: 12px; line-height: 1.75; margin-top: 15px; }
 .identity-separator { margin-inline: 5px; }
 .identity-description { font-size: 16px; line-height: 1.75; margin-top: 13px; }
@@ -38,24 +36,23 @@ body.home-theme {
 .research-connections path { fill: none; stroke: var(--connection); stroke-width: 1; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
 .research-areas { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; list-style: none; padding: 0; margin: 0; }
 .research-areas > li { min-width: 0; display: flex; }
-.research-area { position: relative; display: flex; flex-direction: column; gap: 19px; width: 100%; min-height: 165px; padding: 23px 20px; text-align: left; background: var(--card); color: var(--ink); border: 1px solid var(--hair); border-radius: 3px; transition: background-color .15s ease, border-color .15s ease; }
+.research-area { position: relative; display: flex; flex-direction: column; gap: 19px; width: 100%; min-height: 165px; padding: 23px 20px; text-align: left; background: var(--card); color: var(--ink); border: 1px solid var(--hair); border-radius: 0; transition: background-color .15s ease, border-color .15s ease; }
 .research-area:disabled { cursor: default; opacity: 1; }
 .area-heading { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; width: 100%; }
 .area-name { font: 500 18px/1.35 var(--display); letter-spacing: -.035em; }
 .area-toggle { flex-shrink: 0; color: var(--ink-soft); font: 400 15px/1 var(--sans); }
 .area-description { color: var(--ink-soft); font: 400 13px/1.7 var(--sans); }
-.research-area:enabled:hover { border-color: #8da2b3; background: #fff; }
-.research-area[aria-pressed="true"] { border-color: var(--selected); background: var(--selected); color: #f8fafc; }
-.research-area[aria-pressed="true"] :is(.area-description, .area-toggle) { color: #dbe6ef; }
-.research-area[aria-pressed="true"]:hover { border-color: #203c53; background: #29455c; }
-.research-section[data-selected="all"] .research-area { color: var(--ink); border-color: #9bafbf; background: #e3ecf3; }
-.research-section[data-selected="all"] :is(.area-description, .area-toggle) { color: var(--ink-soft); }
-.research-section[data-selected="all"] .research-area:hover { border-color: var(--accent); background: #dce7f0; }
+.research-area:enabled:hover { border-color: #a7b0c1; background: var(--card-hover); }
+.research-area[aria-pressed="true"] { border-color: #b6bfce; border-left-color: var(--paper-ink); background: var(--selected); box-shadow: inset 2px 0 0 var(--paper-ink); }
+.research-area[aria-pressed="true"] .area-toggle { color: var(--paper-ink); }
+.research-area[aria-pressed="true"]:hover { border-color: var(--paper-ink); background: var(--selected); }
+.research-section[data-selected="all"] .research-area { border-color: #b6bfce; background: var(--card-hover); }
+.research-section[data-selected="all"] .research-area:hover { border-color: var(--paper-ink); background: var(--selected); }
 
 .related-work { margin-top: 62px; }
 .work-grid { display: grid; grid-template-columns: repeat(var(--work-columns, 3), minmax(0, 1fr)); gap: 18px; list-style: none; padding: 0; margin: 0; }
 .work-grid[data-count="1"] { max-width: 540px; margin-inline: auto; }
-.work-card { position: relative; display: flex; flex-direction: column; align-items: flex-start; min-width: 0; padding: 24px 25px; background: var(--card); border: 1px solid var(--hair); border-radius: 3px; }
+.work-card { position: relative; display: flex; flex-direction: column; align-items: flex-start; min-width: 0; padding: 24px 25px; background: var(--surface); border: 1px solid var(--hair); border-radius: 0; }
 .work-meta { display: flex; flex-wrap: wrap; gap: 3px 12px; color: var(--ink-soft); font-size: 11px; line-height: 1.7; margin-bottom: 12px; }
 .work-meta span + span::before { content: "·"; margin-right: 12px; }
 .work-card h3 { width: 100%; font: 500 20px/1.4 var(--display); letter-spacing: -.03em; }
@@ -75,7 +72,7 @@ body.home-theme {
 
 .home-publications { margin-top: 46px; }
 .home-publications .section-heading { padding-top: 20px; margin-bottom: 23px; }
-.selected-manuscript { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 30px; align-items: baseline; }
+.selected-manuscript { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 30px; align-items: baseline; padding: 26px 28px; border-left: 3px solid var(--paper-ink); background: var(--paper-tint); }
 .selected-status { color: var(--ink-soft); font-size: 12px; }
 .selected-manuscript h3 { font: 500 21px/1.5 var(--display); letter-spacing: -.03em; }
 .selected-manuscript h3 a { display: flex; align-items: baseline; justify-content: space-between; gap: 20px; }
@@ -143,7 +140,7 @@ body.home-theme {
   .research-section[data-selected="all"] .work-meta span + span::before { display: none; }
   .home-publications { margin-top: 34px; }
   .home-publications .section-heading { margin-bottom: 19px; }
-  .selected-manuscript { grid-template-columns: 1fr; gap: 8px; }
+  .selected-manuscript { grid-template-columns: 1fr; gap: 8px; padding: 22px 20px; }
   .selected-status { font-size: 11px; }
   .selected-manuscript h3 { font-size: 19px; }
 }

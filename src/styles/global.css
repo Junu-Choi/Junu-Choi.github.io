@@ -13,6 +13,10 @@
   --accent-strong: #175582;
   --accent-soft-bg: #eaf2f8;
   --bg-panel: #eef3f6;
+  /* The manuscript's theorem palette, shared by Papers and the home page. */
+  --paper-ink: #16213e;
+  --paper-tint: #f6f6f7;
+  --paper-rule: #d9dde4;
   --display: "Manrope", "Helvetica Neue", Arial, sans-serif;
   --sans: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --code: ui-monospace, "SFMono-Regular", Consolas, monospace;
