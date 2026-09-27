@@ -1,3 +1,5 @@
+import { ptmManuscript } from "./manuscripts";
+
 /**
  * CV content. Each section sorted newest-first.
  *
@@ -48,7 +50,7 @@ export const cv = {
       date: "Sep 2025 – present",
       details: [
         "RED attention: routed encode–decode attention for efficient global weather forecasting — to be published.",
-        "Min-energy Transport Matching: transport maps and minimum-energy stochastic dynamics for posterior sampling — to be published.",
+        `${ptmManuscript.title}: minimum-energy transport matching for posterior sampling — to be published.`,
       ],
     },
     {

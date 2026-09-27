@@ -1,3 +1,5 @@
+import { ptmManuscript } from "./manuscripts";
+
 export type ResearchArea = {
   id: string;
   label: string;
@@ -57,10 +59,10 @@ export type ResearchWork = {
 export const researchWork: ResearchWork[] = [
   {
     id: "transport",
-    title: "Min-energy Transport Matching",
-    shortTitle: "Min-energy Transport Matching",
+    title: ptmManuscript.title,
+    shortTitle: ptmManuscript.title,
     place: "SNU",
-    description: "Transport maps and minimum-energy stochastic dynamics for posterior sampling.",
+    description: "Minimum-energy transport matching with numerical maps for posterior sampling.",
     href: "/cv/#snu-research",
     forthcoming: true,
     links: [{ label: "Manuscript preview", href: "/papers/#ptm" }],
