@@ -1,0 +1,89 @@
+{
+  "kind": "Analytic illustration, not experimental evidence or posterior heat marginals",
+  "volume_map": "F_s(u,v) = (u, 0.8^s exp(0.65 s u) v)",
+  "jacobian_determinant": "0.8^s exp(0.65 s u) > 0",
+  "source_cells": [
+    [
+      -1.0,
+      -0.6,
+      -0.2,
+      0.2
+    ],
+    [
+      0.6,
+      1.0,
+      -0.2,
+      0.2
+    ]
+  ],
+  "endpoint_area_ratios": [
+    0.47695722380661126,
+    1.3494154927115491
+  ],
+  "maximum_relative_area_check_error": 3.912036701247956e-07,
+  "kernel_covariance": "C_lambda = (I / tau + lambda A^T A / R)^(-1)",
+  "tau": 0.8,
+  "R": 0.08,
+  "A": [
+    [
+      0.8660254037844387,
+      0.49999999999999994
+    ]
+  ],
+  "mixture_means": [
+    [
+      -1.65,
+      -1.05
+    ],
+    [
+      -0.15,
+      1.6
+    ],
+    [
+      1.65,
+      -0.75
+    ]
+  ],
+  "mixture_weights": [
+    0.32,
+    0.36,
+    0.32
+  ],
+  "mixture_component_covariance": [
+    [
+      0.08,
+      0.025
+    ],
+    [
+      0.025,
+      0.05
+    ]
+  ],
+  "density": "p0 convolved with N(0, C_lambda)",
+  "contour_enclosed_masses": [
+    0.9,
+    0.75,
+    0.5,
+    0.25
+  ],
+  "minimum_grid_mass": 0.9999999957658158,
+  "visible_contours_checked": true,
+  "endpoint_kernel_eigenvalues": [
+    0.07272727272727272,
+    0.8000000000000002
+  ],
+  "animations": {
+    "volume": {
+      "width": 640,
+      "height": 460,
+      "frames": 96,
+      "duration_ms": 10120
+    },
+    "conditioning": {
+      "width": 640,
+      "height": 460,
+      "frames": 96,
+      "duration_ms": 10120
+    }
+  }
+}

@@ -4,7 +4,6 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import SectionRule from "../components/SectionRule.astro";
 import ResearchAreas from "../components/ResearchAreas.astro";
 import PaperList from "../components/PaperList.astro";
-import TransportStudy from "../components/TransportStudy.astro";
 import { papers } from "../data/papers";
 import { site } from "../config/site";
 
@@ -16,20 +15,22 @@ const latestNote = notes[0];
 <BaseLayout activeNav="about" pageClass="home-page">
   <section class="hero" aria-labelledby="hero-title">
     <div class="hero-copy">
-      <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> Generative modeling &amp; geometry</p>
+      <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> Machine learning · Inference · Geometry</p>
       <h1 id="hero-title">Junu Choi<span class="name-period">.</span></h1>
-      <p class="hero-statement">Understanding the paths<br/>from <span>noise to data.</span></p>
-      <p class="hero-description">I study generative models through dynamics and optimal transport — how to design the process, choose the path, and understand its geometry.</p>
+      <p class="hero-statement">Learning and inference,<br/><span>grounded in structure.</span></p>
+      <p class="hero-description">I study how mathematical structure can guide learning and inference. My current work centers on generative dynamics, posterior sampling, and scientific modeling, building on earlier work in speech, multimodal learning, and efficient adaptation.</p>
       <div class="hero-links">
         <a class="text-link" href="#research">Research interests <span aria-hidden="true">↓</span></a>
         <a class="text-link muted-link" href="/cv/">View CV <span aria-hidden="true">↗</span></a>
       </div>
-      <div class="hero-profile">
-        <img src="/junu.jpeg" alt={`Portrait of ${site.name}`} width="800" height="1103" loading="eager"/>
-        <div><span class="profile-role">Graduate student</span><span>Interdisciplinary Program in AI</span><span>Seoul National University</span></div>
-      </div>
     </div>
-    <TransportStudy/>
+    <figure class="hero-portrait">
+      <div class="portrait-frame"><img src="/junu.jpeg" alt={`Portrait of ${site.name}`} width="800" height="1103" loading="eager" fetchpriority="high"/></div>
+      <figcaption>
+        <p class="portrait-statement">From mathematical ideas<br/>to working systems.</p>
+        <p class="portrait-affiliation"><strong>Graduate researcher · Seoul National University</strong><span>Interdisciplinary Program in Artificial Intelligence</span></p>
+      </figcaption>
+    </figure>
   </section>
 
   <section class="home-section" id="research" aria-labelledby="research-title">

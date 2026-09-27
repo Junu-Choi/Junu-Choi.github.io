@@ -1,0 +1,68 @@
+<article class="publication-preview" id="ptm" aria-labelledby="ptm-title">
+  <header class="preview-heading">
+    <p class="eyebrow"><span class="preview-number">01</span> Manuscript preview</p>
+    <h2 id="ptm-title">Posterior Transport Matching<br class="desktop-break"/> for Inverse Problems</h2>
+    <p class="preview-description">Pairing numerical transport maps with stochastic input updates for posterior sampling.</p>
+    <p class="preview-availability">Manuscript and links forthcoming.</p>
+  </header>
+
+  <section class="geometry-figure" aria-labelledby="geometry-title" data-geometry-figure>
+    <div class="geometry-heading">
+      <div>
+        <h3 id="geometry-title">Geometry in motion</h3>
+        <p>A map changes volume. An observation changes the shape of uncertainty.</p>
+      </div>
+      <button class="motion-toggle" type="button" hidden data-motion-toggle>Play animation</button>
+    </div>
+    <div class="geometry-panels">
+      <figure>
+        <h4><span aria-hidden="true">a.</span> Local volume</h4>
+        <img
+          src="/figures/ptm/volume-still.png"
+          data-still-src="/figures/ptm/volume-still.png"
+          data-animation-src="/figures/ptm/volume.gif"
+          width="640" height="460" loading="lazy" decoding="async"
+          alt="A smooth map deforms a square grid. Two initially equal cells change area by factors of 0.48 and 1.35 at the endpoint."
+        />
+        <figcaption>Equal source cells acquire different areas under a smooth transport map. The counters track each cell’s area relative to its starting value.</figcaption>
+      </figure>
+      <figure>
+        <h4><span aria-hidden="true">b.</span> Conditioning</h4>
+        <img
+          src="/figures/ptm/conditioning-still.png"
+          data-still-src="/figures/ptm/conditioning-still.png"
+          data-animation-src="/figures/ptm/conditioning.gif"
+          width="640" height="460" loading="lazy" decoding="async"
+          alt="As observation precision increases, the rust Gaussian kernel narrows along the observed direction. Its variance falls from 0.8 to 0.073, while the unobserved variance stays at 0.8. Blue contours show the prior convolved with that kernel."
+        />
+        <figcaption>Stronger conditioning narrows the <span class="kernel-key">Gaussian kernel</span> along the observed direction. Blue contours show the same prior convolved with that kernel.</figcaption>
+      </figure>
+    </div>
+    <p class="geometry-note">Illustrative 2D geometry. The blue contours describe a smoothed prior, rather than posterior marginals.</p>
+  </section>
+</article>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-geometry-figure]").forEach((figure) => {
+    const button = figure.querySelector<HTMLButtonElement>("[data-motion-toggle]");
+    const images = figure.querySelectorAll<HTMLImageElement>("[data-animation-src]");
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (!button) return;
+
+    let playing = false;
+    function setPlaying(value: boolean) {
+      playing = value;
+      images.forEach((image) => {
+        const source = value ? image.dataset.animationSrc : image.dataset.stillSrc;
+        if (source) image.src = source;
+      });
+      button!.textContent = value ? "Show stills" : "Play animation";
+      figure.dataset.motionState = value ? "playing" : "still";
+    }
+
+    button.hidden = false;
+    setPlaying(!reducedMotion.matches);
+    button.addEventListener("click", () => setPlaying(!playing));
+    reducedMotion.addEventListener("change", (event) => setPlaying(!event.matches));
+  });
+</script>

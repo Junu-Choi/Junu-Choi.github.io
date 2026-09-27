@@ -8,7 +8,7 @@ const { items } = Astro.props;
 ---
 <ul class="cv-list">
   {items.map((e) => (
-    <li class="cv-entry">
+    <li class="cv-entry" id={e.id}>
       <div class="cv-entry-head">
         <span class="cv-entry-title">{e.title}</span>
         <span class="cv-entry-date">{e.date}</span>
