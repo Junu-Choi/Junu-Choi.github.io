@@ -19,7 +19,7 @@ body.home-theme {
 .home-theme .footer-email { font-size: 13px; }
 
 .identity-surface { position: relative; isolation: isolate; overflow: hidden; }
-.identity { --portrait-width: 132px; --portrait-height: 158px; display: grid; grid-template-columns: minmax(0, 1fr) var(--portrait-width); align-items: center; gap: 68px; width: calc(100% - 104px); max-width: 750px; margin-inline: auto; padding-block: 62px 68px; }
+.identity { --portrait-width: 132px; --portrait-height: 158px; display: grid; grid-template-columns: minmax(0, 1fr) var(--portrait-width); align-items: center; gap: 38px; width: calc(100% - 104px); max-width: 660px; margin-inline: auto; padding-block: 62px 68px; }
 .identity-copy h1 { font: 400 clamp(60px, 6.4vw, 82px)/1.1 var(--display); letter-spacing: -.06em; word-spacing: .07em; }
 .identity-copy h1, .area-name, .work-card h3, .selected-manuscript h3 { color: var(--paper-ink); }
 .identity-affiliation { color: var(--ink-soft); font-size: 12px; line-height: 1.75; margin-top: 15px; }

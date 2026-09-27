@@ -39,7 +39,9 @@ The home page shares the Papers page's white background, navy `#16213E` headings
 and pale `#F6F6F7` panels. Shared `--paper-*` colors keep both pages aligned;
 Selected papers repeats the manuscript preview's navy left rule. The name,
 affiliation, and short introduction share a centered
-profile block with a separate portrait. A local gray-to-blue-gray field uses only
+profile block with a separate portrait. On wider screens, the profile is capped
+at 660 px with a 38 px column gap, keeping the portrait close to the text.
+A local gray-to-blue-gray field uses only
 the photographed wall's colors and softly joins the portrait to the white page.
 `public/portrait-background.svg` interpolates ten wall-only samples from five
 heights on each side of the photo, preserving its horizontal and vertical
