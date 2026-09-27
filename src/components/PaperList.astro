@@ -47,7 +47,9 @@ function splitAuthors(authors: string): { text: string; bold: boolean }[] {
                 {p.grade && <span class="grade-badge">{p.grade}</span>}
               </div>
               <div class="pub-content">
-                <a href="#" class="title">{p.title}</a>
+                <h3 class="pub-title">
+                  {p.links?.[0] ? <a href={p.links[0].href}>{p.title}</a> : p.title}
+                </h3>
                 <div class="meta">
                   {splitAuthors(p.authors).map((seg) => seg.bold ? <strong>{seg.text}</strong> : <>{seg.text}</>)}
                 </div>

@@ -2,17 +2,20 @@
 import "../styles/global.css";
 import "../styles/site.css";
 import "katex/dist/katex.min.css";
-import Rail from "../components/Rail.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
 import { site } from "../config/site";
 
 interface Props {
   title?: string;
   description?: string;
   activeNav?: string;
+  pageClass?: string;
 }
-const { title, description, activeNav } = Astro.props;
+const { title, description, activeNav, pageClass } = Astro.props;
 const pageTitle = title ? `${title} — ${site.name}` : site.name;
-const desc = description ?? `${site.name} — ${site.affiliationShort}`;
+const desc = description ?? `${site.name}, a graduate student at Seoul National University studying generative dynamics, optimal transport, and geometry.`;
+const canonicalURL = new URL(Astro.url.pathname, site.url);
 ---
 <!doctype html>
 <html lang="en">
@@ -22,18 +25,28 @@ const desc = description ?? `${site.name} — ${site.affiliationShort}`;
   <title>{pageTitle}</title>
   <meta name="description" content={desc}/>
   <meta name="generator" content={Astro.generator}/>
+  <meta name="theme-color" content="#f8fafb"/>
+  <link rel="canonical" href={canonicalURL}/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content={pageTitle}/>
+  <meta property="og:description" content={desc}/>
+  <meta property="og:url" content={canonicalURL}/>
+  <meta property="og:image" content={new URL("/junu.jpeg", site.url)}/>
+  <meta property="og:image:alt" content={`Portrait of ${site.name}`}/>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link
-    href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;650;700;750&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap"
     rel="stylesheet"
   />
 </head>
-<body>
-  <Rail activeNav={activeNav}/>
-  <main class="paper">
+<body id="top">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <SiteHeader activeNav={activeNav}/>
+  <main id="main-content" class:list={["container page-content", pageClass]} tabindex="-1">
     <slot/>
   </main>
+  <SiteFooter/>
 </body>
 </html>
