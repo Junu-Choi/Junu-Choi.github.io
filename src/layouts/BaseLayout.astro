@@ -13,6 +13,7 @@ interface Props {
   pageClass?: string;
 }
 const { title, description, activeNav, pageClass } = Astro.props;
+const isHome = pageClass === "home-page";
 const pageTitle = title ? `${title} — ${site.name}` : site.name;
 const desc = description ?? `${site.name}, a graduate researcher at Seoul National University working on learning, inference, and scientific modeling through mathematical structure.`;
 const canonicalURL = new URL(Astro.url.pathname, site.url);
@@ -25,7 +26,7 @@ const canonicalURL = new URL(Astro.url.pathname, site.url);
   <title>{pageTitle}</title>
   <meta name="description" content={desc}/>
   <meta name="generator" content={Astro.generator}/>
-  <meta name="theme-color" content="#ffffff"/>
+  <meta name="theme-color" content={isHome ? "#f2f5f4" : "#ffffff"}/>
   <link rel="canonical" href={canonicalURL}/>
   <meta property="og:type" content="website"/>
   <meta property="og:title" content={pageTitle}/>
@@ -41,7 +42,7 @@ const canonicalURL = new URL(Astro.url.pathname, site.url);
     rel="stylesheet"
   />
 </head>
-<body id="top">
+<body id="top" class:list={{ "home-theme": isHome }}>
   <a class="skip-link" href="#main-content">Skip to content</a>
   <SiteHeader activeNav={activeNav}/>
   <main id="main-content" class:list={["container page-content", pageClass]} tabindex="-1">
