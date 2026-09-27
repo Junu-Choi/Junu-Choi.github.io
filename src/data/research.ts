@@ -10,7 +10,7 @@ export const researchAreas: ResearchArea[] = [
     description:
       "Designing diffusion and flow dynamics: how the choice of paths, couplings, and transport maps shapes a generative model.",
     experience: [
-      { label: "Generative dynamics · SNU", href: "/cv/#snu-research" },
+      { label: "Min-energy Transport Matching · SNU", href: "/cv/#snu-research" },
       { label: "Speech generation · Humelo", href: "/cv/#humelo-research" },
     ],
   },
@@ -19,16 +19,16 @@ export const researchAreas: ResearchArea[] = [
     description:
       "Sampling under observations and constraints, with a focus on posterior sampling, sequential Monte Carlo, and transport-based reconstruction.",
     experience: [
-      { label: "Inverse problems · SNU", href: "/cv/#snu-research" },
+      { label: "Min-energy Transport Matching · SNU", href: "/cv/#snu-research" },
       { label: "Sequential Monte Carlo · KAIST", href: "/cv/#kaist-visual-ai" },
     ],
   },
   {
-    name: "Geometry & scientific modeling",
+    name: "Attention & scientific modeling",
     description:
-      "Using geometric structure to understand high-dimensional dynamics, with current interests in confinement and generative models for climate.",
+      "Designing scalable attention for physical systems, including content-routed interactions across spatial scales for global weather forecasting.",
     experience: [
-      { label: "Confinement & climate · SNU", href: "/cv/#snu-research" },
+      { label: "RED attention · SNU", href: "/cv/#snu-research" },
     ],
   },
   {

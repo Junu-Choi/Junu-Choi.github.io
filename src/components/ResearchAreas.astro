@@ -2,30 +2,8 @@
 import { researchAreas } from "../data/research";
 ---
 <ul class="areas">
-  {researchAreas.map((a, i) => (
+  {researchAreas.map((a) => (
     <li>
-      <svg class="area-symbol" viewBox="0 0 100 72" fill="none" aria-hidden="true">
-        {i === 0 ? (
-          <g stroke="currentColor" stroke-width="1.2">
-            {[0, 1, 2, 3, 4, 5, 6].map((n) => <path d={`M 5 ${12 + n * 8} C 34 ${70 - n * 6}, 64 ${n * 8}, 95 ${12 + n * 8}`}/>)}
-          </g>
-        ) : i === 1 ? (
-          <g stroke="currentColor" stroke-width="1.2" transform="translate(50 36) rotate(-25)">
-            {[0, 1, 2, 3, 4].map((n) => <ellipse rx={40 - n * 7} ry="24"/>)}
-            <path d="M-40 0H40M0-24V24"/>
-          </g>
-        ) : i === 2 ? (
-          <g stroke="currentColor" stroke-width="1.2">
-            {[0, 1, 2, 3, 4].map((n) => <path d={`M 8 ${13 + n * 10} Q 50 ${-8 + n * 16} 92 ${13 + n * 10}`}/>)}
-            {[0, 1, 2, 3, 4].map((n) => <path d={`M ${8 + n * 21} 13 Q ${20 + n * 15} 36 ${8 + n * 21} 53`}/>)}
-          </g>
-        ) : (
-          <g stroke="currentColor" stroke-width="1.2">
-            <path d="M8 36H20L26 17L34 55L43 9L52 63L61 22L69 47L77 36H92"/>
-            <path d="M8 23H16M84 23H92M8 49H16M84 49H92" opacity=".45"/>
-          </g>
-        )}
-      </svg>
       <h3 class="area-name">{a.name}</h3>
       <div class="area-desc">{a.description}</div>
       <ul class="area-experience" aria-label={`Related experience: ${a.name}`}>
