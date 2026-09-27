@@ -35,8 +35,15 @@ Requires Node `>=22.12.0`.
 The palette follows PTM Figure 2: blue `#2878B5` distribution contours, teal
 `#238A83` paths, charcoal `#30363E` geometry, and a small rust `#C16A43` accent.
 Manrope headings and IBM Plex Sans body text sit on a light, spacious grid.
-The home page pairs a research statement with a portrait. Research areas link
-to stable CV entry IDs defined in `src/data/cv.ts`.
+The home page uses a pale `#F2F5F4` background with charcoal text and restrained
+teal links. A small portrait sits in the left margin; the name, introduction,
+and research rows share an alignment. Research areas link to stable CV entry
+IDs defined in `src/data/cv.ts`. The home theme is scoped to `body.home-theme`.
+
+The previous home layout is preserved on the remote branch
+`backup/home-before-mineral-20260927` at `2a921d0`. That snapshot includes the
+publication's Figure 2 banner and animation disclosure. Revert the home-layout
+commit on `main` to restore the previous design without rewriting history.
 
 `PublicationPreview.astro` holds the first manuscript placeholder. Its navy
 left rule and pale background follow the manuscript's theorem style. The
