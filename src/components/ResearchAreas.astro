@@ -1,0 +1,68 @@
+---
+import { researchAreas, researchWork } from "../data/research";
+---
+<ul class="research-areas" id="research-topics">
+  {researchAreas.map((area) => (
+    <li>
+      <details class="research-area" data-area={area.id} data-work={area.work.join(" ")} data-label={area.label}>
+        <summary aria-controls="related-work">
+          <h3>{area.label}</h3>
+          <span class="area-toggle" aria-hidden="true"></span>
+        </summary>
+        <div class="area-details">
+          <p>{area.description}</p>
+          <ul class="research-experience" aria-label={`Related experience: ${area.name}`}>
+            {area.work.map((id) => {
+              const work = researchWork.find((entry) => entry.id === id)!;
+              return <li><a href={work.href}>{work.shortTitle}<span> · {work.place}</span></a></li>;
+            })}
+          </ul>
+        </div>
+      </details>
+    </li>
+  ))}
+</ul>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-research-overview]").forEach((overview) => {
+    const areas = [...overview.querySelectorAll<HTMLDetailsElement>("[data-area]")];
+    const entries = [...overview.querySelectorAll<HTMLElement>("[data-research-work]")];
+    const context = overview.querySelector<HTMLElement>("[data-work-context]");
+    const status = overview.querySelector<HTMLElement>("[data-work-status]");
+    const allButton = overview.querySelector<HTMLButtonElement>("[data-all-research]");
+    let selected = "compact";
+
+    function select(mode: string) {
+      selected = mode;
+      overview.dataset.selected = mode;
+      const area = areas.find((entry) => entry.dataset.area === mode);
+      const related = new Set((area?.dataset.work ?? "").split(" "));
+      areas.forEach((entry) => {
+        entry.open = mode === "all" || entry === area;
+        const summary = entry.querySelector("summary");
+        if (mode === "all") summary?.setAttribute("aria-label", `Focus on ${entry.dataset.label}`);
+        else summary?.removeAttribute("aria-label");
+      });
+      let count = 0;
+      entries.forEach((entry) => {
+        entry.hidden = mode === "all" ? false : area ? !related.has(entry.dataset.researchWork!) : entry.dataset.featured !== "true";
+        if (!entry.hidden) count++;
+      });
+      allButton?.setAttribute("aria-pressed", String(mode === "all"));
+      const label = mode === "all" ? "All research" : area?.dataset.label ?? "";
+      if (context) context.textContent = label;
+      if (status) status.textContent = `${label || "Recent research"}: ${count} related ${count === 1 ? "project" : "projects"}.`;
+    }
+
+    areas.forEach((area) => {
+      area.querySelector("summary")?.addEventListener("click", (event) => {
+        event.preventDefault();
+        select(selected === area.dataset.area ? "compact" : area.dataset.area!);
+      });
+    });
+    if (allButton) {
+      allButton.hidden = false;
+      allButton.addEventListener("click", () => select(selected === "all" ? "compact" : "all"));
+    }
+  });
+</script>

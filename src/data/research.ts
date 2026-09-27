@@ -12,7 +12,7 @@ export const researchAreas: ResearchArea[] = [
     label: "Generative dynamics",
     name: "Generative dynamics & transport",
     description:
-      "Diffusion, flows, and transport maps.",
+      "I study transport maps and stochastic dynamics for generative modeling.",
     work: ["transport", "speech"],
   },
   {
@@ -20,15 +20,15 @@ export const researchAreas: ResearchArea[] = [
     label: "Inference",
     name: "Inference & inverse problems",
     description:
-      "Posterior sampling and inverse problems.",
+      "I develop sampling methods for posterior inference and inverse problems.",
     work: ["transport", "smc"],
   },
   {
     id: "attention",
-    label: "Attention",
-    name: "Attention & scientific modeling",
+    label: "ML architectures",
+    name: "Machine learning architectures",
     description:
-      "Efficient attention for scientific modeling and weather forecasting.",
+      "I design efficient model architectures for scientific prediction.",
     work: ["red"],
   },
   {
@@ -36,14 +36,13 @@ export const researchAreas: ResearchArea[] = [
     label: "Efficient learning",
     name: "Efficient & multimodal learning",
     description:
-      "Speech, audio–language models, and efficient inference.",
+      "I work on efficient adaptation and inference for language and multimodal models.",
     work: ["speech", "adaptation", "decoding"],
   },
 ];
 
 export type ResearchWork = {
   id: string;
-  reference: string;
   title: string;
   shortTitle: string;
   place: string;
@@ -53,14 +52,13 @@ export type ResearchWork = {
   preview?: string;
 };
 
-// References stay stable across filters; these are experience records, not
-// publication entries. The two SNU projects remain forthcoming.
+// Shared experience records link research interests to the CV. The two SNU
+// projects remain forthcoming, separate from publication metadata.
 export const researchWork: ResearchWork[] = [
   {
     id: "transport",
-    reference: "a",
     title: "Min-energy Transport Matching",
-    shortTitle: "Transport Matching",
+    shortTitle: "Min-energy Transport Matching",
     place: "SNU",
     description: "Transport maps and minimum-energy stochastic dynamics for posterior sampling.",
     href: "/cv/#snu-research",
@@ -69,7 +67,6 @@ export const researchWork: ResearchWork[] = [
   },
   {
     id: "red",
-    reference: "b",
     title: "RED attention",
     shortTitle: "RED attention",
     place: "SNU",
@@ -79,7 +76,6 @@ export const researchWork: ResearchWork[] = [
   },
   {
     id: "speech",
-    reference: "c",
     title: "Speech & audio–language",
     shortTitle: "Speech & audio",
     place: "Humelo",
@@ -88,7 +84,6 @@ export const researchWork: ResearchWork[] = [
   },
   {
     id: "smc",
-    reference: "d",
     title: "Sequential Monte Carlo",
     shortTitle: "Sequential Monte Carlo",
     place: "KAIST",
@@ -97,7 +92,6 @@ export const researchWork: ResearchWork[] = [
   },
   {
     id: "adaptation",
-    reference: "e",
     title: "LLM adaptation",
     shortTitle: "LLM adaptation",
     place: "KAIST",
@@ -106,7 +100,6 @@ export const researchWork: ResearchWork[] = [
   },
   {
     id: "decoding",
-    reference: "f",
     title: "Speculative decoding",
     shortTitle: "Speculative decoding",
     place: "KAIST",
