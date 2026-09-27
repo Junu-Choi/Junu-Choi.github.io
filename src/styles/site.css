@@ -18,7 +18,7 @@
 .text-link:hover { border-color: var(--accent); }
 .text-link:hover span { transform: translate(2px, -2px); }
 
-/* Shared section labels; the home index has its own layout in home.css. */
+/* Shared section labels; the home page has its own layout in home.css. */
 .section-heading { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-top: 23px; border-top: 1px solid var(--hair); margin-bottom: 25px; }
 .section-heading h2 { font: 600 17px/1.4 var(--display); letter-spacing: -.02em; }
 .section-heading > .text-link { font-size: 12px; border-bottom: 0; min-height: 30px; color: var(--accent); }

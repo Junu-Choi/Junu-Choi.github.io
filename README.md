@@ -13,7 +13,7 @@ src/
 ├── components/        # SiteHeader, PublicationPreview, PaperList, …
 ├── pages/             # routes: index, papers, cv, notes/
 ├── content/           # MDX research notes
-└── styles/            # shared styles and the home research index
+└── styles/            # shared styles and the home layout
 public/                # static assets (images, etc.)
 ```
 
@@ -35,21 +35,28 @@ Requires Node `>=22.12.0`.
 The palette follows PTM Figure 2: blue `#2878B5` distribution contours, teal
 `#238A83` paths, charcoal `#30363E` geometry, and a small rust `#C16A43` accent.
 Manrope headings and IBM Plex Sans body text sit on a light, spacious grid.
-The home page uses a pale `#F2F5F4` background and a portrait placed between the
-two parts of the name. `ResearchIndex.astro` pairs four research interests with
-six distinct work records from `src/data/research.ts`. Small letter references
-show shared work across interests. Selecting an interest keeps its description
-and matching work visible; selecting it again or choosing “All research” restores
-the full index. Direct experience links beneath each interest point to stable CV
-entry IDs defined in `src/data/cv.ts`. Filtering supports keyboard input and
-announces the result count. Without JavaScript, all work and links remain visible.
-The home layout lives in `src/styles/home.css`; research notes close the index
-with a single short entry. The two SNU work records remain “To be published.”
+The home page uses a cool blue-gray `#EDF3F9` background. A compact, nearly square
+portrait sits between the two parts of the name, centered as one group. Below,
+four research interests occupy a narrow left column; a short introduction sits
+above Related work in the right column. On mobile, the introduction comes first.
+`ResearchAreas.astro` uses the experience records in `src/data/research.ts` to link
+each interest directly to stable CV entry IDs defined in `src/data/cv.ts`.
+All four topics start folded, and Related work initially shows the two forthcoming
+SNU projects, each marked “To be published.” “All research” opens a concise
+overview: one sentence describing the work in each area, plus all six project
+titles with affiliations and forthcoming status. It omits duplicate experience
+links and full project summaries. Selecting one topic focuses that area, reveals
+its experience links, and shows the matching project summaries. Closing the
+active topic or toggling “All research” off restores the initial two projects.
+Native topic disclosures also work without JavaScript; in that case, Related work
+keeps the two initial projects and the all-research control is hidden. A single
+short research note closes the column. The layout lives in `src/styles/home.css`.
 
 The previous home layout is preserved on the remote branch
 `backup/home-before-mineral-20260927` at `2a921d0`. That snapshot includes the
 publication's Figure 2 banner and animation disclosure. The subsequent static
-layout is also preserved on `backup/home-mineral-20260927` at `85965d2`.
+layout is also preserved on `backup/home-mineral-20260927` at `85965d2`, and the
+interactive index on `backup/home-research-index-20260927` at `a3bfb5d`.
 Revert the corresponding home-layout commit on `main` to restore a prior design
 without rewriting history.
 
@@ -75,8 +82,12 @@ and contour bounds, and writes `public/figures/ptm/geometry.json` alongside the 
 The website build uses the checked-in assets and does not require Python.
 
 Reference directions: [Peter Holderrieth](https://www.peterholderrieth.com/)
-for readable academic structure, and [NVIDIA Research](https://www.nvidia.com/en-us/research/)
-for restrained typography and hierarchy. No third-party artwork is reused.
+for readable academic structure and direct research links,
+[Michael Albergo](https://malbergo.me/) for personal identity with limited content,
+and [NVIDIA Research](https://www.nvidia.com/en-us/research/) for heading hierarchy
+and spacing. The centered name-and-portrait composition, cool background, and
+compact text columns form this site's own arrangement. No third-party artwork
+is reused.
 
 Research notes should lead with one takeaway, then the minimum equation and
 evidence needed to support it. State the experiment's scope and link to the
