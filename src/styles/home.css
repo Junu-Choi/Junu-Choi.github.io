@@ -19,37 +19,54 @@ body.home-theme {
 .home-theme .footer-email { font-size: 13px; }
 
 .identity-surface { position: relative; isolation: isolate; overflow: hidden; }
-.identity { --portrait-width: 132px; --portrait-height: 158px; display: grid; grid-template-columns: minmax(0, 1fr) var(--portrait-width); align-items: center; gap: 68px; width: calc(100% - 104px); max-width: 750px; margin-inline: auto; padding-block: 62px 68px; }
+.identity { --portrait-width: 132px; --portrait-height: 158px; --portrait-corner: 5px; --portrait-bleed: 9px; --portrait-feather: 4px; display: grid; grid-template-columns: minmax(0, 1fr) var(--portrait-width); align-items: center; gap: 68px; width: calc(100% - 104px); max-width: 750px; margin-inline: auto; padding-block: 62px 68px; }
 .identity-copy h1 { font: 400 clamp(60px, 6.4vw, 82px)/1.1 var(--display); letter-spacing: -.06em; word-spacing: .07em; }
 .identity-copy h1, .area-name, .work-card h3, .selected-manuscript h3 { color: var(--paper-ink); }
 .identity-affiliation { color: var(--ink-soft); font-size: 12px; line-height: 1.75; margin-top: 15px; }
 .identity-separator { margin-inline: 5px; }
 .identity-description { font-size: 16px; line-height: 1.75; margin-top: 13px; }
-.portrait-blend { position: relative; width: var(--portrait-width); height: var(--portrait-height); }
+.portrait-blend {
+  --contour-radius: var(--portrait-corner);
+  --contour-feather: var(--portrait-feather);
+  position: relative;
+  width: var(--portrait-width);
+  height: var(--portrait-height);
+}
 /* Sampled from the wall at either side of the portrait, never the clothing.
-   The field follows the portrait's own box at every breakpoint. Only this
-   full-width introduction clips its decorative overflow. */
+   Keep the color field registered to the photo; reveal only a narrow band
+   outside its rounded rectangle. Distances follow the photo width, rounded
+   to whole CSS pixels so the mask slices meet without rasterization seams. */
 .portrait-blend::before {
+  --contour-radius: calc(var(--portrait-corner) + var(--portrait-bleed));
+  --contour-feather: var(--portrait-bleed);
   content: "";
   position: absolute;
   z-index: -1;
-  inset: -45% -150%;
+  inset: calc(-1 * var(--portrait-bleed));
   pointer-events: none;
-  background: url("/portrait-background.svg") center / 100% 100% no-repeat;
-  -webkit-mask-image: radial-gradient(ellipse, #000 25%, rgb(0 0 0 / .75) 42%, rgb(0 0 0 / .3) 57%, transparent 70%);
-  mask-image: radial-gradient(ellipse, #000 25%, rgb(0 0 0 / .75) 42%, rgb(0 0 0 / .3) 57%, transparent 70%);
+  background: url("/portrait-background.svg") center / calc(var(--portrait-width) * 4) calc(var(--portrait-height) * 1.9) no-repeat;
+}
+/* Straight-edge gradients and quarter circles form a rounded-rectangle
+   distance mask. Each contour has the same feather width, including corners.
+   The layers meet at their edges; their shared center is fully opaque. */
+.portrait-blend::before, .identity-portrait {
+  --corner-stops: #000 calc(var(--contour-radius) - var(--contour-feather)), transparent var(--contour-radius);
+  --portrait-contour:
+    radial-gradient(circle at right bottom, var(--corner-stops)) left top / var(--contour-radius) var(--contour-radius) no-repeat,
+    radial-gradient(circle at left bottom, var(--corner-stops)) right top / var(--contour-radius) var(--contour-radius) no-repeat,
+    radial-gradient(circle at right top, var(--corner-stops)) left bottom / var(--contour-radius) var(--contour-radius) no-repeat,
+    radial-gradient(circle at left top, var(--corner-stops)) right bottom / var(--contour-radius) var(--contour-radius) no-repeat,
+    linear-gradient(90deg, transparent, #000 var(--contour-feather), #000 calc(100% - var(--contour-feather)), transparent) center / 100% calc(100% - 2 * var(--contour-radius)) no-repeat,
+    linear-gradient(180deg, transparent, #000 var(--contour-feather), #000 calc(100% - var(--contour-feather)), transparent) center / calc(100% - 2 * var(--contour-radius)) 100% no-repeat;
+  -webkit-mask: var(--portrait-contour);
+  mask: var(--portrait-contour);
 }
 .identity-portrait {
-  --portrait-mask: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent), linear-gradient(180deg, transparent, #000 5%, #000 78%, transparent);
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center 18%;
-  -webkit-mask-image: var(--portrait-mask);
-  mask-image: var(--portrait-mask);
-  -webkit-mask-composite: source-in;
-  mask-composite: intersect;
 }
 
 .research-section { border-top: 1px solid var(--hair); padding-top: 18px; }
@@ -120,7 +137,7 @@ body.home-theme {
   .work-card h3 { font-size: 19px; }
 }
 @media (max-width: 900px) {
-  .identity { --portrait-width: 120px; --portrait-height: 146px; max-width: 640px; gap: 38px; padding-block: 48px 54px; }
+  .identity { --portrait-width: 120px; --portrait-height: 146px; --portrait-bleed: 8px; max-width: 640px; gap: 38px; padding-block: 48px 54px; }
   .identity-description { font-size: 15px; }
   .identity-break { display: none; }
   .research-areas { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
@@ -137,7 +154,7 @@ body.home-theme {
   .home-theme .header-inner { min-height: 92px; }
   .home-theme .main-nav a[aria-current="page"]::after { bottom: 0; }
   .home-theme .home-page { padding-bottom: 36px; }
-  .identity { --portrait-width: 86px; --portrait-height: 112px; width: calc(100% - 40px); grid-template-columns: minmax(0, 1fr) var(--portrait-width); gap: 19px; padding-block: 37px 40px; }
+  .identity { --portrait-width: 86px; --portrait-height: 112px; --portrait-corner: 3px; --portrait-bleed: 6px; --portrait-feather: 3px; width: calc(100% - 40px); grid-template-columns: minmax(0, 1fr) var(--portrait-width); gap: 19px; padding-block: 37px 40px; }
   .identity-copy { display: contents; }
   .identity-copy h1 { font-size: clamp(42px, 11vw, 62px); white-space: nowrap; }
   .identity-affiliation { font-size: 11px; line-height: 1.7; margin: 0; grid-column: 1; }
@@ -172,7 +189,7 @@ body.home-theme {
   .selected-manuscript h3 { font-size: 19px; }
 }
 @media (max-width: 360px) {
-  .identity { --portrait-width: 70px; --portrait-height: 94px; gap: 14px; }
+  .identity { --portrait-width: 70px; --portrait-height: 94px; --portrait-bleed: 5px; --portrait-feather: 2px; gap: 14px; }
   .identity-copy h1 { font-size: 39px; }
   .research-area { padding: 16px 12px; min-height: 204px; }
   .area-name { font-size: 15px; }
