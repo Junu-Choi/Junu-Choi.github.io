@@ -13,7 +13,7 @@ src/
 ├── components/        # SiteHeader, PublicationPreview, PaperList, …
 ├── pages/             # routes: index, papers, cv, notes/
 ├── content/           # MDX research notes
-└── styles/site.css
+└── styles/            # shared styles and the home research index
 public/                # static assets (images, etc.)
 ```
 
@@ -35,15 +35,23 @@ Requires Node `>=22.12.0`.
 The palette follows PTM Figure 2: blue `#2878B5` distribution contours, teal
 `#238A83` paths, charcoal `#30363E` geometry, and a small rust `#C16A43` accent.
 Manrope headings and IBM Plex Sans body text sit on a light, spacious grid.
-The home page uses a pale `#F2F5F4` background with charcoal text and restrained
-teal links. A small portrait sits in the left margin; the name, introduction,
-and research rows share an alignment. Research areas link to stable CV entry
-IDs defined in `src/data/cv.ts`. The home theme is scoped to `body.home-theme`.
+The home page uses a pale `#F2F5F4` background and a portrait placed between the
+two parts of the name. `ResearchIndex.astro` pairs four research interests with
+six distinct work records from `src/data/research.ts`. Small letter references
+show shared work across interests. Selecting an interest keeps its description
+and matching work visible; selecting it again or choosing “All research” restores
+the full index. Direct experience links beneath each interest point to stable CV
+entry IDs defined in `src/data/cv.ts`. Filtering supports keyboard input and
+announces the result count. Without JavaScript, all work and links remain visible.
+The home layout lives in `src/styles/home.css`; research notes close the index
+with a single short entry. The two SNU work records remain “To be published.”
 
 The previous home layout is preserved on the remote branch
 `backup/home-before-mineral-20260927` at `2a921d0`. That snapshot includes the
-publication's Figure 2 banner and animation disclosure. Revert the home-layout
-commit on `main` to restore the previous design without rewriting history.
+publication's Figure 2 banner and animation disclosure. The subsequent static
+layout is also preserved on `backup/home-mineral-20260927` at `85965d2`.
+Revert the corresponding home-layout commit on `main` to restore a prior design
+without rewriting history.
 
 `PublicationPreview.astro` holds the first manuscript placeholder. Its navy
 left rule and pale background follow the manuscript's theorem style. The

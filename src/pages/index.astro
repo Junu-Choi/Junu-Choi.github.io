@@ -2,10 +2,10 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import SectionRule from "../components/SectionRule.astro";
-import ResearchAreas from "../components/ResearchAreas.astro";
+import ResearchIndex from "../components/ResearchIndex.astro";
 import PaperList from "../components/PaperList.astro";
+import "../styles/home.css";
 import { papers } from "../data/papers";
-import { site } from "../config/site";
 
 const hasSelectedPapers = papers.some((p) => p.selected);
 const notes = (await getCollection("notes", ({ data }) => !data.draft))
@@ -13,33 +13,34 @@ const notes = (await getCollection("notes", ({ data }) => !data.draft))
 const latestNote = notes[0];
 ---
 <BaseLayout activeNav="about" pageClass="home-page">
-  <section class="hero" aria-labelledby="hero-title">
-    <div class="hero-copy">
-      <h1 id="hero-title">Junu Choi</h1>
-      <p class="hero-affiliation">Graduate researcher, Seoul National University<span>Interdisciplinary Program in Artificial Intelligence</span></p>
-      <p class="hero-description">I work on generative modeling, probabilistic inference, and scientific machine learning. My current research focuses on transport-based posterior sampling and efficient attention for weather forecasting.</p>
+  <section class="identity" aria-labelledby="hero-title">
+    <h1 class="identity-name" id="hero-title" aria-label="Junu Choi">
+      <span>Junu</span>
+      <img class="identity-portrait" src="/junu.jpeg" alt="" width="800" height="1103" loading="eager" fetchpriority="high"/>
+      <span>Choi</span>
+    </h1>
+    <div class="identity-description">
+      <p class="identity-affiliation">Graduate researcher<span>Seoul National University · IPAI</span></p>
+      <p>I work on generative modeling, probabilistic inference, and scientific machine learning.</p>
     </div>
-    <img class="hero-portrait" src="/junu.jpeg" alt={`Portrait of ${site.name}`} width="800" height="1103" loading="eager" fetchpriority="high"/>
   </section>
 
-  <section class="home-section" id="research" aria-labelledby="research-title">
-    <SectionRule label="Research interests" id="research-title"/>
-    <ResearchAreas/>
-  </section>
+  <ResearchIndex/>
 
   {hasSelectedPapers && (
-    <section class="home-section" aria-labelledby="selected-title">
+    <section class="index-publications" aria-labelledby="selected-title">
       <SectionRule label="Selected papers" id="selected-title" href="/papers/" linkLabel="All papers"/>
       <PaperList selectedOnly/>
     </section>
   )}
   {latestNote && (
-    <section class="home-section" aria-labelledby="writing-title">
-      <SectionRule label="Research notes" id="writing-title" href="/notes/" linkLabel="All notes"/>
-      <a class="featured-note" href={`/notes/${latestNote.id}/`}>
-        <div class="featured-note-meta"><time datetime={latestNote.data.publishedAt.toISOString()}>{latestNote.data.publishedAt.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric", timeZone: "UTC" })}</time></div>
-        <div class="featured-note-content"><h3>{latestNote.data.title}</h3><p>{latestNote.data.abstract}</p></div>
-      </a>
+    <section class="index-note" aria-labelledby="writing-title">
+      <h2 id="writing-title"><a href="/notes/">Research notes</a></h2>
+      <div class="index-note-content">
+        <h3><a href={`/notes/${latestNote.id}/`}>{latestNote.data.title} <span aria-hidden="true">↗</span></a></h3>
+        <p>{latestNote.data.abstract}</p>
+      </div>
+      <time datetime={latestNote.data.publishedAt.toISOString()}>{latestNote.data.publishedAt.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric", timeZone: "UTC" })}</time>
     </section>
   )}
 </BaseLayout>
