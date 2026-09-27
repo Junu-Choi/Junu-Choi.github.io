@@ -15,7 +15,7 @@ interface Props {
 const { title, description, activeNav, pageClass } = Astro.props;
 const isHome = pageClass === "home-page";
 const pageTitle = title ? `${title} — ${site.name}` : site.name;
-const desc = description ?? `${site.name}, a graduate researcher at Seoul National University working on learning, inference, and scientific modeling through mathematical structure.`;
+const desc = description ?? `${site.name}, a master's student in AI at Seoul National University studying generative modeling, probabilistic inference, and scientific machine learning.`;
 const canonicalURL = new URL(Astro.url.pathname, site.url);
 ---
 <!doctype html>

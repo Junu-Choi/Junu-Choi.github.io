@@ -13,7 +13,7 @@ export const researchAreas: ResearchArea[] = [
     name: "Generative dynamics & transport",
     description:
       "I study transport maps and stochastic dynamics for generative modeling.",
-    work: ["transport", "speech"],
+    work: ["transport", "lighttransporter", "speech"],
   },
   {
     id: "inference",
@@ -49,7 +49,7 @@ export type ResearchWork = {
   description: string;
   href: string;
   forthcoming?: boolean;
-  preview?: string;
+  links?: { label: string; href: string }[];
 };
 
 // Shared experience records link research interests to the CV. The two SNU
@@ -63,7 +63,7 @@ export const researchWork: ResearchWork[] = [
     description: "Transport maps and minimum-energy stochastic dynamics for posterior sampling.",
     href: "/cv/#snu-research",
     forthcoming: true,
-    preview: "/papers/#ptm",
+    links: [{ label: "Manuscript preview", href: "/papers/#ptm" }],
   },
   {
     id: "red",
@@ -75,6 +75,18 @@ export const researchWork: ResearchWork[] = [
     forthcoming: true,
   },
   {
+    id: "lighttransporter",
+    title: "LightTransporter",
+    shortTitle: "LightTransporter",
+    place: "KAIST",
+    description: "Led a diffusion relighting project using a Light-Image Encoder to condition on source/target environment maps and camera pose.",
+    href: "/cv/#lighttransporter",
+    links: [
+      { label: "Code", href: "https://github.com/j-mayo/LightTransporter" },
+      { label: "Hugging Face", href: "https://huggingface.co/LightTransporter/DiffRelight-OpenIllumination" },
+    ],
+  },
+  {
     id: "speech",
     title: "Speech & audio–language",
     shortTitle: "Speech & audio",
@@ -84,26 +96,26 @@ export const researchWork: ResearchWork[] = [
   },
   {
     id: "smc",
-    title: "Sequential Monte Carlo",
-    shortTitle: "Sequential Monte Carlo",
+    title: "Resampling design for SMC",
+    shortTitle: "SMC resampling",
     place: "KAIST",
-    description: "Sampling complex distributions with population-simulated resampling.",
+    description: "Investigated population-simulated resampling for sequential Monte Carlo samplers.",
     href: "/cv/#kaist-visual-ai",
   },
   {
     id: "adaptation",
-    title: "LLM adaptation",
-    shortTitle: "LLM adaptation",
+    title: "Medical QA adaptation & evaluation",
+    shortTitle: "Medical QA models",
     place: "KAIST",
-    description: "Parameter-efficient fine-tuning and evaluation of conversational models.",
+    description: "Parameter-efficient tuning on medical instruction data and an evaluation protocol addressing GPT-4 judge bias and scoring variability.",
     href: "/cv/#kaist-mlilab",
   },
   {
     id: "decoding",
-    title: "Speculative decoding",
-    shortTitle: "Speculative decoding",
+    title: "Feature-level speculative decoding",
+    shortTitle: "Feature-level decoding",
     place: "KAIST",
-    description: "Feature-level speculation combined with knowledge distillation.",
-    href: "/cv/#kaist-education",
+    description: "Led a team project combining intermediate-feature speculation, knowledge distillation, and sparse rejection.",
+    href: "/cv/#kaist-decoding",
   },
 ];

@@ -29,7 +29,11 @@ import { researchAreas, researchWork } from "../data/research";
             <p class="work-meta"><span>{work.place}</span>{work.forthcoming && <span>To be published</span>}</p>
             <h3><a href={work.href}>{work.title}<span aria-hidden="true">↗</span></a></h3>
             <p class="work-description">{work.description}</p>
-            {work.preview && <a class="work-preview" href={work.preview}>Manuscript preview <span aria-hidden="true">↗</span></a>}
+            {work.links && (
+              <div class="work-links">
+                {work.links.map((link) => <a class="work-preview" href={link.href}>{link.label} <span aria-hidden="true">↗</span></a>)}
+              </div>
+            )}
           </li>
         ))}
       </ul>

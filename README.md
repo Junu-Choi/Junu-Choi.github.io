@@ -45,7 +45,7 @@ on smaller screens. Each has a short statement of the work. Selecting a card
 reveals its project previews below, linked by restrained SVG branches. A selected
 topic uses a dark slate-blue background. The connector geometry updates with
 layout and font changes; on narrow screens it routes around other cards and uses
-one outside rail for stacked work. “All research” shows a compact grid of all six
+one outside rail for stacked work. “All research” shows a compact grid of all seven
 projects, with titles, affiliations, and forthcoming status. Selecting a topic
 from that overview opens its detailed previews; selecting it again closes them.
 Only the four topic cards are visible initially. Without JavaScript, all project
@@ -53,8 +53,11 @@ previews and links remain visible, with the filter controls disabled or hidden.
 
 Project data in `src/data/research.ts` points to stable CV entry IDs and the PTM
 manuscript preview. The two SNU projects remain “To be published.” The same work
-appears only once per view even when it belongs to multiple research areas. A
-single short research note follows the map. The layout lives in `src/styles/home.css`.
+appears only once per view even when it belongs to multiple research areas. The
+Selected papers section follows the map. It includes the PTM forthcoming preview
+from `src/data/manuscripts.ts`, with its status explicit; Figure 2 and animations
+remain on the Papers page. Research notes are available through the Notes page
+without an excerpt on the home page. The layout lives in `src/styles/home.css`.
 
 The previous home layout is preserved on the remote branch
 `backup/home-before-mineral-20260927` at `2a921d0`. That snapshot includes the
@@ -63,10 +66,12 @@ layout is also preserved on `backup/home-mineral-20260927` at `85965d2`, and the
 interactive index on `backup/home-research-index-20260927` at `a3bfb5d`.
 The subsequent centered-name design with folded topics is preserved on
 `backup/home-folded-overview-20260927` at `551b236`.
+The connected-card layout before these content updates is preserved on
+`backup/home-research-cards-20260927` at `28d121e`.
 Revert the corresponding home-layout commit on `main` to restore a prior design
 without rewriting history.
 
-`PublicationPreview.astro` holds the first manuscript placeholder. Its navy
+`PublicationPreview.astro` renders the shared PTM manuscript preview. Its navy
 left rule and pale background follow the manuscript's theorem style. The
 placeholder stays separate from `src/data/papers.ts` until publication metadata
 is ready, so it does not create an incomplete publication in the CV.
@@ -100,3 +105,20 @@ evidence needed to support it. State the experiment's scope and link to the
 recorded measurements and reproduction code. Prefer a short note over a long
 derivation; preserve existing URLs when editing. Paper and CV records remain
 in `src/data/`.
+
+## Experience wording and sources
+
+KAIST work is described by its method and task rather than broad subject labels.
+The SMC resampling wording and medical Q&A / GPT-4 evaluation details follow the
+original CV data (`a2665c9`); the intermediate-feature speculation, distillation,
+and sparse-rejection details follow the team-lead entry in `c2d6f51`. No new
+speedups, benchmark improvements, or publication claims are inferred.
+
+LightTransporter appears as a led team project in the CV's Selected projects
+section and under Generative dynamics on the home page. The project lead role was
+confirmed by Junu; the three-person team, Fall 2024 course, Light-Image Encoder,
+environment-map / camera-pose conditioning, and OpenIllumination evaluation are
+documented in the [project repository](https://github.com/j-mayo/LightTransporter),
+[Hugging Face model card](https://huggingface.co/LightTransporter/DiffRelight-OpenIllumination),
+and [project report](https://drive.google.com/file/d/1009QskpqLxJRltqiCnim5seDmX1nxwEL/view).
+Course projects stay separate from research appointments and publication metadata.
