@@ -44,13 +44,11 @@ the photographed wall's colors and softly joins the portrait to the white page.
 `public/portrait-background.svg` interpolates ten wall-only samples from five
 heights on each side of the photo, preserving its horizontal and vertical
 lighting variation. The sampled patch coordinates are recorded in the SVG.
-The original photo is unchanged. A rounded-rectangle distance mask keeps the
-blend close to its frame: the outer fade is about 7% of the photo width (5–9 px),
-with small 3–5 px corner radii and a 2–4 px inward edge fade. These dimensions use
-whole CSS pixels at each breakpoint to avoid seams. Linear side gradients meet radial
-corner gradients at equal distances; there is no broad oval glow. The color field
-stays registered to the portrait at every breakpoint, so its lighting pattern
-and the narrow feather follow the image on mobile without horizontal scroll.
+The original photo is unchanged; CSS masks soften its edges. The background uses
+a soft elliptical falloff that fades quickly outside the photo, reaching full
+transparency at 56% of the gradient radius. Its color field stays registered to
+the portrait at every breakpoint, so the lighting pattern and fade follow the
+image on mobile without horizontal scroll.
 On mobile, the introduction spans the width below the name and photo; no separate
 About section interrupts the research.
 
