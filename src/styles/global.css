@@ -1,7 +1,7 @@
 /* Color relationships follow PTM Figure 2: blue density, teal paths, charcoal geometry. */
 :root {
   color-scheme: light;
-  --bg-page: #f8fafb;
+  --bg-page: #fff;
   --surface: #fff;
   --ink: #27333c;
   --ink-soft: #596974;

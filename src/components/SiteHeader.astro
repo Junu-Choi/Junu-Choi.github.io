@@ -7,11 +7,6 @@ const { activeNav } = Astro.props;
 <header class="site-header">
   <div class="container header-inner">
     <a class="wordmark" href="/" aria-label={`${site.name}, home`}>
-      <svg class="brand-mark" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-        <path d="M4 24C4 8 28 24 28 8M4 16C4 0 28 32 28 16" stroke="currentColor" stroke-width="2"/>
-        <circle cx="4" cy="24" r="2.5" fill="currentColor"/>
-        <circle cx="28" cy="8" r="2.5" fill="currentColor"/>
-      </svg>
       <span>{site.name}</span>
     </a>
     <nav class="main-nav" aria-label="Main navigation">
@@ -21,6 +16,6 @@ const { activeNav } = Astro.props;
         </a>
       ))}
     </nav>
-    <a class="header-contact" href={`mailto:${site.email}`}>Get in touch <span aria-hidden="true">↗</span></a>
+    <a class="header-contact" href={`mailto:${site.email}`}>Email</a>
   </div>
 </header>

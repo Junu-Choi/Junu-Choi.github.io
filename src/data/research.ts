@@ -8,7 +8,7 @@ export const researchAreas: ResearchArea[] = [
   {
     name: "Generative dynamics & transport",
     description:
-      "Designing diffusion and flow dynamics: how the choice of paths, couplings, and transport maps shapes a generative model.",
+      "Diffusion, flows, and transport maps for designing and understanding generative processes.",
     experience: [
       { label: "Min-energy Transport Matching · SNU", href: "/cv/#snu-research" },
       { label: "Speech generation · Humelo", href: "/cv/#humelo-research" },
@@ -17,7 +17,7 @@ export const researchAreas: ResearchArea[] = [
   {
     name: "Inference & inverse problems",
     description:
-      "Sampling under observations and constraints, with a focus on posterior sampling, sequential Monte Carlo, and transport-based reconstruction.",
+      "Posterior sampling and reconstruction with transport methods and sequential Monte Carlo.",
     experience: [
       { label: "Min-energy Transport Matching · SNU", href: "/cv/#snu-research" },
       { label: "Sequential Monte Carlo · KAIST", href: "/cv/#kaist-visual-ai" },
@@ -26,7 +26,7 @@ export const researchAreas: ResearchArea[] = [
   {
     name: "Attention & scientific modeling",
     description:
-      "Designing scalable attention for physical systems, including content-routed interactions across spatial scales for global weather forecasting.",
+      "Scalable, content-routed attention for scientific modeling and global weather forecasting.",
     experience: [
       { label: "RED attention · SNU", href: "/cv/#snu-research" },
     ],
@@ -34,7 +34,7 @@ export const researchAreas: ResearchArea[] = [
   {
     name: "Efficient & multimodal learning",
     description:
-      "Learning across speech, audio, and language, with an emphasis on parameter-efficient adaptation, stable training, and faster inference.",
+      "Speech and audio–language models, parameter-efficient adaptation, and efficient inference.",
     experience: [
       { label: "Speech & audio–language · Humelo", href: "/cv/#humelo-research" },
       { label: "LLM adaptation · KAIST", href: "/cv/#kaist-mlilab" },
