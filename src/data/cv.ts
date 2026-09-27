@@ -6,6 +6,7 @@
  */
 
 export type CVEntry = {
+  id?: string;
   title: string;
   place: string;
   date: string;
@@ -25,6 +26,7 @@ export const cv = {
       details: ["GPA: 4.30 / 4.30 (in progress)"],
     },
     {
+      id: "kaist-education",
       title: "B.S. (Double Major), School of Computing × Mathematical Sciences",
       place: "Korea Advanced Institute of Science and Technology",
       date: "2017 – 2025",
@@ -40,6 +42,7 @@ export const cv = {
 
   experience: [
     {
+      id: "snu-research",
       title: "Graduate Researcher",
       place: "Seoul National University",
       date: "Sep 2025 – present",
@@ -50,6 +53,7 @@ export const cv = {
       ],
     },
     {
+      id: "kaist-visual-ai",
       title: "Undergraduate Researcher",
       place: "Visual AI Group, KAIST",
       date: "Jan – Mar 2025",
@@ -58,6 +62,7 @@ export const cv = {
       ],
     },
     {
+      id: "kaist-mlilab",
       title: "Undergraduate Researcher",
       place: "MLILAB, KAIST",
       date: "Mar – Aug 2024",
@@ -67,6 +72,7 @@ export const cv = {
       ],
     },
     {
+      id: "humelo-research",
       title: "AI Researcher (Speech & Multimodal)",
       place: "Humelo, Inc. — incl. two years of alternative military service (industrial technical personnel)",
       date: "Sep 2020 – Jan 2024",
