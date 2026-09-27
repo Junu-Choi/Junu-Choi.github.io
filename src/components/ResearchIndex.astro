@@ -1,0 +1,91 @@
+---
+import { researchAreas, researchWork } from "../data/research";
+---
+<section class="research-index" id="research" aria-labelledby="research-title" data-research-index>
+  <div class="research-topics">
+    <div class="index-heading">
+      <h2 id="research-title">Research interests</h2>
+      <button class="index-reset" type="button" data-topic="all" aria-controls="related-work" aria-pressed="true" hidden>All research</button>
+    </div>
+    <p class="topic-hint" data-topic-hint hidden>Select a topic to see related work.</p>
+    <ul class="topic-list">
+      {researchAreas.map((area) => (
+        <li class="topic" data-area={area.id}>
+          <h3>
+            <button type="button" class="topic-button" data-topic={area.id} data-work={area.work.join(" ")} data-label={area.label}
+              aria-controls="related-work" aria-pressed="false" aria-label={`Show work related to ${area.name}`} disabled>
+              <span>{area.label}</span><sup aria-hidden="true">{area.work.map((id) => researchWork.find((work) => work.id === id)!.reference).join(", ")}</sup>
+            </button>
+          </h3>
+          <p class="topic-description">{area.description}</p>
+          <ul class="topic-references" aria-label={`Related experience: ${area.name}`}>
+            {area.work.map((id) => {
+              const work = researchWork.find((entry) => entry.id === id)!;
+              return <li><a href={work.href}><span class="reference-letter" aria-hidden="true">{work.reference}</span>{work.shortTitle}</a></li>;
+            })}
+          </ul>
+        </li>
+      ))}
+    </ul>
+  </div>
+  <div class="research-work" id="related-work" aria-labelledby="work-title">
+    <div class="index-heading">
+      <h2 id="work-title">Related work</h2>
+      <span class="work-context" data-work-context>All research</span>
+    </div>
+    <p class="visually-hidden" role="status" aria-live="polite" aria-atomic="true" data-work-status></p>
+    <ol class="work-list">
+      {researchWork.map((work) => (
+        <li class:list={["work-entry", { "work-forthcoming": work.forthcoming }]} id={`work-${work.id}`} data-research-work={work.id}>
+          <span class="work-reference" aria-hidden="true">{work.reference}</span>
+          <div class="work-content">
+            <div class="work-meta"><span>{work.place}</span>{work.forthcoming && <span>To be published</span>}</div>
+            <h3><a href={work.href}>{work.title}</a></h3>
+            <p>{work.description}</p>
+            {work.preview && <a class="work-preview" href={work.preview}>Manuscript preview <span aria-hidden="true">↗</span></a>}
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-research-index]").forEach((index) => {
+    const buttons = [...index.querySelectorAll<HTMLButtonElement>("[data-topic]")];
+    const entries = [...index.querySelectorAll<HTMLElement>("[data-research-work]")];
+    const context = index.querySelector<HTMLElement>("[data-work-context]");
+    const status = index.querySelector<HTMLElement>("[data-work-status]");
+    let selected = "all";
+
+    function select(topic: string) {
+      const target = buttons.find((button) => button.dataset.topic === topic);
+      if (!target) return;
+      selected = topic;
+      const related = new Set((target.dataset.work ?? "").split(" "));
+      let count = 0;
+      entries.forEach((entry) => {
+        entry.hidden = topic !== "all" && !related.has(entry.dataset.researchWork!);
+        if (!entry.hidden) count++;
+      });
+      buttons.forEach((button) => {
+        const active = button.dataset.topic === topic;
+        button.setAttribute("aria-pressed", String(active));
+        button.closest<HTMLElement>("[data-area]")?.toggleAttribute("data-active", active);
+      });
+      index.dataset.selected = topic;
+      const label = topic === "all" ? "All research" : target.dataset.label!;
+      if (context) context.textContent = label;
+      if (status) status.textContent = `${label}: ${count} related ${count === 1 ? "project" : "projects"}.`;
+    }
+
+    buttons.forEach((button) => {
+      button.disabled = false;
+      button.hidden = false;
+      button.addEventListener("click", () => select(selected === button.dataset.topic ? "all" : button.dataset.topic!));
+    });
+    index.dataset.enhanced = "true";
+    index.querySelector<HTMLElement>("[data-topic-hint]")?.removeAttribute("hidden");
+    select("all");
+  });
+</script>
