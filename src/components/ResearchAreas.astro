@@ -7,7 +7,7 @@ import { researchAreas } from "../data/research";
       <h3 class="area-name">{a.name}</h3>
       <div class="area-desc">{a.description}</div>
       <ul class="area-experience" aria-label={`Related experience: ${a.name}`}>
-        {a.experience.map((e) => <li><a href={e.href}>{e.label}<span aria-hidden="true">↗</span></a></li>)}
+        {a.experience.map((e) => <li><a href={e.href}>{e.label}</a></li>)}
       </ul>
     </li>
   ))}
