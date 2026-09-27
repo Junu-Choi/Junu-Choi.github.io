@@ -33,25 +33,25 @@
 .note { color: var(--ink-soft); }
 
 /* Publications remain driven by the shared data array. */
-.publication-preview { border-left: 3px solid #16213e; background: #f6f6f7; padding: 35px 38px 28px; margin-bottom: 48px; scroll-margin-top: 30px; }
+.publication-preview { border-left: 3px solid var(--paper-ink); background: var(--paper-tint); padding: 35px 38px 28px; margin-bottom: 48px; scroll-margin-top: 30px; }
 .publication-banner { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: 32px; align-items: center; }
 .preview-heading { min-width: 0; }
-.preview-number { color: #16213e; margin-right: 19px; }
-.preview-heading h2 { font: 550 clamp(24px, 2.4vw, 28px)/1.3 var(--display); letter-spacing: -.035em; color: #16213e; margin-top: 17px; }
+.preview-number { color: var(--paper-ink); margin-right: 19px; }
+.preview-heading h2 { font: 550 clamp(24px, 2.4vw, 28px)/1.3 var(--display); letter-spacing: -.035em; color: var(--paper-ink); margin-top: 17px; }
 .preview-description { max-width: 650px; font-size: 16px; line-height: 1.7; margin-top: 19px; }
 .preview-availability { color: var(--ink-soft); font: 12px/1.7 var(--sans); margin-top: 13px; }
 .preview-figure { min-width: 0; }
 .preview-figure a { display: block; }
 .preview-figure img { display: block; width: 100%; height: auto; background: white; }
 .preview-figure figcaption { color: var(--ink-soft); font-size: 11px; line-height: 1.6; margin-top: 10px; }
-.geometry-figure { border-top: 1px solid #d9dde4; margin-top: 28px; }
+.geometry-figure { border-top: 1px solid var(--paper-rule); margin-top: 28px; }
 .geometry-summary { padding-block: 16px 0; font: 500 15px/1.6 var(--display); cursor: pointer; }
 .geometry-summary::marker { color: var(--ink-soft); font-size: 11px; }
 .geometry-figure[open] .geometry-summary { padding-bottom: 20px; }
 .geometry-heading { display: flex; justify-content: space-between; align-items: flex-start; gap: 22px; }
 .geometry-heading p { color: var(--ink-soft); font-size: 14px; line-height: 1.65; }
-.motion-toggle { flex-shrink: 0; min-height: 40px; border: 1px solid #bac2ce; background: transparent; padding: 7px 13px; font: 12px/1.5 var(--sans); color: #16213e; }
-.motion-toggle:hover { background: #e9ecf0; border-color: #16213e; }
+.motion-toggle { flex-shrink: 0; min-height: 40px; border: 1px solid #bac2ce; background: transparent; padding: 7px 13px; font: 12px/1.5 var(--sans); color: var(--paper-ink); }
+.motion-toggle:hover { background: #e9ecf0; border-color: var(--paper-ink); }
 .geometry-panels { display: grid; grid-template-columns: 1fr 1fr; gap: 34px; margin-top: 30px; }
 .geometry-panels figure { min-width: 0; }
 .geometry-panels h3 { font: 500 14px/1.5 var(--display); letter-spacing: -.02em; margin: 0; }
@@ -59,7 +59,7 @@
 .geometry-panels img { display: block; width: 100%; height: auto; margin-top: 8px; }
 .geometry-panels figcaption { color: var(--ink-soft); font-size: 12px; line-height: 1.75; margin-top: 14px; }
 .kernel-key { color: #99512f; }
-.geometry-note { color: var(--ink-soft); font-size: 11px; line-height: 1.65; margin-top: 24px; padding-top: 16px; border-top: 1px solid #d9dde4; }
+.geometry-note { color: var(--ink-soft); font-size: 11px; line-height: 1.65; margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--paper-rule); }
 .pubs-year-group { display: grid; grid-template-columns: 130px 1fr; gap: 30px; border-top: 1px solid var(--hair); padding-top: 28px; margin-bottom: 40px; }
 .pubs-year { font: 400 18px var(--sans); color: var(--accent); }
 .pub-entry + .pub-entry { margin-top: 30px; border-top: 1px solid var(--hair); padding-top: 28px; }
@@ -177,7 +177,7 @@
   .desktop-break { display: none; }
   .geometry-heading { flex-direction: column; gap: 15px; }
   .geometry-panels { grid-template-columns: 1fr; gap: 29px; margin-top: 23px; }
-  .geometry-panels figure + figure { border-top: 1px solid #d9dde4; padding-top: 23px; }
+  .geometry-panels figure + figure { border-top: 1px solid var(--paper-rule); padding-top: 23px; }
   .geometry-panels img { max-width: 540px; margin-inline: auto; }
   .geometry-panels figcaption { margin-top: 10px; }
   .cv-entry-head { flex-direction: column; gap: 5px; }
