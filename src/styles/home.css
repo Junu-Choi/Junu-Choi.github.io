@@ -15,15 +15,42 @@ body.home-theme {
 .home-theme .main-nav a, .home-theme .header-contact { font-size: 13px; }
 .home-theme .main-nav a[aria-current="page"]::after { height: 1px; bottom: 5px; }
 .home-theme .home-page { padding-block: 0 54px; }
+.home-theme .page-content.home-page { width: 100%; }
 .home-theme .footer-email { font-size: 13px; }
 
-.identity { display: grid; grid-template-columns: minmax(0, 1fr) 132px; align-items: center; gap: 68px; max-width: 750px; margin-inline: auto; padding-block: 62px 68px; }
+.identity-surface { position: relative; isolation: isolate; overflow: hidden; }
+.identity { --portrait-width: 132px; --portrait-height: 158px; display: grid; grid-template-columns: minmax(0, 1fr) var(--portrait-width); align-items: center; gap: 68px; width: calc(100% - 104px); max-width: 750px; margin-inline: auto; padding-block: 62px 68px; }
 .identity-copy h1 { font: 400 clamp(60px, 6.4vw, 82px)/1.1 var(--display); letter-spacing: -.06em; word-spacing: .07em; }
 .identity-copy h1, .area-name, .work-card h3, .selected-manuscript h3 { color: var(--paper-ink); }
 .identity-affiliation { color: var(--ink-soft); font-size: 12px; line-height: 1.75; margin-top: 15px; }
 .identity-separator { margin-inline: 5px; }
 .identity-description { font-size: 16px; line-height: 1.75; margin-top: 13px; }
-.identity-portrait { display: block; width: 132px; height: 158px; object-fit: cover; object-position: center 18%; border-radius: 3px; }
+.portrait-blend { position: relative; width: var(--portrait-width); height: var(--portrait-height); }
+/* Sampled from the wall at either side of the portrait, never the clothing.
+   The field follows the portrait's own box at every breakpoint. Only this
+   full-width introduction clips its decorative overflow. */
+.portrait-blend::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -45% -150%;
+  pointer-events: none;
+  background: url("/portrait-background.svg") center / 100% 100% no-repeat;
+  -webkit-mask-image: radial-gradient(ellipse, #000 25%, rgb(0 0 0 / .75) 42%, rgb(0 0 0 / .3) 57%, transparent 70%);
+  mask-image: radial-gradient(ellipse, #000 25%, rgb(0 0 0 / .75) 42%, rgb(0 0 0 / .3) 57%, transparent 70%);
+}
+.identity-portrait {
+  --portrait-mask: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent), linear-gradient(180deg, transparent, #000 5%, #000 78%, transparent);
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 18%;
+  -webkit-mask-image: var(--portrait-mask);
+  mask-image: var(--portrait-mask);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+}
 
 .research-section { border-top: 1px solid var(--hair); padding-top: 18px; }
 .research-heading { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-bottom: 15px; }
@@ -84,6 +111,7 @@ body.home-theme {
 
 @media (max-width: 1100px) {
   .home-theme .container { width: calc(100% - 64px); }
+  .identity { width: calc(100% - 64px); }
   .research-area { padding: 20px 16px; }
   .area-name { font-size: 17px; }
   .area-description { font-size: 12px; }
@@ -92,8 +120,7 @@ body.home-theme {
   .work-card h3 { font-size: 19px; }
 }
 @media (max-width: 900px) {
-  .identity { max-width: 640px; gap: 38px; grid-template-columns: minmax(0, 1fr) 120px; padding-block: 48px 54px; }
-  .identity-portrait { width: 120px; height: 146px; }
+  .identity { --portrait-width: 120px; --portrait-height: 146px; max-width: 640px; gap: 38px; padding-block: 48px 54px; }
   .identity-description { font-size: 15px; }
   .identity-break { display: none; }
   .research-areas { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
@@ -110,14 +137,14 @@ body.home-theme {
   .home-theme .header-inner { min-height: 92px; }
   .home-theme .main-nav a[aria-current="page"]::after { bottom: 0; }
   .home-theme .home-page { padding-bottom: 36px; }
-  .identity { grid-template-columns: 1fr 86px; gap: 19px; padding-block: 37px 40px; }
+  .identity { --portrait-width: 86px; --portrait-height: 112px; width: calc(100% - 40px); grid-template-columns: minmax(0, 1fr) var(--portrait-width); gap: 19px; padding-block: 37px 40px; }
   .identity-copy { display: contents; }
   .identity-copy h1 { font-size: clamp(42px, 11vw, 62px); white-space: nowrap; }
   .identity-affiliation { font-size: 11px; line-height: 1.7; margin: 0; grid-column: 1; }
   .identity-separator { display: none; }
   .identity-institution { display: block; }
   .identity-description { grid-column: 1 / -1; font-size: 14px; line-height: 1.75; margin: 0; }
-  .identity-portrait { grid-column: 2; grid-row: 1 / 3; width: 86px; height: 112px; align-self: start; margin: 0; }
+  .portrait-blend { grid-column: 2; grid-row: 1 / 3; align-self: start; }
   .research-section { padding-top: 12px; }
   .research-heading { margin-bottom: 12px; }
   .research-heading h2 { font-size: 13px; }
@@ -145,9 +172,8 @@ body.home-theme {
   .selected-manuscript h3 { font-size: 19px; }
 }
 @media (max-width: 360px) {
-  .identity { grid-template-columns: 1fr 70px; gap: 14px; }
+  .identity { --portrait-width: 70px; --portrait-height: 94px; gap: 14px; }
   .identity-copy h1 { font-size: 39px; }
-  .identity-portrait { width: 70px; height: 94px; }
   .research-area { padding: 16px 12px; min-height: 204px; }
   .area-name { font-size: 15px; }
   .area-description { font-size: 11px; }
@@ -155,7 +181,9 @@ body.home-theme {
 }
 @media print {
   .home-theme .container { width: 100%; }
-  .identity { padding-block: 10px 25px; }
+  .identity { width: 100%; padding-block: 10px 25px; }
+  .portrait-blend::before { display: none; }
+  .identity-portrait { -webkit-mask-image: none; mask-image: none; }
   .identity-copy h1 { font-size: 54px; }
   .all-research, .area-toggle, .research-connections { display: none !important; }
   .research-area, .work-card { break-inside: avoid; }

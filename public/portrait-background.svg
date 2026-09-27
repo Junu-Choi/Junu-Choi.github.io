@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 190" preserveAspectRatio="none" color-interpolation="sRGB">
+  <!-- Wall-only samples from junu.jpeg: 45 x 80 px patches at x=0 and
+       x=755, centered at y=40, 200, 360, 520, 680. The portrait sits at
+       x=150..250, y=45..145 inside this extended field. Its CSS mask
+       fades the field into the page without introducing clothing colors. -->
+  <defs>
+    <linearGradient id="left-wall" x1="0" y1="45" x2="0" y2="145" gradientUnits="userSpaceOnUse">
+      <stop offset=".02" stop-color="#e8e7e8"/>
+      <stop offset=".18" stop-color="#eceaeb"/>
+      <stop offset=".35" stop-color="#ece8e4"/>
+      <stop offset=".52" stop-color="#ebe6e1"/>
+      <stop offset=".68" stop-color="#ebe6e1"/>
+    </linearGradient>
+    <linearGradient id="right-wall" x1="0" y1="45" x2="0" y2="145" gradientUnits="userSpaceOnUse">
+      <stop offset=".02" stop-color="#d8dde3"/>
+      <stop offset=".18" stop-color="#d9dee4"/>
+      <stop offset=".35" stop-color="#d9dee4"/>
+      <stop offset=".52" stop-color="#dadfe4"/>
+      <stop offset=".68" stop-color="#d5d8dc"/>
+    </linearGradient>
+    <linearGradient id="across" x1="150" y1="0" x2="250" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="white" stop-opacity="0"/>
+      <stop offset="1" stop-color="white"/>
+    </linearGradient>
+    <mask id="right-blend" maskUnits="userSpaceOnUse" x="0" y="0" width="400" height="190">
+      <rect width="400" height="190" fill="url(#across)"/>
+    </mask>
+  </defs>
+  <rect width="400" height="190" fill="url(#left-wall)"/>
+  <rect width="400" height="190" fill="url(#right-wall)" mask="url(#right-blend)"/>
+</svg>

@@ -10,26 +10,32 @@ import { ptmManuscript } from "../data/manuscripts";
 const hasSelectedPapers = papers.some((p) => p.selected);
 ---
 <BaseLayout activeNav="about" pageClass="home-page">
-  <header class="identity">
-    <div class="identity-copy">
-      <h1 id="hero-title">Junu Choi</h1>
-      <p class="identity-affiliation">Master’s student in AI <span class="identity-separator" aria-hidden="true">·</span> <span class="identity-institution">Seoul National University</span></p>
-      <p class="identity-description">I study generative modeling, probabilistic inference,<br class="identity-break"/> and scientific machine learning.</p>
-    </div>
-    <img class="identity-portrait" src="/junu.jpeg" alt="Portrait of Junu Choi" width="800" height="1103" loading="eager" fetchpriority="high"/>
-  </header>
-
-  <ResearchMap/>
-
-  <section class="home-publications" aria-labelledby="selected-title">
-    <SectionRule label="Selected papers" id="selected-title" href="/papers/" linkLabel="All papers"/>
-    <article class="selected-manuscript">
-      <p class="selected-status">{ptmManuscript.status}</p>
-      <div>
-        <h3><a href={ptmManuscript.href}>{ptmManuscript.title}<span aria-hidden="true">↗</span></a></h3>
-        <p>{ptmManuscript.description}</p>
+  <div class="identity-surface">
+    <header class="identity">
+      <div class="identity-copy">
+        <h1 id="hero-title">Junu Choi</h1>
+        <p class="identity-affiliation">Master’s student in AI <span class="identity-separator" aria-hidden="true">·</span> <span class="identity-institution">Seoul National University</span></p>
+        <p class="identity-description">I study generative modeling, probabilistic inference,<br class="identity-break"/> and scientific machine learning.</p>
       </div>
-    </article>
-    {hasSelectedPapers && <PaperList selectedOnly/>}
-  </section>
+      <div class="portrait-blend">
+        <img class="identity-portrait" src="/junu.jpeg" alt="Portrait of Junu Choi" width="800" height="1103" loading="eager" fetchpriority="high"/>
+      </div>
+    </header>
+  </div>
+
+  <div class="container home-body">
+    <ResearchMap/>
+
+    <section class="home-publications" aria-labelledby="selected-title">
+      <SectionRule label="Selected papers" id="selected-title" href="/papers/" linkLabel="All papers"/>
+      <article class="selected-manuscript">
+        <p class="selected-status">{ptmManuscript.status}</p>
+        <div>
+          <h3><a href={ptmManuscript.href}>{ptmManuscript.title}<span aria-hidden="true">↗</span></a></h3>
+          <p>{ptmManuscript.description}</p>
+        </div>
+      </article>
+      {hasSelectedPapers && <PaperList selectedOnly/>}
+    </section>
+  </div>
 </BaseLayout>

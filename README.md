@@ -39,8 +39,16 @@ The home page shares the Papers page's white background, navy `#16213E` headings
 and pale `#F6F6F7` panels. Shared `--paper-*` colors keep both pages aligned;
 Selected papers repeats the manuscript preview's navy left rule. The name,
 affiliation, and short introduction share a centered
-profile block with a separate portrait. On mobile, the introduction spans the
-width below the name and photo; no separate About section interrupts the research.
+profile block with a separate portrait. A local gray-to-blue-gray field uses only
+the photographed wall's colors and softly joins the portrait to the white page.
+`public/portrait-background.svg` interpolates ten wall-only samples from five
+heights on each side of the photo, preserving its horizontal and vertical
+lighting variation. The sampled patch coordinates are recorded in the SVG.
+The original photo is unchanged; CSS masks soften its edges. The decorative field
+is anchored to the portrait's dimensions and clipped within the full-width
+introduction, so it follows the image on mobile without causing horizontal scroll.
+On mobile, the introduction spans the width below the name and photo; no separate
+About section interrupts the research.
 
 `ResearchMap.astro` presents four research cards in one desktop row, or a 2×2 grid
 on smaller screens. Each has a short statement of the work. Selecting a card
@@ -72,6 +80,8 @@ The connected-card layout before these content updates is preserved on
 `backup/home-research-cards-20260927` at `28d121e`.
 The cool-gray palette before the Papers color alignment is preserved on
 `backup/home-before-paper-tint-20260927` at `f0de424`.
+The Papers palette before the portrait blend is preserved on
+`backup/home-before-portrait-blend-20260927` at `3e8d025`.
 Revert the corresponding home-layout commit on `main` to restore a prior design
 without rewriting history.
 
