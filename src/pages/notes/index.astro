@@ -7,10 +7,12 @@ const notes = allNotes.sort((a, b) =>
   b.data.publishedAt.getTime() - a.data.publishedAt.getTime()
 );
 ---
-<BaseLayout title="Notes" activeNav="notes">
+<BaseLayout title="Notes" activeNav="notes" pageClass="notes-page">
 
   <header class="page-head">
-    <h1>Research notes</h1>
+    <p class="eyebrow">Ideas / Notebook</p>
+    <h1>Research notes<span class="name-period">.</span></h1>
+    <p class="page-intro">One question. One useful result.</p>
   </header>
 
   {notes.length === 0 ? (
@@ -21,16 +23,18 @@ const notes = allNotes.sort((a, b) =>
     <ul class="notes-list">
       {notes.map((n) => (
         <li class="notes-entry">
-          <a href={`/notes/${n.id}/`} class="notes-title">{n.data.title}</a>
           <time class="notes-date" datetime={n.data.publishedAt.toISOString()}>
-            {n.data.publishedAt.toISOString().slice(0, 10)}
+            {n.data.publishedAt.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric", timeZone: "UTC" })}
           </time>
+          <div class="notes-summary">
+          <h2><a href={`/notes/${n.id}/`} class="notes-title">{n.data.title}<span aria-hidden="true">↗</span></a></h2>
           <p class="notes-abstract">{n.data.abstract}</p>
           {n.data.tags.length > 0 && (
             <ul class="notes-tags">
               {n.data.tags.map((t) => <li>{t}</li>)}
             </ul>
           )}
+          </div>
         </li>
       ))}
     </ul>

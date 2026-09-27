@@ -1,55 +1,40 @@
-/* Palette — prussian ink on cool paper, with a dark navy rail. */
-
+/* Color relationships follow PTM Figure 2: blue density, teal paths, charcoal geometry. */
 :root {
-  /* Ink family — cool neutrals */
-  --ink:        #191C1E;   /* primary text */
-  --ink-soft:   #4E555B;   /* secondary text */
-  --hair:       #CFD4CE;   /* hairline rules */
-
-  /* Plane / paper */
-  --bg-plane:   #EBEEE9;   /* cool paper tint — used on panels, not full page */
-  --bg-page:    #F5F6F3;   /* cool off-white — main page background */
-  --bg-panel:   #EBEEE9;   /* alias for paper tint when used as a panel */
-  --bg-sunken:  #E2E6E0;   /* slightly deeper tint for layered panels */
-
-  /* Endpoints / reference */
-  --source:     #191C1E;
-  --target:     #8C9097;
-  --ref-dash:   #B2B5BB;
-
-  /* kappa-sequential stops (paper → mist → steel → prussian → midnight) */
-  --k-0:        #E3E9EF;
-  --k-1:        #BCCBDC;
-  --k-2:        #7E97B0;
-  --k-3:        #33567E;
-  --k-4:        #152740;
-
-  /* Semantic accents pulled from the deep end of the ramp */
-  --accent:           #33567E;
-  --accent-strong:    #1F3A59;
-  --accent-soft-bg:   #E3E9EF;
-
-  /* Left rail — dark navy panel with its own ink scale */
-  --rail-bg:     #1B2430;
-  --rail-ink:    #97A1AC;   /* default rail text */
-  --rail-bright: #EDF0F2;   /* name, active nav, hover */
-  --rail-dim:    #6E7885;   /* labels, footer */
-  --rail-hair:   #313B47;   /* borders inside the rail */
+  color-scheme: light;
+  --bg-page: #f8fafb;
+  --surface: #fff;
+  --ink: #27333c;
+  --ink-soft: #596974;
+  --hair: #d9e2e8;
+  --blue: #2878b5;
+  --teal: #238a83;
+  --rust: #c16a43;
+  --accent: #216a9e;
+  --accent-strong: #175582;
+  --accent-soft-bg: #eaf2f8;
+  --bg-panel: #eef3f6;
+  --display: "Manrope", "Helvetica Neue", Arial, sans-serif;
+  --sans: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
-html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-body {
-  margin: 0;
-  background: var(--bg-page);
-  color: var(--ink);
+html { scroll-behavior: smooth; scroll-padding-top: 2rem; -webkit-font-smoothing: antialiased; }
+body { margin: 0; background: var(--bg-page); color: var(--ink); font: 400 16px/1.65 var(--sans); }
+img, svg { max-width: 100%; }
+img { height: auto; }
+button, input { font: inherit; }
+button, a, input { -webkit-tap-highlight-color: transparent; }
+a { color: inherit; text-decoration: none; transition: color .18s ease; }
+a:hover { color: var(--accent); }
+button { cursor: pointer; }
+h1, h2, h3, p, figure { margin: 0; }
+h1, h2, h3 { font-family: var(--display); }
+h1, h2, h3, p, li { overflow-wrap: break-word; }
+::selection { background: #c5dced; color: #172d3f; }
+:focus-visible { outline: 2px solid var(--teal); outline-offset: 5px; }
+[hidden] { display: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
 }
-a {
-  color: var(--ink);
-  text-decoration: none;
-  border-bottom: 1px solid var(--hair);
-  transition: color .15s, border-color .15s;
-}
-a:hover { color: var(--accent-strong); border-bottom-color: var(--accent); }
-hr { border: 0; border-top: 1px solid var(--hair); margin: 2.5rem 0; }
-::selection { background: var(--k-1); color: var(--ink); }

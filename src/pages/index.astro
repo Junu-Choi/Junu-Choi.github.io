@@ -1,35 +1,56 @@
 ---
+import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import SectionRule from "../components/SectionRule.astro";
 import ResearchAreas from "../components/ResearchAreas.astro";
 import PaperList from "../components/PaperList.astro";
+import TransportStudy from "../components/TransportStudy.astro";
 import { papers } from "../data/papers";
 import { site } from "../config/site";
 
 const hasSelectedPapers = papers.some((p) => p.selected);
+const notes = (await getCollection("notes", ({ data }) => !data.draft))
+  .sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime());
+const latestNote = notes[0];
 ---
-<BaseLayout activeNav="about">
-
-  <header class="masthead">
-    <h1>{site.name}</h1>
-    <p class="role">Graduate student, Interdisciplinary Program in AI &middot; Seoul National University</p>
-  </header>
-
-  <section class="about">
-    <p>I am a graduate student at the Interdisciplinary Program in AI at Seoul National University. I work on generative modeling through the lens of dynamics &mdash; <em>designing the processes that carry noise to data</em> (diffusion, flows, stochastic interpolants) and understanding them with the tools of <em>optimal transport</em>.</p>
-    <p>I am drawn to the questions where the design space is geometric: which dynamics to run, along which path between distributions, at what cost &mdash; and what the answers reveal about the structure of high-dimensional data.</p>
+<BaseLayout activeNav="about" pageClass="home-page">
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-copy">
+      <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> Generative modeling &amp; geometry</p>
+      <h1 id="hero-title">Junu Choi<span class="name-period">.</span></h1>
+      <p class="hero-statement">Understanding the paths<br/>from <span>noise to data.</span></p>
+      <p class="hero-description">I study generative models through dynamics and optimal transport — how to design the process, choose the path, and understand its geometry.</p>
+      <div class="hero-links">
+        <a class="text-link" href="#research">Research interests <span aria-hidden="true">↓</span></a>
+        <a class="text-link muted-link" href="/cv/">View CV <span aria-hidden="true">↗</span></a>
+      </div>
+      <div class="hero-profile">
+        <img src="/junu.jpeg" alt={`Portrait of ${site.name}`} width="800" height="1103" loading="eager"/>
+        <div><span class="profile-role">Graduate student</span><span>Interdisciplinary Program in AI</span><span>Seoul National University</span></div>
+      </div>
+    </div>
+    <TransportStudy/>
   </section>
 
-  <section>
-    <SectionRule label="Research"/>
+  <section class="home-section" id="research" aria-labelledby="research-title">
+    <SectionRule label="Research interests" index="01" id="research-title"/>
     <ResearchAreas/>
   </section>
 
   {hasSelectedPapers && (
-    <section>
-      <SectionRule label="Selected papers"/>
+    <section class="home-section" aria-labelledby="selected-title">
+      <SectionRule label="Selected papers" id="selected-title" href="/papers/" linkLabel="All papers"/>
       <PaperList selectedOnly/>
     </section>
   )}
-
+  {latestNote && (
+    <section class="home-section" aria-labelledby="writing-title">
+      <SectionRule label="From the notebook" index="02" id="writing-title" href="/notes/" linkLabel="All notes"/>
+      <a class="featured-note" href={`/notes/${latestNote.id}/`}>
+        <div class="featured-note-meta"><span class="eyebrow">Research note</span><time datetime={latestNote.data.publishedAt.toISOString()}>{latestNote.data.publishedAt.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric", timeZone: "UTC" })}</time></div>
+        <div class="featured-note-content"><h3>{latestNote.data.title}</h3><p>{latestNote.data.abstract}</p><ul class="notes-tags">{latestNote.data.tags.map((tag) => <li>{tag}</li>)}</ul></div>
+        <span class="featured-note-arrow" aria-hidden="true">↗</span>
+      </a>
+    </section>
+  )}
 </BaseLayout>

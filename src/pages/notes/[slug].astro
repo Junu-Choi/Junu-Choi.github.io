@@ -15,10 +15,11 @@ const { Content } = await render(note);
 const isoDate = note.data.publishedAt.toISOString().slice(0, 10);
 const isoUpdated = note.data.updatedAt?.toISOString().slice(0, 10);
 ---
-<BaseLayout title={note.data.title} description={note.data.abstract} activeNav="notes">
+<BaseLayout title={note.data.title} description={note.data.abstract} activeNav="notes" pageClass="article-page">
 
   <article class="note-article">
     <header class="note-head">
+      <a href="/notes/" class="article-back">← Research notes</a>
       <h1>{note.data.title}</h1>
       <div class="note-meta">
         <time datetime={note.data.publishedAt.toISOString()}>{isoDate}</time>

@@ -1,0 +1,21 @@
+---
+import { site } from "../config/site";
+---
+<footer class="site-footer container">
+  <div class="footer-main">
+    <div>
+      <p class="eyebrow">Contact</p>
+      <a class="footer-email" href={`mailto:${site.email}`}>{site.email}<span aria-hidden="true">↗</span></a>
+    </div>
+    <nav class="footer-links" aria-label="External profiles">
+      {site.externalLinks.map(({ label, href }) => (
+        <a href={href}>{label === "github" ? "GitHub" : "ORCID"} <span aria-hidden="true">↗</span></a>
+      ))}
+    </nav>
+  </div>
+  <div class="footer-bottom">
+    <span>© {new Date().getUTCFullYear()} {site.name}</span>
+    <span>Seoul National University</span>
+    <a href="#top">Back to top <span aria-hidden="true">↑</span></a>
+  </div>
+</footer>

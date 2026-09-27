@@ -2,9 +2,21 @@
 import { researchAreas } from "../data/research";
 ---
 <ul class="areas">
-  {researchAreas.map((a) => (
+  {researchAreas.map((a, i) => (
     <li>
-      <div class="area-name">{a.name}</div>
+      <svg class="area-symbol" viewBox="0 0 100 72" fill="none" aria-hidden="true">
+        {i === 0 ? (
+          <g stroke="currentColor" stroke-width="1.2">
+            {[0, 1, 2, 3, 4, 5, 6].map((n) => <path d={`M 5 ${12 + n * 8} C 34 ${70 - n * 6}, 64 ${n * 8}, 95 ${12 + n * 8}`}/>)}
+          </g>
+        ) : (
+          <g stroke="currentColor" stroke-width="1.2" transform="translate(50 36) rotate(-25)">
+            {[0, 1, 2, 3, 4].map((n) => <ellipse rx={40 - n * 7} ry="24"/>)}
+            <path d="M-40 0H40M0-24V24"/>
+          </g>
+        )}
+      </svg>
+      <h3 class="area-name">{a.name}</h3>
       <div class="area-desc">{a.description}</div>
     </li>
   ))}
