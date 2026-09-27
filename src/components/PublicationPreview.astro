@@ -1,10 +1,13 @@
-<article class="publication-preview" id="ptm" aria-labelledby="ptm-title">
+---
+import { ptmManuscript } from "../data/manuscripts";
+---
+<article class="publication-preview" id={ptmManuscript.id} aria-labelledby="ptm-title">
   <div class="publication-banner">
     <header class="preview-heading">
       <p class="eyebrow"><span class="preview-number">01</span> Manuscript preview</p>
-      <h2 id="ptm-title">Posterior Transport Matching<br class="desktop-break"/> for Inverse Problems</h2>
-      <p class="preview-description">Pairing numerical transport maps with stochastic input updates for posterior sampling.</p>
-      <p class="preview-availability">Manuscript and links forthcoming.</p>
+      <h2 id="ptm-title">{ptmManuscript.title}</h2>
+      <p class="preview-description">{ptmManuscript.description}</p>
+      <p class="preview-availability">{ptmManuscript.availability}</p>
     </header>
     <figure class="preview-figure">
       <a href="/figures/ptm/figure-2.svg" aria-label="View Figure 2 at full size">

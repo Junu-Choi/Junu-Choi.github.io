@@ -11,12 +11,13 @@ export type CVEntry = {
   place: string;
   date: string;
   details?: string[];
+  links?: { label: string; href: string }[];
 };
 
 export type CVSection = readonly CVEntry[];
 
 export const cv = {
-  lastUpdated: "July 2026",
+  lastUpdated: "September 2026",
 
   education: [
     {
@@ -32,7 +33,6 @@ export const cv = {
       date: "2017 – 2025",
       details: [
         "On leave 2020 – 2024 — industry R&D at Humelo, Inc., including two years of alternative military service.",
-        "Led a team project on speculative-decoding acceleration — feature-level speculation combined with knowledge distillation.",
       ],
     },
   ] satisfies CVSection,
@@ -43,7 +43,7 @@ export const cv = {
   experience: [
     {
       id: "snu-research",
-      title: "Graduate Researcher",
+      title: "Graduate Researcher (M.S.)",
       place: "Seoul National University",
       date: "Sep 2025 – present",
       details: [
@@ -57,7 +57,7 @@ export const cv = {
       place: "Visual AI Group, KAIST",
       date: "Jan – Mar 2025",
       details: [
-        "Sequential Monte Carlo for sampling complex distributions — design-space expansion via population-simulated resampling.",
+        "Investigated population-simulated resampling to expand the design space of sequential Monte Carlo samplers.",
       ],
     },
     {
@@ -66,8 +66,8 @@ export const cv = {
       place: "MLILAB, KAIST",
       date: "Mar – Aug 2024",
       details: [
-        "PEFT fine-tuning of conversational LLMs on instruction-based medical Q&A data.",
-        "Designed a novel evaluation methodology for LLM output quality that mitigates GPT-4 evaluator bias and instability.",
+        "Fine-tuned conversational LLMs on medical instruction Q&A using parameter-efficient adaptation.",
+        "Developed an evaluation protocol to address GPT-4 evaluator bias and scoring variability.",
       ],
     },
     {
@@ -88,6 +88,32 @@ export const cv = {
       date: "Jul – Sep 2020",
       details: [
         "GMM-based emotional control of speaker embeddings; multi-band mel-GAN vocoder.",
+      ],
+    },
+  ] satisfies CVSection,
+
+  projects: [
+    {
+      id: "lighttransporter",
+      title: "LightTransporter — diffusion-based image relighting",
+      place: "KAIST · CS492D: Diffusion Models and Their Applications",
+      date: "Fall 2024",
+      details: [
+        "Led a three-person project using a Light-Image Encoder to condition diffusion on source/target environment maps and camera pose; evaluated on OpenIllumination.",
+      ],
+      links: [
+        { label: "Code", href: "https://github.com/j-mayo/LightTransporter" },
+        { label: "Hugging Face", href: "https://huggingface.co/LightTransporter/DiffRelight-OpenIllumination" },
+        { label: "Report", href: "https://drive.google.com/file/d/1009QskpqLxJRltqiCnim5seDmX1nxwEL/view" },
+      ],
+    },
+    {
+      id: "kaist-decoding",
+      title: "Feature-level speculative decoding",
+      place: "KAIST · Team project",
+      date: "Mar – Jun 2024",
+      details: [
+        "Led a team project combining intermediate-feature speculation, knowledge distillation, and sparse rejection for speculative decoding.",
       ],
     },
   ] satisfies CVSection,
