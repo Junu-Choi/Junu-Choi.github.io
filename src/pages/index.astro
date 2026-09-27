@@ -2,11 +2,10 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import SectionRule from "../components/SectionRule.astro";
-import ResearchAreas from "../components/ResearchAreas.astro";
+import ResearchMap from "../components/ResearchMap.astro";
 import PaperList from "../components/PaperList.astro";
 import "../styles/home.css";
 import { papers } from "../data/papers";
-import { researchWork } from "../data/research";
 
 const hasSelectedPapers = papers.some((p) => p.selected);
 const notes = (await getCollection("notes", ({ data }) => !data.draft))
@@ -15,63 +14,33 @@ const latestNote = notes[0];
 ---
 <BaseLayout activeNav="about" pageClass="home-page">
   <header class="identity">
-    <h1 class="identity-name" id="hero-title" aria-label="Junu Choi">
-      <span>Junu</span>
-      <img class="identity-portrait" src="/junu.jpeg" alt="" width="800" height="1103" loading="eager" fetchpriority="high"/>
-      <span>Choi</span>
-    </h1>
+    <div class="identity-copy">
+      <h1 id="hero-title">Junu Choi</h1>
+      <p class="identity-affiliation">Graduate researcher <span class="identity-separator" aria-hidden="true">·</span> <span class="identity-institution">Seoul National University</span></p>
+      <p class="identity-description">I study generative modeling, probabilistic inference,<br class="identity-break"/> and scientific machine learning.</p>
+    </div>
+    <img class="identity-portrait" src="/junu.jpeg" alt="Portrait of Junu Choi" width="800" height="1103" loading="eager" fetchpriority="high"/>
   </header>
 
-  <div class="home-content" data-research-overview data-selected="compact">
-    <section class="home-about" aria-labelledby="about-title">
-      <h2 id="about-title">About</h2>
-      <p>I’m a graduate researcher at Seoul National University. I study generative modeling, probabilistic inference, and scientific machine learning.</p>
-    </section>
+  <ResearchMap/>
 
-    <section class="home-interests" id="research" aria-labelledby="research-title">
-      <div class="home-interests-heading">
-        <h2 id="research-title">Research interests</h2>
-        <button class="all-research" type="button" aria-controls="research-topics related-work" aria-pressed="false" data-all-research hidden>All research</button>
+  {latestNote && (
+    <section class="home-note" aria-labelledby="writing-title">
+      <div class="home-note-heading">
+        <h2 id="writing-title"><a href="/notes/">Research notes</a></h2>
+        <time datetime={latestNote.data.publishedAt.toISOString()}>{latestNote.data.publishedAt.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric", timeZone: "UTC" })}</time>
       </div>
-      <ResearchAreas/>
-    </section>
-
-    <section class="home-work" id="related-work" aria-labelledby="work-title">
-      <div class="home-work-heading">
-        <h2 id="work-title">Related work</h2>
-        <span class="work-context" data-work-context></span>
-      </div>
-      <p class="visually-hidden" role="status" aria-live="polite" aria-atomic="true" data-work-status></p>
-      <ul class="current-work-list">
-        {researchWork.map((work) => (
-          <li class="current-work" id={`work-${work.id}`} data-research-work={work.id} data-featured={work.forthcoming ? "true" : "false"} hidden={!work.forthcoming}>
-            <h3><a href={work.href}>{work.title}</a></h3>
-            <p>{work.description}</p>
-            <div class="current-work-meta">
-              <span>{work.place}{work.forthcoming && " · To be published"}</span>
-              {work.preview && <a href={work.preview}>Manuscript preview <span aria-hidden="true">↗</span></a>}
-            </div>
-          </li>
-        ))}
-      </ul>
-    </section>
-
-    {latestNote && (
-      <section class="home-note" aria-labelledby="writing-title">
-        <div class="home-note-heading">
-          <h2 id="writing-title"><a href="/notes/">Research notes</a></h2>
-          <time datetime={latestNote.data.publishedAt.toISOString()}>{latestNote.data.publishedAt.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric", timeZone: "UTC" })}</time>
-        </div>
+      <div class="home-note-copy">
         <h3><a href={`/notes/${latestNote.id}/`}>{latestNote.data.title} <span aria-hidden="true">↗</span></a></h3>
         <p>{latestNote.data.abstract}</p>
-      </section>
-    )}
+      </div>
+    </section>
+  )}
 
-    {hasSelectedPapers && (
-      <section class="home-publications" aria-labelledby="selected-title">
-        <SectionRule label="Selected papers" id="selected-title" href="/papers/" linkLabel="All papers"/>
-        <PaperList selectedOnly/>
-      </section>
-    )}
-  </div>
+  {hasSelectedPapers && (
+    <section class="home-publications" aria-labelledby="selected-title">
+      <SectionRule label="Selected papers" id="selected-title" href="/papers/" linkLabel="All papers"/>
+      <PaperList selectedOnly/>
+    </section>
+  )}
 </BaseLayout>

@@ -35,28 +35,34 @@ Requires Node `>=22.12.0`.
 The palette follows PTM Figure 2: blue `#2878B5` distribution contours, teal
 `#238A83` paths, charcoal `#30363E` geometry, and a small rust `#C16A43` accent.
 Manrope headings and IBM Plex Sans body text sit on a light, spacious grid.
-The home page uses a cool blue-gray `#EDF3F9` background. A compact, nearly square
-portrait sits between the two parts of the name, centered as one group. Below,
-four research interests occupy a narrow left column; a short introduction sits
-above Related work in the right column. On mobile, the introduction comes first.
-`ResearchAreas.astro` uses the experience records in `src/data/research.ts` to link
-each interest directly to stable CV entry IDs defined in `src/data/cv.ts`.
-All four topics start folded, and Related work initially shows the two forthcoming
-SNU projects, each marked “To be published.” “All research” opens a concise
-overview: one sentence describing the work in each area, plus all six project
-titles with affiliations and forthcoming status. It omits duplicate experience
-links and full project summaries. Selecting one topic focuses that area, reveals
-its experience links, and shows the matching project summaries. Closing the
-active topic or toggling “All research” off restores the initial two projects.
-Native topic disclosures also work without JavaScript; in that case, Related work
-keeps the two initial projects and the all-research control is hidden. A single
-short research note closes the column. The layout lives in `src/styles/home.css`.
+The home page uses a cool gray `#EEF2F5` background, slate `#2C3947` text, and
+off-white cards. The name, affiliation, and short introduction share a centered
+profile block with a separate portrait. On mobile, the introduction spans the
+width below the name and photo; no separate About section interrupts the research.
+
+`ResearchMap.astro` presents four research cards in one desktop row, or a 2×2 grid
+on smaller screens. Each has a short statement of the work. Selecting a card
+reveals its project previews below, linked by restrained SVG branches. A selected
+topic uses a dark slate-blue background. The connector geometry updates with
+layout and font changes; on narrow screens it routes around other cards and uses
+one outside rail for stacked work. “All research” shows a compact grid of all six
+projects, with titles, affiliations, and forthcoming status. Selecting a topic
+from that overview opens its detailed previews; selecting it again closes them.
+Only the four topic cards are visible initially. Without JavaScript, all project
+previews and links remain visible, with the filter controls disabled or hidden.
+
+Project data in `src/data/research.ts` points to stable CV entry IDs and the PTM
+manuscript preview. The two SNU projects remain “To be published.” The same work
+appears only once per view even when it belongs to multiple research areas. A
+single short research note follows the map. The layout lives in `src/styles/home.css`.
 
 The previous home layout is preserved on the remote branch
 `backup/home-before-mineral-20260927` at `2a921d0`. That snapshot includes the
 publication's Figure 2 banner and animation disclosure. The subsequent static
 layout is also preserved on `backup/home-mineral-20260927` at `85965d2`, and the
 interactive index on `backup/home-research-index-20260927` at `a3bfb5d`.
+The subsequent centered-name design with folded topics is preserved on
+`backup/home-folded-overview-20260927` at `551b236`.
 Revert the corresponding home-layout commit on `main` to restore a prior design
 without rewriting history.
 
@@ -85,8 +91,8 @@ Reference directions: [Peter Holderrieth](https://www.peterholderrieth.com/)
 for readable academic structure and direct research links,
 [Michael Albergo](https://malbergo.me/) for personal identity with limited content,
 and [NVIDIA Research](https://www.nvidia.com/en-us/research/) for heading hierarchy
-and spacing. The centered name-and-portrait composition, cool background, and
-compact text columns form this site's own arrangement. No third-party artwork
+and spacing. The compact profile, cool background, and connected research cards
+form this site's own arrangement. No third-party artwork
 is reused.
 
 Research notes should lead with one takeaway, then the minimum equation and

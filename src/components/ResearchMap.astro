@@ -1,0 +1,158 @@
+---
+import { researchAreas, researchWork } from "../data/research";
+---
+<section class="research-section" id="research" aria-labelledby="research-title" data-research-map>
+  <div class="research-heading">
+    <h2 id="research-title">Research interests</h2>
+    <button class="all-research" type="button" aria-controls="related-work" aria-pressed="false" aria-expanded="false" data-all-research hidden>All research <span aria-hidden="true">↓</span></button>
+  </div>
+
+  <div class="research-map" data-map-canvas>
+    <svg class="research-connections" aria-hidden="true" focusable="false" data-connections><path/></svg>
+    <ul class="research-areas" id="research-topics">
+      {researchAreas.map((area) => (
+        <li>
+          <button class="research-area" type="button" data-area={area.id} data-work={area.work.join(" ")} data-label={area.label}
+            aria-labelledby={`area-${area.id}`} aria-describedby={`area-${area.id}-description`} aria-controls="related-work" aria-expanded="false" aria-pressed="false" disabled>
+            <span class="area-heading"><span id={`area-${area.id}`} class="area-name">{area.label}</span><span class="area-toggle" aria-hidden="true">+</span></span>
+            <span class="area-description" id={`area-${area.id}-description`}>{area.description}</span>
+          </button>
+        </li>
+      ))}
+    </ul>
+
+    <section class="related-work" id="related-work" aria-labelledby="work-title">
+      <h2 class="visually-hidden" id="work-title">Related work</h2>
+      <ul class="work-grid" data-work-grid>
+        {researchWork.map((work) => (
+          <li class="work-card" id={`work-${work.id}`} data-research-work={work.id}>
+            <p class="work-meta"><span>{work.place}</span>{work.forthcoming && <span>To be published</span>}</p>
+            <h3><a href={work.href}>{work.title}<span aria-hidden="true">↗</span></a></h3>
+            <p class="work-description">{work.description}</p>
+            {work.preview && <a class="work-preview" href={work.preview}>Manuscript preview <span aria-hidden="true">↗</span></a>}
+          </li>
+        ))}
+      </ul>
+      <p class="work-context" data-work-context>Related work</p>
+    </section>
+  </div>
+  <p class="visually-hidden" role="status" aria-live="polite" aria-atomic="true" data-work-status></p>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-research-map]").forEach((section) => {
+    const areas = [...section.querySelectorAll<HTMLButtonElement>("[data-area]")];
+    const entries = [...section.querySelectorAll<HTMLElement>("[data-research-work]")];
+    const panel = section.querySelector<HTMLElement>(".related-work")!;
+    const grid = section.querySelector<HTMLElement>("[data-work-grid]")!;
+    const canvas = section.querySelector<HTMLElement>("[data-map-canvas]")!;
+    const topicGrid = section.querySelector<HTMLElement>(".research-areas")!;
+    const svg = section.querySelector<SVGSVGElement>("[data-connections]")!;
+    const path = svg.querySelector("path")!;
+    const context = section.querySelector<HTMLElement>("[data-work-context]");
+    const status = section.querySelector<HTMLElement>("[data-work-status]");
+    const allButton = section.querySelector<HTMLButtonElement>("[data-all-research]")!;
+    let selected = "compact";
+    let frame = 0;
+
+    function drawConnections() {
+      if (panel.hidden) { path.setAttribute("d", ""); return; }
+      const bounds = canvas.getBoundingClientRect();
+      const topics = topicGrid.getBoundingClientRect();
+      const visible = entries.filter((entry) => !entry.hidden);
+      const targets = visible.map((entry) => {
+        const rect = entry.getBoundingClientRect();
+        return { x: rect.x + rect.width / 2 - bounds.x, left: rect.x - bounds.x, y: rect.y - bounds.y };
+      });
+      const topicsBottom = topics.bottom - bounds.y;
+      const firstTarget = Math.min(...targets.map((target) => target.y));
+      const joint = topicsBottom + (firstTarget - topicsBottom) / 2;
+      const twoRows = areas[0].offsetTop !== areas[areas.length - 1].offsetTop;
+      const selectedAreas = selected === "all" ? areas : areas.filter((area) => area.dataset.area === selected);
+      const sources = selectedAreas.map((area) => {
+        const rect = area.getBoundingClientRect();
+        return { x: rect.x + rect.width / 2 - bounds.x, y: rect.bottom - bounds.y };
+      });
+      const commands: string[] = [];
+      const stacked = selected !== "all" && targets.some((target) => target.y > firstTarget + 2);
+      const connectedTargets = selected === "all" ? targets.filter((target) => target.y < firstTarget + 2) : targets;
+      const joins: number[] = stacked ? [-9] : connectedTargets.map((target) => target.x);
+
+      // On small screens, the full overview connects as one group. A selected
+      // top-row topic routes through the outside gutter, clear of the other cards.
+      if (selected === "all" && twoRows) {
+        joins.push(bounds.width / 2);
+        commands.push(`M ${bounds.width / 2} ${topicsBottom} V ${joint}`);
+      } else {
+        sources.forEach((source) => {
+          if (source.y < topicsBottom - 2) {
+            const lane = source.x < bounds.width / 2 ? -9 : bounds.width + 9;
+            const rowGap = parseFloat(getComputedStyle(topicGrid).rowGap);
+            commands.push(`M ${source.x} ${source.y} V ${source.y + rowGap / 2} H ${lane} V ${joint}`);
+            joins.push(lane);
+          } else {
+            commands.push(`M ${source.x} ${source.y} V ${joint}`);
+            joins.push(source.x);
+          }
+        });
+      }
+      commands.push(`M ${Math.min(...joins)} ${joint} H ${Math.max(...joins)}`);
+      if (stacked) {
+        // Stacked cards branch from one outside rail, so they read as siblings.
+        commands.push(`M -9 ${joint} V ${Math.max(...targets.map((target) => target.y)) + 24}`);
+        targets.forEach((target) => commands.push(`M -9 ${target.y + 24} H ${target.left}`));
+      } else {
+        connectedTargets.forEach((target) => commands.push(`M ${target.x} ${joint} V ${target.y}`));
+      }
+      svg.setAttribute("viewBox", `0 0 ${bounds.width} ${bounds.height}`);
+      path.setAttribute("d", commands.join(" "));
+    }
+
+    function scheduleConnections() {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(drawConnections);
+    }
+
+    function select(mode: string, announce = true) {
+      selected = mode;
+      section.dataset.selected = mode;
+      const area = areas.find((entry) => entry.dataset.area === mode);
+      const related = new Set((area?.dataset.work ?? "").split(" "));
+      let count = 0;
+      areas.forEach((entry) => {
+        const active = entry === area;
+        entry.setAttribute("aria-pressed", String(active));
+        entry.setAttribute("aria-expanded", String(active));
+        entry.querySelector(".area-toggle")!.textContent = active ? "−" : "+";
+      });
+      entries.forEach((entry) => {
+        entry.hidden = mode !== "all" && !related.has(entry.dataset.researchWork!);
+        if (!entry.hidden) count++;
+      });
+      panel.hidden = count === 0;
+      grid.dataset.count = String(count);
+      grid.style.setProperty("--work-columns", String(Math.min(count || 1, 3)));
+      allButton.setAttribute("aria-pressed", String(mode === "all"));
+      allButton.setAttribute("aria-expanded", String(mode === "all"));
+      allButton.querySelector("span")!.textContent = mode === "all" ? "↑" : "↓";
+      const label = mode === "all" ? "All research" : area?.dataset.label ?? "";
+      if (context) context.textContent = `${label} · ${count} related ${count === 1 ? "project" : "projects"}`;
+      if (announce && status) status.textContent = count ? `${label}: ${count} related ${count === 1 ? "project" : "projects"} shown below.` : "Related work closed.";
+      scheduleConnections();
+    }
+
+    areas.forEach((area) => {
+      area.disabled = false;
+      area.addEventListener("click", () => select(selected === area.dataset.area ? "compact" : area.dataset.area!));
+    });
+    allButton.hidden = false;
+    allButton.addEventListener("click", () => select(selected === "all" ? "compact" : "all"));
+    section.dataset.enhanced = "true";
+    select("compact", false);
+    const observer = new ResizeObserver(scheduleConnections);
+    observer.observe(canvas);
+    observer.observe(topicGrid);
+    observer.observe(grid);
+    document.fonts.ready.then(scheduleConnections);
+  });
+</script>
