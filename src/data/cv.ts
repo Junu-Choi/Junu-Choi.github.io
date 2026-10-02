@@ -25,14 +25,14 @@ export const cv = {
     {
       title: "M.S., Interdisciplinary Program in Artificial Intelligence",
       place: "Seoul National University",
-      date: "2025 – Aug 2027",
+      date: "Sep 2025 – Aug 2027",
       details: ["GPA: 4.20 / 4.30 (in progress)"],
     },
     {
       id: "kaist-education",
       title: "B.S. (Double Major), School of Computing × Mathematical Sciences",
       place: "Korea Advanced Institute of Science and Technology",
-      date: "2017 – 2025",
+      date: "Feb 2017 – Aug 2025",
       details: [
         "Semiminor in Artificial Intelligence.",
         "On leave 2020 – 2024 — industry R&D at Humelo, Inc., including two years of alternative military service.",
