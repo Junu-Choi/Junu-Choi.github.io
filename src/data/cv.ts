@@ -19,14 +19,14 @@ export type CVEntry = {
 export type CVSection = readonly CVEntry[];
 
 export const cv = {
-  lastUpdated: "September 2026",
+  lastUpdated: "October 2026",
 
   education: [
     {
       title: "M.S., Interdisciplinary Program in Artificial Intelligence",
       place: "Seoul National University",
       date: "2025 – present",
-      details: ["GPA: 4.30 / 4.30 (in progress)"],
+      details: ["GPA: 4.20 / 4.30 (in progress)"],
     },
     {
       id: "kaist-education",
