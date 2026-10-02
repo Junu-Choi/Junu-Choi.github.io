@@ -25,7 +25,7 @@ export const cv = {
     {
       title: "M.S., Interdisciplinary Program in Artificial Intelligence",
       place: "Seoul National University",
-      date: "2025 – present",
+      date: "2025 – Aug 2027",
       details: ["GPA: 4.20 / 4.30 (in progress)"],
     },
     {
