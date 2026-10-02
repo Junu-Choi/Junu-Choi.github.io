@@ -26,7 +26,7 @@ import { researchAreas, researchWork } from "../data/research";
       <ul class="work-grid" data-work-grid>
         {researchWork.map((work) => (
           <li class="work-card" id={`work-${work.id}`} data-research-work={work.id}>
-            <p class="work-meta"><span>{work.place}</span>{work.forthcoming && <span>To be published</span>}</p>
+            <p class="work-meta"><span>{work.place}</span>{work.forthcoming && <span>{work.status ?? "To be published"}</span>}</p>
             <h3><a href={work.href}>{work.title}<span aria-hidden="true">↗</span></a></h3>
             <p class="work-description">{work.description}</p>
             {work.links && (

@@ -51,6 +51,8 @@ export type ResearchWork = {
   description: string;
   href: string;
   forthcoming?: boolean;
+  /** Status label shown on the research map for forthcoming work. */
+  status?: string;
   links?: { label: string; href: string }[];
 };
 
@@ -65,6 +67,7 @@ export const researchWork: ResearchWork[] = [
     description: "Minimum-energy transport matching with numerical maps for posterior sampling.",
     href: "/cv/#snu-research",
     forthcoming: true,
+    status: ptmManuscript.status,
     links: [{ label: "Manuscript preview", href: "/papers/#ptm" }],
   },
   {
@@ -75,6 +78,7 @@ export const researchWork: ResearchWork[] = [
     description: "Routed encode–decode attention for efficient global weather forecasting.",
     href: "/cv/#snu-research",
     forthcoming: true,
+    status: "Manuscript in preparation",
   },
   {
     id: "lighttransporter",

@@ -34,6 +34,7 @@ export const cv = {
       place: "Korea Advanced Institute of Science and Technology",
       date: "2017 – 2025",
       details: [
+        "Semiminor in Artificial Intelligence.",
         "On leave 2020 – 2024 — industry R&D at Humelo, Inc., including two years of alternative military service.",
       ],
     },
@@ -49,8 +50,9 @@ export const cv = {
       place: "Seoul National University",
       date: "Sep 2025 – present",
       details: [
-        "RED attention: routed encode–decode attention for efficient global weather forecasting — to be published.",
-        `${ptmManuscript.title}: minimum-energy transport matching for posterior sampling — to be published.`,
+        "Advisor: Prof. Youngjoon Hong.",
+        "RED attention: routed encode–decode attention for efficient global weather forecasting — manuscript in preparation.",
+        `${ptmManuscript.title}: minimum-energy transport matching for posterior sampling — under review, ICLR 2027.`,
       ],
     },
     {

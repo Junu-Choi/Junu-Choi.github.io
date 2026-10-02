@@ -4,7 +4,7 @@ export const ptmManuscript = {
   id: "ptm",
   title: "Posterior Transport Matching for Inverse Problems",
   description: "Pairing numerical transport maps with stochastic input updates for posterior sampling.",
-  status: "To be published",
+  status: "Under review, ICLR 2027",
   availability: "Manuscript and links forthcoming.",
   href: "/papers/#ptm",
 } as const;
