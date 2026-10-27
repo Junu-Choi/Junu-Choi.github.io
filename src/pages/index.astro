@@ -16,7 +16,7 @@ const hasSelectedPapers = papers.some((p) => p.selected);
         <p class="identity-eyebrow">Seoul National University · Master’s Student in AI</p>
         <h1 id="hero-title">{site.name}</h1>
         <p class="identity-description">
-          I research <strong>generative dynamics</strong>, <strong>probabilistic inference</strong>, and <strong>scientific machine learning</strong>—designing optimal transport principles and scalable architectures for high-dimensional physical systems.
+          I study <strong>generative modeling</strong>, <strong>probabilistic inference</strong>, and <strong>scientific machine learning</strong>.
         </p>
         <div class="meta-strip">
           <div class="meta-item">
@@ -104,8 +104,9 @@ const hasSelectedPapers = papers.some((p) => p.selected);
               <span>Manuscript</span>
             </div>
             <div class="metric-badges">
-              <span class="badge blue">Optimal Transport</span>
-              <span class="badge">Bayesian Inverse Problems</span>
+              <span class="badge blue">Posterior Sampling</span>
+              <span class="badge teal">Transport Maps</span>
+              <span class="badge">Inverse Problems</span>
             </div>
           </div>
           <div class="paper-body">
@@ -113,9 +114,8 @@ const hasSelectedPapers = papers.some((p) => p.selected);
               <h3 class="paper-title">
                 <a href={ptmManuscript.href}>{ptmManuscript.title}</a>
               </h3>
-              <p class="paper-authors"><strong>Junu Choi</strong>, et al.</p>
               <p class="paper-desc">
-                Alternates minimum-energy numerical transport maps with stochastic input updates (rematching) to sample complex posterior distributions without iterative simulation collapse.
+                {ptmManuscript.description}
               </p>
               <div class="paper-links">
                 <a class="btn-chip" href={ptmManuscript.href}>Manuscript Preview <span aria-hidden="true">→</span></a>
