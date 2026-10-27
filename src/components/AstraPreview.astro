@@ -22,22 +22,47 @@ import { astraPreview } from "../data/manuscripts";
     </figure>
   </div>
 
-  <details class="geometry-figure">
-    <summary class="geometry-summary">Kantorovich Attention</summary>
+  <details class="geometry-figure" data-geometry-figure open>
+    <summary class="geometry-summary" id="ka-title">Kantorovich Attention in motion</summary>
     <div class="geometry-heading">
-      <p>Each region (tile) of the grid chooses both the tiles it reads from and the tiles it writes to. Together the two choices form a transport plan in which every tile sends and receives at token resolution.</p>
+      <p>Each region (tile) of the grid chooses both the tiles it reads from (pull) and the tiles it writes to (push). Together the two choices form a transport plan in which every tile sends and receives at token resolution.</p>
+      <button class="motion-toggle" type="button" hidden data-motion-toggle>Play animation</button>
     </div>
     <ul class="ka-points">
-      <li><strong class="ka-pull">Pull</strong> Each tile picks the K tiles it reads from. Alone, it leaves some tiles unread (60 of 180 in this example).</li>
-      <li><strong class="ka-push">Push</strong> Each tile picks the K tiles it writes to, so every tile is read by at least K others.</li>
-      <li><strong class="ka-plan">Optimal plan</strong> Without a solver, the two-sided selection reaches 94–98% of the optimal plan’s gain over random pairs.</li>
+      <li><strong class="ka-pull">Pull</strong> Each tile picks the <em>K</em> tiles it reads from. Alone, it leaves some tiles unread (60 of 180 on the trained 2° globe).</li>
+      <li><strong class="ka-push">Push</strong> Each tile picks the <em>K</em> tiles it writes to, so every tile is read by at least <em>K</em> others.</li>
+      <li><strong class="ka-plan">Two-sided plan</strong> Without a linear-programming solver, the union of pull and push leaves 0 unread tiles by construction and reaches 94–98% of the optimal transport plan’s gain.</li>
     </ul>
-    <figure class="preview-figure ka-figure">
+    <div class="geometry-panels">
+      <figure>
+        <h3><span aria-hidden="true">a.</span> Two-sided 3D tile routing</h3>
+        <img
+          src="/figures/astra/ka-routing-still.png"
+          data-still-src="/figures/astra/ka-routing-still.png"
+          data-animation-src="/figures/astra/ka-routing.gif"
+          width="720" height="518" loading="lazy" decoding="async"
+          alt="Animation cycling through Pull alone (leaving 2 senders unread), Push alone (leaving 2 receivers reading nothing), and Kantorovich Attention (Pull union Push) on 3D raised Earth plates with twisting transport tubes."
+        />
+        <figcaption>Pull gathers <em>K</em> senders into query tile <em>i</em>; push scatters <em>i</em> to <em>K</em> receivers. Their union satisfies both marginal floors (≥ <em>K</em>) and achieves total score 21.8 vs. the LP optimum 21.9.</figcaption>
+      </figure>
+      <figure>
+        <h3><span aria-hidden="true">b.</span> Global coverage on trained scores</h3>
+        <img
+          src="/figures/astra/ka-coverage-still.png"
+          data-still-src="/figures/astra/ka-coverage-still.png"
+          data-animation-src="/figures/astra/ka-coverage.gif"
+          width="720" height="518" loading="lazy" decoding="async"
+          alt="Animation of the 180 global 20-degree raised Earth tiles on a trained L2 attention head: one-sided Pull leaves 60 of 180 tiles unread (hatched), whereas Two-sided top-K rescues every unread tile (0 unread by construction)."
+        />
+        <figcaption>Across 4,608 trained score matrices, one-sided pull leaves 28–38% of global tiles unread. Two-sided top-<em>K</em> guarantees 0% unread tiles by construction and captures 94–98% of the optimal transport gain.</figcaption>
+      </figure>
+    </div>
+    <figure class="preview-figure ka-figure" style="margin-top: 28px;">
       <a href="/figures/astra/figure-2.webp" aria-label="View Figure 2 at full size">
-        <img src="/figures/astra/figure-2.webp" width="1800" height="1714" loading="lazy" decoding="async"
+        <img src="/figures/astra/figure-2.webp" width="2237" height="2132" loading="lazy" decoding="async"
           alt="Figure 2: a, one tile at the top of a cut-away Earth reads from, writes to, and exchanges with selected tiles through transport tubes, while every other tile reaches it through a pooled term. b, plans on the trained network's scores: pull alone leaves 60 of 180 tiles unread, the two-sided top-K plan none, close to the optimal plan. c, a toy plan with at least K partners per tile on both sides."/>
       </a>
-      <figcaption>Figure 2. Kantorovich Attention routes from both sides: no tile is left unread, and the two-sided top-K solution reaches 94–98% of the optimal plan’s gain over random pairs.</figcaption>
+      <figcaption>Figure 2. Full architecture overview: 3D cut-away globe (a), trained-network score plans (b), and bipartite 3D plate decomposition (c).</figcaption>
     </figure>
   </details>
 </article>

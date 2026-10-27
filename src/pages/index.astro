@@ -38,7 +38,6 @@ const hasSelectedPapers = papers.some((p) => p.selected);
       <div class="dm-section-head">
         <div class="dm-section-titles">
           <h2 id="selected-title" class="dm-section-title">Papers</h2>
-          <p class="dm-section-subtitle">Selected preprints and manuscripts.</p>
         </div>
         <a class="dm-pill-btn" href="/papers/">All papers</a>
       </div>
@@ -58,12 +57,12 @@ const hasSelectedPapers = papers.some((p) => p.selected);
               <span>arXiv:2610.35545</span>
               <a class="dm-meta-link" href={astraPreview.arxiv}>Read paper <span class="dm-chevron" aria-hidden="true">›</span></a>
               <a class="dm-meta-link" href={astraPreview.pdf}>PDF <span class="dm-chevron" aria-hidden="true">›</span></a>
-              <a class="dm-meta-link" href={`/papers/#${astraPreview.id}`}>Interactive preview <span class="dm-chevron" aria-hidden="true">›</span></a>
+              <a class="dm-meta-link" href="/papers/#ka-title">Interactive preview <span class="dm-chevron" aria-hidden="true">›</span></a>
             </div>
           </div>
           <figure class="paper-thumb-stage">
-            <a href={`/papers/#${astraPreview.id}`} aria-label="Open Astra interactive scorecard and Kantorovich Attention figure">
-              <img src="/figures/astra/figure-2.webp" width="1800" height="1714" loading="eager" decoding="async" alt="Astra Kantorovich Attention two-sided transport architecture figure"/>
+            <a href="/papers/#ka-title" aria-label="Open Astra Kantorovich Attention interactive preview">
+              <img src="/figures/astra/hero-globe.webp" width="1039" height="1000" loading="eager" decoding="async" alt="Astra 3D cut-away Earth globe illustrating two-sided Kantorovich Attention transport tubes and raised tile zooms"/>
             </a>
           </figure>
         </article>

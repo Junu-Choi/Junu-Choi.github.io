@@ -7,20 +7,25 @@ Conditioning changes a Gaussian denoising kernel; the convolved density is NOT
 a posterior heat marginal. No manuscript files are read or modified.
 """
 from pathlib import Path
+import glob
 import json
 
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+from matplotlib import font_manager, patheffects
 from matplotlib.patches import Ellipse, Polygon
 import numpy as np
 from PIL import Image
 
+for _f in glob.glob("/data/junuchoi/hyperlane_wb2_prep/fig4b_sprint/M1/fonts_ttf/*.ttf"):
+    font_manager.fontManager.addfont(_f)
+
 OUT = Path(__file__).resolve().parents[2] / "public" / "figures" / "ptm"
-BG, INK, MUTED = "#f6f6f7", "#30363e", "#596974"
-BLUE, TEAL, RUST = "#2878b5", "#238a83", "#c16a43"
-TEAL_TEXT, RUST_TEXT = "#196d67", "#99512f"
-COLORS = ["#e3eef7", "#b5d1e6", "#75a9cd", "#347fb3"]
+BG, INK, MUTED = "#F8F9FA", "#202124", "#5F6368"
+BLUE, TEAL, RUST = "#1A73E8", "#0D9488", "#E05A33"
+TEAL_TEXT, RUST_TEXT = "#0F766E", "#C2410C"
+COLORS = ["#E4EEFC", "#BDD6FA", "#7CACF8", "#2B7DE9"]
 CELLS = [(-1.0, -0.6, -0.2, 0.2), (0.6, 1.0, -0.2, 0.2)]
 MEANS = np.array([[-1.65, -1.05], [-0.15, 1.6], [1.65, -0.75]])
 WEIGHTS = np.array([0.32, 0.36, 0.32])
@@ -35,9 +40,9 @@ MASSES = np.array([0.9, 0.75, 0.5, 0.25])
 STEPS = (1 - np.cos(np.linspace(0, np.pi, 49))) / 2
 
 plt.rcParams.update({
-    "font.family": "DejaVu Sans", "font.size": 10,
+    "font.family": "TeX Gyre Heros", "font.size": 10.5,
     "text.color": INK, "figure.facecolor": BG, "axes.facecolor": BG,
-    "lines.solid_joinstyle": "round", "mathtext.fontset": "dejavusans",
+    "lines.solid_joinstyle": "round", "mathtext.fontset": "stixsans",
 })
 
 
@@ -67,12 +72,12 @@ def area_ratio(cell, s):
 
 
 def frame_base(label, s):
-    fig = plt.figure(figsize=(5, 3.6), dpi=128)
-    fig.text(0.06, 0.935, label, color=MUTED, fontsize=11)
-    fig.text(0.94, 0.935, f"{s:.2f}", ha="right", family="DejaVu Sans Mono", fontsize=11)
+    fig = plt.figure(figsize=(5.0, 3.6), dpi=144)
+    fig.text(0.055, 0.935, label, color=MUTED, fontsize=10.8, fontweight="bold")
+    fig.text(0.945, 0.935, f"{s:.2f}", ha="right", fontsize=10.8, fontweight="bold", color=INK)
     fig.lines.extend([
-        plt.Line2D([0.06, 0.94], [0.89, 0.89], transform=fig.transFigure, color="#dce2e6", lw=1.3),
-        plt.Line2D([0.06, 0.06 + 0.88 * s], [0.89, 0.89], transform=fig.transFigure, color=BLUE, lw=1.3),
+        plt.Line2D([0.055, 0.945], [0.892, 0.892], transform=fig.transFigure, color="#DADCE0", lw=1.8),
+        plt.Line2D([0.055, 0.055 + 0.89 * s], [0.892, 0.892], transform=fig.transFigure, color=BLUE, lw=2.2),
     ])
     return fig
 
@@ -91,8 +96,9 @@ def volume_frame(s):
         ax.add_patch(Polygon(transform(boundary((-1, 1, -1, 1)), value), facecolor=BLUE, alpha=0.10, edgecolor="none"))
         for cell, color, name in zip(CELLS, [TEAL, RUST], ["A", "B"]):
             ax.add_patch(Polygon(transform(boundary(cell), value), facecolor=color, alpha=0.70, edgecolor="none"))
-            center = transform(np.array([[(cell[0] + cell[1]) / 2, 0.0]]), value)[0]
-            ax.text(center[0], center[1] - 0.39, name, ha="center", va="top", color=TEAL_TEXT if name == "A" else RUST_TEXT, fontsize=11)
+            bot = transform(np.array([[(cell[0] + cell[1]) / 2, cell[2]]]), value)[0]
+            txt = ax.text(bot[0], bot[1] - 0.11, name, ha="center", va="top", color=TEAL_TEXT if name == "A" else RUST_TEXT, fontsize=10.5, fontweight="bold", zorder=5)
+            txt.set_path_effects([patheffects.withStroke(linewidth=2.6, foreground="#EBF2FC")])
         t = np.linspace(-1, 1, 161)
         for edge in np.linspace(-1, 1, 6):
             for line in [np.column_stack((t, t * 0 + edge)), np.column_stack((t * 0 + edge, t))]:
@@ -158,8 +164,8 @@ def save_animation(name, frames):
     palette = sample.quantize(colors=256, method=Image.Quantize.MEDIANCUT)
     indexed = [frame.quantize(palette=palette, dither=Image.Dither.NONE) for frame in frames]
     cycle = indexed + indexed[-2:0:-1]
-    durations = [80] * len(cycle)
-    durations[0], durations[len(frames) - 1] = 1000, 1600
+    durations = [60] * len(cycle)
+    durations[0], durations[len(frames) - 1] = 900, 1400
     cycle[0].save(OUT / f"{name}.gif", save_all=True, append_images=cycle[1:], duration=durations, loop=0, optimize=False, disposal=1)
     frames[-1].save(OUT / f"{name}-still.png", optimize=True)
     return {"width": frames[0].width, "height": frames[0].height, "frames": len(cycle), "duration_ms": sum(durations)}
