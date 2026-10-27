@@ -51,7 +51,7 @@ export const cv = {
       date: "Sep 2025 – present",
       details: [
         "Advisor: Prof. Youngjoon Hong.",
-        "RED attention: routed encode–decode attention for efficient global weather forecasting — manuscript in preparation.",
+        "Astra: Kantorovich Attention (two-sided transport attention) for efficient quarter-degree probabilistic weather forecasting — arXiv:2610.35545.",
         `${ptmManuscript.title}: minimum-energy transport matching for posterior sampling — under review, ICLR 2027.`,
       ],
     },

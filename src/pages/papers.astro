@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import PaperList from "../components/PaperList.astro";
+import AstraPreview from "../components/AstraPreview.astro";
 import PublicationPreview from "../components/PublicationPreview.astro";
 import { papers } from "../data/papers";
 ---
@@ -10,6 +11,7 @@ import { papers } from "../data/papers";
     <h1>Publications</h1>
   </header>
 
+  <AstraPreview/>
   <PublicationPreview/>
   {papers.length > 0 && <PaperList/>}
 

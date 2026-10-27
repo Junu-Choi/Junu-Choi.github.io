@@ -26,4 +26,17 @@ export type Paper = {
  */
 // Latest-first within each year. PaperList and the CV publications mapper
 // both year-sort with a stable algorithm, so the order here is preserved.
-export const papers: Paper[] = [];
+export const papers: Paper[] = [
+  {
+    year: 2026,
+    title: "Efficient probabilistic weather forecasting at quarter-degree resolution with two-sided transport attention",
+    authors: "Junu Choi, Youngjoon Hong",
+    venue: "arXiv",
+    status: "Preprint",
+    links: [
+      { label: "arXiv", href: "https://arxiv.org/abs/2610.35545" },
+      { label: "PDF", href: "https://arxiv.org/pdf/2610.35545" },
+      { label: "Preview", href: "/papers/#astra" },
+    ],
+  },
+];

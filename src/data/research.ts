@@ -31,7 +31,7 @@ export const researchAreas: ResearchArea[] = [
     name: "Machine learning architectures",
     description:
       "I design efficient model architectures for scientific prediction.",
-    work: ["red"],
+    work: ["ka"],
   },
   {
     id: "learning",
@@ -56,8 +56,8 @@ export type ResearchWork = {
   links?: { label: string; href: string }[];
 };
 
-// Shared experience records link research interests to the CV. The two SNU
-// projects remain forthcoming, separate from publication metadata.
+// Shared experience records link research interests to the CV. Forthcoming
+// projects stay separate from publication metadata.
 export const researchWork: ResearchWork[] = [
   {
     id: "transport",
@@ -71,14 +71,16 @@ export const researchWork: ResearchWork[] = [
     links: [{ label: "Manuscript preview", href: "/papers/#ptm" }],
   },
   {
-    id: "red",
-    title: "RED attention",
-    shortTitle: "RED attention",
+    id: "ka",
+    title: "Kantorovich Attention",
+    shortTitle: "Kantorovich Attention",
     place: "SNU",
-    description: "Routed encode–decode attention for efficient global weather forecasting.",
-    href: "/cv/#snu-research",
-    forthcoming: true,
-    status: "Manuscript in preparation",
+    description: "Two-sided transport attention for efficient quarter-degree probabilistic weather forecasting (Astra).",
+    href: "/papers/#astra",
+    links: [
+      { label: "arXiv", href: "https://arxiv.org/abs/2610.35545" },
+      { label: "Preview", href: "/papers/#astra" },
+    ],
   },
   {
     id: "lighttransporter",
