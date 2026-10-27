@@ -22,28 +22,8 @@ const hasSelectedPapers = papers.some((p) => p.selected);
         </p>
         <div class="dm-meta-row hero-actions">
           <a class="dm-pill-btn" href="/papers/">Read papers</a>
-          <button
-            type="button"
-            class="dm-meta-link dm-email-toggle"
-            aria-expanded="false"
-            aria-controls="hero-email-drawer"
-            data-email-toggle
-          >
-            Email <span class="dm-chevron" aria-hidden="true">›</span>
-          </button>
           <a class="dm-meta-link" href="/cv/">Curriculum Vitae <span class="dm-chevron" aria-hidden="true">›</span></a>
           <a class="dm-meta-link" href="https://orcid.org/0009-0005-6979-9505">ORCID <span class="dm-chevron" aria-hidden="true">›</span></a>
-        </div>
-        <div class="dm-email-drawer" id="hero-email-drawer" hidden>
-          <div class="dm-email-item">
-            <span class="dm-email-label">Institutional</span>
-            <a class="dm-email-addr" href={`mailto:${site.emailInstitutional}`}>{site.emailInstitutional}</a>
-          </div>
-          <span class="dm-email-sep" aria-hidden="true">·</span>
-          <div class="dm-email-item">
-            <span class="dm-email-label">Permanent</span>
-            <a class="dm-email-addr" href={`mailto:${site.emailPermanent}`}>{site.emailPermanent}</a>
-          </div>
         </div>
       </div>
       <div class="portrait-frame">
