@@ -52,11 +52,11 @@ body.home-theme {
   font-weight: 500;
 }
 
-/* Structured 4-Item Metadata Strip */
+/* Structured 3-Item Metadata Strip */
 .meta-strip {
   display: grid;
-  grid-template-columns: repeat(4, auto);
-  gap: 28px;
+  grid-template-columns: repeat(3, auto);
+  gap: 32px;
   padding-top: 18px;
   border-top: 1px solid #f1f5f9;
   justify-content: start;
