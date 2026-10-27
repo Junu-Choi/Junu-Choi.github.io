@@ -119,11 +119,16 @@ h1, h2, h3, p, li { overflow-wrap: break-word; }
   background: var(--accent-soft-bg);
 }
 .dm-email-drawer {
-  margin-top: 16px;
+  position: absolute;
+  top: calc(100% + 14px);
+  left: 0;
+  z-index: 20;
   display: inline-flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 8px 16px;
+  width: max-content;
+  max-width: 100%;
   background: var(--surface);
   border: 1px solid var(--pill-border);
   border-radius: 14px;

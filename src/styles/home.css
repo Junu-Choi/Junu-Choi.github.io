@@ -28,6 +28,9 @@ body.home-theme {
   padding: 52px 0 76px;
   border-bottom: 1px solid var(--hair);
 }
+.identity-copy {
+  position: relative;
+}
 .identity-copy h1 {
   font: 500 clamp(44px, 4.8vw, 54px)/1.08 var(--display);
   letter-spacing: -0.03em;
@@ -404,7 +407,7 @@ body.home-theme {
   .identity {
     grid-template-columns: 1fr;
     gap: 28px;
-    padding: 32px 0 44px;
+    padding: 32px 0 68px;
   }
   .portrait-frame {
     order: -1;
