@@ -1,0 +1,22 @@
+---
+import { astraPreview } from "../data/manuscripts";
+---
+<article class="publication-preview" id={astraPreview.id} aria-labelledby="astra-title">
+  <div class="publication-banner publication-banner--stacked">
+    <header class="preview-heading">
+      <p class="eyebrow"><span class="preview-number">01</span> Preprint</p>
+      <h2 id="astra-title">{astraPreview.title}</h2>
+      <p class="preview-description">{astraPreview.description}</p>
+      <p class="preview-availability">
+        {astraPreview.availability} · <a class="quiet" href={astraPreview.arxiv}>arXiv</a> · <a class="quiet" href={astraPreview.pdf}>PDF</a>
+      </p>
+    </header>
+    <figure class="preview-figure">
+      <a href="/figures/astra/figure-2.webp" aria-label="View Figure 2 at full size">
+        <img src="/figures/astra/figure-2.webp" width="1800" height="1714" loading="eager" decoding="async"
+          alt="Figure 2: a, one tile at the top of a cut-away Earth reads from, writes to, and exchanges with selected tiles through transport tubes, while every other tile reaches it through a pooled term. b, plans on the trained network's scores: pull alone leaves 60 of 180 tiles unread, the two-sided top-K plan none, close to the optimal plan. c, a toy plan with at least K partners per tile on both sides."/>
+      </a>
+      <figcaption>Figure 2. Kantorovich Attention routes from both sides: no tile is left unread, and the two-sided top-K solution reaches 94–98% of the optimal plan’s gain over random pairs.</figcaption>
+    </figure>
+  </div>
+</article>

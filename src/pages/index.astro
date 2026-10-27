@@ -5,7 +5,7 @@ import ResearchMap from "../components/ResearchMap.astro";
 import PaperList from "../components/PaperList.astro";
 import "../styles/home.css";
 import { papers } from "../data/papers";
-import { ptmManuscript } from "../data/manuscripts";
+import { astraPreview, ptmManuscript } from "../data/manuscripts";
 
 const hasSelectedPapers = papers.some((p) => p.selected);
 ---
@@ -28,6 +28,13 @@ const hasSelectedPapers = papers.some((p) => p.selected);
 
     <section class="home-publications" aria-labelledby="selected-title">
       <SectionRule label="Selected papers" id="selected-title" href="/papers/" linkLabel="All papers"/>
+      <article class="selected-manuscript">
+        <p class="selected-status">arXiv preprint, 2026</p>
+        <div>
+          <h3><a href={`/papers/#${astraPreview.id}`}>{astraPreview.title}<span aria-hidden="true">↗</span></a></h3>
+          <p>Kantorovich Attention lets each region choose both where it reads from and where it writes to; trained on one node, Astra matches GenCast with 9.8% of its hardware-normalised training compute.</p>
+        </div>
+      </article>
       <article class="selected-manuscript">
         <p class="selected-status">{ptmManuscript.status}</p>
         <div>
