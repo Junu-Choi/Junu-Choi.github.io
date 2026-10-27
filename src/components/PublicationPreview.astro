@@ -2,25 +2,15 @@
 import { ptmManuscript } from "../data/manuscripts";
 ---
 <article class="publication-preview" id={ptmManuscript.id} aria-labelledby="ptm-title">
-  <div class="preview-topbar">
-    <div class="preview-id">
-      <strong>02</strong>
-      <span aria-hidden="true">·</span>
-      <span>{ptmManuscript.status}</span>
-      <span aria-hidden="true">·</span>
-      <span>Manuscript preview</span>
-    </div>
-    <div class="preview-badges">
-      <span class="preview-badge blue">Posterior Sampling</span>
-      <span class="preview-badge teal">Transport Maps</span>
-      <span class="preview-badge">Inverse Problems</span>
-    </div>
-  </div>
   <div class="publication-banner">
     <header class="preview-heading">
       <h2 id="ptm-title">{ptmManuscript.title}</h2>
       <p class="preview-description">{ptmManuscript.description}</p>
-      <p class="preview-availability">{ptmManuscript.availability}</p>
+      <div class="dm-meta-row" style="margin-top: 18px;">
+        <span>2026</span>
+        <span>{ptmManuscript.status}</span>
+        <span>{ptmManuscript.availability}</span>
+      </div>
     </header>
     <figure class="preview-figure">
       <a href="/figures/ptm/figure-2.svg" aria-label="View Figure 2 at full size">
