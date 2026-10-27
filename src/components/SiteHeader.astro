@@ -20,7 +20,63 @@ const { activeNav } = Astro.props;
     </div>
     <div class="header-right">
       <a class="dm-pill-btn" href="https://github.com/Junu-Choi">GitHub</a>
-      <a class="dm-pill-btn" href={`mailto:${site.email}`}>Contact</a>
+      <div class="header-contact-wrap" data-header-contact>
+        <button
+          type="button"
+          class="dm-pill-btn header-contact-btn"
+          aria-expanded="false"
+          aria-controls="header-contact-popover"
+          data-email-toggle
+        >
+          Contact <span class="dm-chevron" aria-hidden="true">›</span>
+        </button>
+        <div class="header-contact-popover" id="header-contact-popover" hidden>
+          <div class="dm-email-item">
+            <span class="dm-email-label">Institutional</span>
+            <a class="dm-email-addr" href={`mailto:${site.emailInstitutional}`}>{site.emailInstitutional}</a>
+          </div>
+          <div class="dm-email-item">
+            <span class="dm-email-label">Permanent</span>
+            <a class="dm-email-addr" href={`mailto:${site.emailPermanent}`}>{site.emailPermanent}</a>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </header>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>("[data-email-toggle]").forEach((btn) => {
+    const targetId = btn.getAttribute("aria-controls");
+    const panel = targetId ? document.getElementById(targetId) : null;
+    if (!panel) return;
+
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const willOpen = btn.getAttribute("aria-expanded") !== "true";
+      btn.setAttribute("aria-expanded", String(willOpen));
+      panel.hidden = !willOpen;
+    });
+  });
+
+  document.addEventListener("click", (e) => {
+    const wrap = document.querySelector("[data-header-contact]");
+    if (!wrap || wrap.contains(e.target as Node)) return;
+    const btn = wrap.querySelector<HTMLButtonElement>("[data-email-toggle]");
+    const panel = document.getElementById("header-contact-popover");
+    if (btn && panel && !panel.hidden) {
+      btn.setAttribute("aria-expanded", "false");
+      panel.hidden = true;
+    }
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key !== "Escape") return;
+    document.querySelectorAll<HTMLButtonElement>('[data-email-toggle][aria-expanded="true"]').forEach((btn) => {
+      const targetId = btn.getAttribute("aria-controls");
+      const panel = targetId ? document.getElementById(targetId) : null;
+      btn.setAttribute("aria-expanded", "false");
+      if (panel) panel.hidden = true;
+    });
+  });
+</script>

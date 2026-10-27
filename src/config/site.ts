@@ -3,6 +3,8 @@ export const site = {
   affiliation: "Master’s student, IPAI, Seoul National University",
   affiliationShort: "IPAI · SNU",
   email: "junu.choi.research@gmail.com",
+  emailInstitutional: "junu0413@snu.ac.kr",
+  emailPermanent: "junu.choi.research@gmail.com",
   emailDisplay: "junu.choi.research",
   url: "https://junu-choi.github.io",
   lastUpdated: "2026 September",
