@@ -45,12 +45,13 @@
 .preview-figure img { display: block; width: 100%; height: auto; background: white; }
 .preview-figure figcaption { color: var(--ink-soft); font-size: 11px; line-height: 1.6; margin-top: 10px; }
 .publication-banner--stacked { grid-template-columns: 1fr; gap: 18px; }
-.publication-banner--stacked .preview-figure { max-width: 700px; }
+.publication-banner--stacked .preview-figure { max-width: 700px; justify-self: center; width: 100%; }
 .publication-banner--stacked .preview-figure--wide { max-width: 860px; }
+.publication-banner--stacked .preview-figure figcaption, .ka-figure figcaption { text-align: center; }
 .ka-points { list-style: none; display: grid; gap: 10px; margin: 18px 0 22px; padding: 0; color: var(--ink-soft); font-size: 14px; line-height: 1.65; }
 .ka-points strong { font: 600 13px/1.6 var(--display); margin-right: 8px; }
 .ka-pull { color: #1F6FA8; } .ka-push { color: #A85A0C; } .ka-plan { color: var(--paper-ink); }
-.ka-figure { max-width: 700px; }
+.ka-figure { max-width: 700px; margin-inline: auto; }
 .geometry-figure { border-top: 1px solid var(--paper-rule); margin-top: 28px; }
 .geometry-summary { padding-block: 16px 0; font: 500 15px/1.6 var(--display); cursor: pointer; }
 .geometry-summary::marker { color: var(--ink-soft); font-size: 11px; }
