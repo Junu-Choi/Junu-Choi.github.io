@@ -94,6 +94,106 @@ h1, h2, h3, p, li { overflow-wrap: break-word; }
   transform: translateX(2px);
 }
 
+/* Email Toggle & Popover (Institutional + Permanent) */
+.dm-email-toggle {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  font: inherit;
+}
+.dm-email-toggle .dm-chevron,
+.header-contact-btn .dm-chevron {
+  display: inline-block;
+  transition: transform 0.18s ease, color 0.18s ease;
+}
+.dm-email-toggle[aria-expanded="true"] {
+  color: var(--blue);
+}
+.dm-email-toggle[aria-expanded="true"] .dm-chevron,
+.header-contact-btn[aria-expanded="true"] .dm-chevron {
+  color: var(--blue);
+  transform: rotate(90deg);
+}
+.header-contact-btn[aria-expanded="true"] {
+  border-color: var(--blue);
+  background: var(--accent-soft-bg);
+}
+.dm-email-drawer {
+  margin-top: 16px;
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  background: var(--surface);
+  border: 1px solid var(--pill-border);
+  border-radius: 14px;
+  padding: 11px 18px;
+}
+.dm-email-item {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 7px;
+}
+.dm-email-label {
+  font: 500 13px/1.4 var(--display);
+  color: var(--ink-soft);
+}
+.dm-email-label::after {
+  content: ":";
+}
+.dm-email-addr {
+  font: 500 14px/1.4 var(--sans);
+  color: var(--ink);
+}
+.dm-email-addr:hover {
+  color: var(--blue);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.dm-email-sep {
+  color: var(--ink-muted);
+  font-size: 14px;
+}
+.header-contact-wrap {
+  position: relative;
+  display: inline-flex;
+}
+.header-contact-popover {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  z-index: 60;
+  min-width: 320px;
+  background: #ffffff;
+  border: 1px solid var(--pill-border);
+  border-radius: 16px;
+  padding: 14px 18px;
+  box-shadow: 0 12px 32px rgba(32, 33, 36, 0.1);
+  display: grid;
+  gap: 10px;
+}
+.header-contact-popover .dm-email-item {
+  justify-content: space-between;
+  gap: 16px;
+}
+.footer-email-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 16px;
+  min-height: 44px;
+}
+.footer-email-drawer {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  background: var(--surface);
+  border: 1px solid var(--pill-border);
+  border-radius: 999px;
+  padding: 6px 16px;
+}
+
 /* Shared Dual-Tone Section Header (deepmind.google/research & /science) */
 .dm-section-head {
   display: flex;
