@@ -20,7 +20,7 @@
     0.47695722380661126,
     1.3494154927115491
   ],
-  "maximum_relative_area_check_error": 3.912036701247956e-07,
+  "maximum_relative_area_check_error": 3.912036876663194e-07,
   "kernel_covariance": "C_lambda = (I / tau + lambda A^T A / R)^(-1)",
   "tau": 0.8,
   "R": 0.08,
@@ -74,16 +74,16 @@
   ],
   "animations": {
     "volume": {
-      "width": 640,
-      "height": 460,
+      "width": 720,
+      "height": 518,
       "frames": 96,
-      "duration_ms": 10120
+      "duration_ms": 7940
     },
     "conditioning": {
-      "width": 640,
-      "height": 460,
+      "width": 720,
+      "height": 518,
       "frames": 96,
-      "duration_ms": 10120
+      "duration_ms": 7940
     }
   }
 }
