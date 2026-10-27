@@ -11,12 +11,31 @@ import { astraPreview } from "../data/manuscripts";
         {astraPreview.availability} · <a class="quiet" href={astraPreview.arxiv}>arXiv</a> · <a class="quiet" href={astraPreview.pdf}>PDF</a>
       </p>
     </header>
-    <figure class="preview-figure">
+    <figure class="preview-figure preview-figure--wide">
+      <a href="/figures/astra/scorecard-c.webp" aria-label="View the scorecard at full size">
+        <img src="/figures/astra/scorecard-c.webp" width="1800" height="465" loading="eager" decoding="async"
+          alt="Scorecard: the CRPS of Astra is lower than that of the ECMWF ensemble, IFS ENS, for all eight variables at all 30 lead times from 12 hours to 15 days, by up to about 30% at short lead times; every cell is blue and significant."/>
+      </a>
+      <figcaption>CRPS improvement over the ECMWF ensemble (IFS ENS) in WeatherBench 2 at 0.25°: lower on every variable and lead time.</figcaption>
+    </figure>
+  </div>
+
+  <details class="geometry-figure">
+    <summary class="geometry-summary">Kantorovich Attention</summary>
+    <div class="geometry-heading">
+      <p>Each region (tile) of the grid chooses both the tiles it reads from and the tiles it writes to. Together the two choices form a transport plan in which every tile sends and receives at token resolution.</p>
+    </div>
+    <ul class="ka-points">
+      <li><strong class="ka-pull">Pull</strong> Each tile picks the K tiles it reads from. Alone, it leaves some tiles unread (60 of 180 in this example).</li>
+      <li><strong class="ka-push">Push</strong> Each tile picks the K tiles it writes to, so every tile is read by at least K others.</li>
+      <li><strong class="ka-plan">Optimal plan</strong> Without a solver, the two-sided selection reaches 94–98% of the optimal plan’s gain over random pairs.</li>
+    </ul>
+    <figure class="preview-figure ka-figure">
       <a href="/figures/astra/figure-2.webp" aria-label="View Figure 2 at full size">
-        <img src="/figures/astra/figure-2.webp" width="1800" height="1714" loading="eager" decoding="async"
+        <img src="/figures/astra/figure-2.webp" width="1800" height="1714" loading="lazy" decoding="async"
           alt="Figure 2: a, one tile at the top of a cut-away Earth reads from, writes to, and exchanges with selected tiles through transport tubes, while every other tile reaches it through a pooled term. b, plans on the trained network's scores: pull alone leaves 60 of 180 tiles unread, the two-sided top-K plan none, close to the optimal plan. c, a toy plan with at least K partners per tile on both sides."/>
       </a>
       <figcaption>Figure 2. Kantorovich Attention routes from both sides: no tile is left unread, and the two-sided top-K solution reaches 94–98% of the optimal plan’s gain over random pairs.</figcaption>
     </figure>
-  </div>
+  </details>
 </article>
