@@ -1,4 +1,4 @@
-import { ptmManuscript } from "./manuscripts";
+import { astraPreview, ptmManuscript } from "./manuscripts";
 
 export type ResearchArea = {
   id: string;
@@ -56,16 +56,16 @@ export type ResearchWork = {
 export const researchWork: ResearchWork[] = [
   {
     id: "astra",
-    title: "Astra: Quarter-Degree Probabilistic Weather Forecasting with Kantorovich Attention",
-    shortTitle: "Astra (Kantorovich Attention)",
+    title: astraPreview.title,
+    shortTitle: astraPreview.title,
     place: "SNU",
     status: "arXiv:2610.35545",
     forthcoming: true,
     description:
-      "Two-sided transport attention (pull & push) for 0.25° global ensemble weather forecasting, outperforming ECMWF IFS ENS across all 600 target–lead cells using 9.8% of GenCast training compute.",
+      "Two-sided Kantorovich Attention (pull & push) for 0.25° global ensemble weather forecasting, outperforming ECMWF IFS ENS across all 600 target–lead cells using 9.8% of GenCast training compute.",
     href: "/papers/#astra",
     links: [
-      { label: "Read paper", href: "https://arxiv.org/abs/2610.35545" },
+      { label: "Read paper", href: astraPreview.arxiv },
       { label: "Interactive preview", href: "/papers/#astra" },
     ],
   },
