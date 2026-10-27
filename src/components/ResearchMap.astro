@@ -8,12 +8,11 @@ import { researchAreas, researchWork } from "../data/research";
       <p class="dm-section-subtitle">Connecting mathematical foundations in transport and diffusion with scientific discovery.</p>
     </div>
     <button class="dm-pill-btn all-research" type="button" aria-controls="related-work" aria-pressed="false" aria-expanded="false" data-all-research hidden>
-      All projects ({String(researchWork.length).padStart(2, "0")}) <span aria-hidden="true">↓</span>
+      Explore all ({String(researchWork.length).padStart(2, "0")}) <span aria-hidden="true">+</span>
     </button>
   </div>
 
   <div class="research-map" data-map-canvas>
-    <svg class="research-connections" aria-hidden="true" focusable="false" data-connections><path/></svg>
     <ul class="research-areas" id="research-topics">
       {researchAreas.map((area) => (
         <li>
@@ -22,66 +21,77 @@ import { researchAreas, researchWork } from "../data/research";
             <span class="dark-domain-copy">
               <span class="area-heading">
                 <span id={`area-${area.id}`} class="area-name">{area.name}</span>
-                <span class="area-toggle" aria-hidden="true">+</span>
               </span>
               <span class="area-description" id={`area-${area.id}-description`}>{area.description}</span>
             </span>
-            <span class="dark-domain-art" aria-hidden="true">
-              {area.id === "generative" && (
-                <svg width="160" height="72" viewBox="0 0 180 80" fill="none">
-                  <path d="M10 65 C 60 65, 90 15, 170 15" stroke="#8AB4F8" stroke-width="2" stroke-opacity="0.8"/>
-                  <path d="M10 65 C 70 45, 100 40, 170 35" stroke="#8AB4F8" stroke-width="1.2" stroke-opacity="0.4" stroke-dasharray="3 3"/>
-                  <path d="M10 65 C 50 25, 110 60, 170 55" stroke="#C58AF9" stroke-width="1.5" stroke-opacity="0.6"/>
-                  <circle cx="10" cy="65" r="4" fill="#8AB4F8"/>
-                  <circle cx="170" cy="15" r="4" fill="#8AB4F8"/>
-                </svg>
-              )}
-              {area.id === "inference" && (
-                <svg width="160" height="72" viewBox="0 0 180 80" fill="none">
-                  <rect x="68" y="12" width="96" height="56" rx="12" stroke="#8AB4F8" stroke-width="1.2" stroke-opacity="0.4"/>
-                  <circle cx="100" cy="40" r="13" stroke="#F28B82" stroke-width="1.6" stroke-opacity="0.65"/>
-                  <circle cx="132" cy="40" r="13" stroke="#8AB4F8" stroke-width="1.6" stroke-opacity="0.8"/>
-                </svg>
-              )}
-              {area.id === "attention" && (
-                <svg width="160" height="72" viewBox="0 0 180 80" fill="none">
-                  <circle cx="130" cy="40" r="32" stroke="#8AB4F8" stroke-width="1.5" stroke-opacity="0.65"/>
-                  <ellipse cx="130" cy="40" rx="32" ry="13" stroke="#8AB4F8" stroke-width="1.1" stroke-opacity="0.38"/>
-                  <ellipse cx="130" cy="40" rx="15" ry="32" stroke="#81C995" stroke-width="1.2" stroke-opacity="0.5"/>
-                </svg>
-              )}
-              {area.id === "learning" && (
-                <svg width="160" height="72" viewBox="0 0 180 80" fill="none">
-                  <path d="M74 40 H 112 L 146 20 M 112 40 L 146 60" stroke="#8AB4F8" stroke-width="1.6" stroke-opacity="0.65" stroke-linecap="round"/>
-                  <circle cx="74" cy="40" r="4" fill="#81C995"/>
-                  <circle cx="112" cy="40" r="4" fill="#8AB4F8"/>
-                  <circle cx="146" cy="20" r="4" fill="#8AB4F8"/>
-                  <circle cx="146" cy="60" r="4" fill="#C58AF9"/>
-                </svg>
-              )}
+            <span class="dark-domain-footer">
+              <span class="domain-action-pill">
+                <span class="domain-action-circle" aria-hidden="true">
+                  <span class="area-toggle">+</span>
+                </span>
+                <span class="domain-action-label">Explore ({area.work.length})</span>
+              </span>
+              <span class="dark-domain-art" aria-hidden="true">
+                {area.id === "generative" && (
+                  <svg width="156" height="72" viewBox="0 0 180 80" fill="none">
+                    <path d="M10 65 C 60 65, 90 15, 170 15" stroke="#8AB4F8" stroke-width="2" stroke-opacity="0.8"/>
+                    <path d="M10 65 C 70 45, 100 40, 170 35" stroke="#8AB4F8" stroke-width="1.2" stroke-opacity="0.4" stroke-dasharray="3 3"/>
+                    <path d="M10 65 C 50 25, 110 60, 170 55" stroke="#C58AF9" stroke-width="1.5" stroke-opacity="0.6"/>
+                    <circle cx="10" cy="65" r="4" fill="#8AB4F8"/>
+                    <circle cx="170" cy="15" r="4" fill="#8AB4F8"/>
+                  </svg>
+                )}
+                {area.id === "inference" && (
+                  <svg width="156" height="72" viewBox="0 0 180 80" fill="none">
+                    <rect x="68" y="12" width="96" height="56" rx="12" stroke="#8AB4F8" stroke-width="1.2" stroke-opacity="0.4"/>
+                    <circle cx="100" cy="40" r="13" stroke="#F28B82" stroke-width="1.6" stroke-opacity="0.65"/>
+                    <circle cx="132" cy="40" r="13" stroke="#8AB4F8" stroke-width="1.6" stroke-opacity="0.8"/>
+                  </svg>
+                )}
+                {area.id === "scientific-ai" && (
+                  <svg width="156" height="72" viewBox="0 0 180 80" fill="none">
+                    <circle cx="130" cy="40" r="32" stroke="#8AB4F8" stroke-width="1.5" stroke-opacity="0.65"/>
+                    <ellipse cx="130" cy="40" rx="32" ry="13" stroke="#8AB4F8" stroke-width="1.1" stroke-opacity="0.38"/>
+                    <ellipse cx="130" cy="40" rx="15" ry="32" stroke="#81C995" stroke-width="1.2" stroke-opacity="0.5"/>
+                  </svg>
+                )}
+              </span>
             </span>
           </button>
         </li>
       ))}
     </ul>
 
-    <section class="related-work" id="related-work" aria-labelledby="work-title">
-      <h2 class="visually-hidden" id="work-title">Related work</h2>
+    <section class="related-work" id="related-work" aria-labelledby="work-title" hidden>
+      <div class="related-work-bar">
+        <div class="related-work-title-group">
+          <h3 id="work-title" class="related-work-heading" data-work-context>Related research &amp; projects</h3>
+        </div>
+        <button class="dm-pill-btn related-work-close" type="button" data-close-research>
+          Close <span aria-hidden="true">×</span>
+        </button>
+      </div>
       <ul class="work-grid" data-work-grid>
         {researchWork.map((work) => (
           <li class="work-card" id={`work-${work.id}`} data-research-work={work.id}>
-            <p class="work-meta"><span>{work.place}</span>{work.forthcoming && <span>{work.status ?? "To be published"}</span>}</p>
-            <h3><a href={work.href}>{work.title}<span aria-hidden="true">›</span></a></h3>
+            <p class="work-meta">
+              <span class="work-place">{work.place}</span>
+              {work.forthcoming && <span>{work.status ?? "To be published"}</span>}
+            </p>
+            <h4><a href={work.href}>{work.title}</a></h4>
             <p class="work-description">{work.description}</p>
             {work.links && (
-              <div class="work-links">
-                {work.links.map((link) => <a class="work-preview" href={link.href}>{link.label} <span aria-hidden="true">›</span></a>)}
+              <div class="dm-meta-row work-links">
+                {work.links.map((link) => (
+                  <a class="dm-meta-link" href={link.href}>
+                    {link.label} <span class="dm-chevron" aria-hidden="true">›</span>
+                  </a>
+                ))}
               </div>
             )}
           </li>
         ))}
       </ul>
-      <p class="work-context" data-work-context>Related work</p>
     </section>
   </div>
   <p class="visually-hidden" role="status" aria-live="polite" aria-atomic="true" data-work-status></p>
@@ -93,70 +103,11 @@ import { researchAreas, researchWork } from "../data/research";
     const entries = [...section.querySelectorAll<HTMLElement>("[data-research-work]")];
     const panel = section.querySelector<HTMLElement>(".related-work")!;
     const grid = section.querySelector<HTMLElement>("[data-work-grid]")!;
-    const canvas = section.querySelector<HTMLElement>("[data-map-canvas]")!;
-    const topicGrid = section.querySelector<HTMLElement>(".research-areas")!;
-    const svg = section.querySelector<SVGSVGElement>("[data-connections]")!;
-    const path = svg.querySelector("path")!;
     const context = section.querySelector<HTMLElement>("[data-work-context]");
     const status = section.querySelector<HTMLElement>("[data-work-status]");
     const allButton = section.querySelector<HTMLButtonElement>("[data-all-research]")!;
+    const closeButton = section.querySelector<HTMLButtonElement>("[data-close-research]");
     let selected = "compact";
-    let frame = 0;
-
-    function drawConnections() {
-      if (panel.hidden) { path.setAttribute("d", ""); return; }
-      const bounds = canvas.getBoundingClientRect();
-      const topics = topicGrid.getBoundingClientRect();
-      const visible = entries.filter((entry) => !entry.hidden);
-      const targets = visible.map((entry) => {
-        const rect = entry.getBoundingClientRect();
-        return { x: rect.x + rect.width / 2 - bounds.x, left: rect.x - bounds.x, y: rect.y - bounds.y };
-      });
-      const topicsBottom = topics.bottom - bounds.y;
-      const firstTarget = Math.min(...targets.map((target) => target.y));
-      const joint = topicsBottom + (firstTarget - topicsBottom) / 2;
-      const twoRows = areas[0].offsetTop !== areas[areas.length - 1].offsetTop;
-      const selectedAreas = selected === "all" ? areas : areas.filter((area) => area.dataset.area === selected);
-      const sources = selectedAreas.map((area) => {
-        const rect = area.getBoundingClientRect();
-        return { x: rect.x + rect.width / 2 - bounds.x, y: rect.bottom - bounds.y };
-      });
-      const commands: string[] = [];
-      const stacked = selected !== "all" && targets.some((target) => target.y > firstTarget + 2);
-      const connectedTargets = selected === "all" ? targets.filter((target) => target.y < firstTarget + 2) : targets;
-      const joins: number[] = stacked ? [-9] : connectedTargets.map((target) => target.x);
-
-      if (selected === "all" && twoRows) {
-        joins.push(bounds.width / 2);
-        commands.push(`M ${bounds.width / 2} ${topicsBottom} V ${joint}`);
-      } else {
-        sources.forEach((source) => {
-          if (source.y < topicsBottom - 2) {
-            const lane = source.x < bounds.width / 2 ? -9 : bounds.width + 9;
-            const rowGap = parseFloat(getComputedStyle(topicGrid).rowGap);
-            commands.push(`M ${source.x} ${source.y} V ${source.y + rowGap / 2} H ${lane} V ${joint}`);
-            joins.push(lane);
-          } else {
-            commands.push(`M ${source.x} ${source.y} V ${joint}`);
-            joins.push(source.x);
-          }
-        });
-      }
-      commands.push(`M ${Math.min(...joins)} ${joint} H ${Math.max(...joins)}`);
-      if (stacked) {
-        commands.push(`M -9 ${joint} V ${Math.max(...targets.map((target) => target.y)) + 24}`);
-        targets.forEach((target) => commands.push(`M -9 ${target.y + 24} H ${target.left}`));
-      } else {
-        connectedTargets.forEach((target) => commands.push(`M ${target.x} ${joint} V ${target.y}`));
-      }
-      svg.setAttribute("viewBox", `0 0 ${bounds.width} ${bounds.height}`);
-      path.setAttribute("d", commands.join(" "));
-    }
-
-    function scheduleConnections() {
-      cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(drawConnections);
-    }
 
     function select(mode: string, announce = true) {
       selected = mode;
@@ -168,7 +119,7 @@ import { researchAreas, researchWork } from "../data/research";
         const active = entry === area;
         entry.setAttribute("aria-pressed", String(active));
         entry.setAttribute("aria-expanded", String(active));
-        entry.querySelector(".area-toggle")!.textContent = active ? "−" : "+";
+        entry.querySelector(".area-toggle")!.textContent = active ? "×" : "+";
       });
       entries.forEach((entry) => {
         entry.hidden = mode !== "all" && !related.has(entry.dataset.researchWork!);
@@ -179,11 +130,10 @@ import { researchAreas, researchWork } from "../data/research";
       grid.style.setProperty("--work-columns", String(Math.min(count || 1, 3)));
       allButton.setAttribute("aria-pressed", String(mode === "all"));
       allButton.setAttribute("aria-expanded", String(mode === "all"));
-      allButton.querySelector("span")!.textContent = mode === "all" ? "↑" : "↓";
-      const label = mode === "all" ? "All research" : area?.dataset.label ?? "";
-      if (context) context.textContent = `${label} · ${count} related ${count === 1 ? "project" : "projects"}`;
+      allButton.querySelector("span")!.textContent = mode === "all" ? "×" : "+";
+      const label = mode === "all" ? "All Research & Earlier Projects" : area?.dataset.label ?? "";
+      if (context) context.textContent = `${label} · ${count} ${count === 1 ? "project" : "projects"}`;
       if (announce && status) status.textContent = count ? `${label}: ${count} related ${count === 1 ? "project" : "projects"} shown below.` : "Related work closed.";
-      scheduleConnections();
     }
 
     areas.forEach((area) => {
@@ -192,12 +142,8 @@ import { researchAreas, researchWork } from "../data/research";
     });
     allButton.hidden = false;
     allButton.addEventListener("click", () => select(selected === "all" ? "compact" : "all"));
+    closeButton?.addEventListener("click", () => select("compact"));
     section.dataset.enhanced = "true";
     select("compact", false);
-    const observer = new ResizeObserver(scheduleConnections);
-    observer.observe(canvas);
-    observer.observe(topicGrid);
-    observer.observe(grid);
-    document.fonts.ready.then(scheduleConnections);
   });
 </script>

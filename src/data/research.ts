@@ -12,39 +12,30 @@ export type ResearchArea = {
 export const researchAreas: ResearchArea[] = [
   {
     id: "generative",
-    tag: "01 · DYNAMICS",
-    label: "Generative dynamics",
-    name: "Generative dynamics & transport",
+    tag: "01 · DYNAMICS & TRANSPORT",
+    label: "Generative Dynamics & Transport",
+    name: "Generative Dynamics & Transport",
     description:
-      "Transport maps and stochastic dynamics for continuous generative modeling.",
-    work: ["transport", "lighttransporter", "speech"],
+      "Transport maps, stochastic dynamics, and diffusion bridges for continuous generative modeling.",
+    work: ["astra", "transport", "lighttransporter"],
   },
   {
     id: "inference",
-    tag: "02 · INFERENCE",
-    label: "Probabilistic inference",
-    name: "Inference & inverse problems",
+    tag: "02 · INFERENCE & INVERSE PROBLEMS",
+    label: "Probabilistic Inference & Inverse Problems",
+    name: "Probabilistic Inference & Inverse Problems",
     description:
-      "Posterior sampling, inverse problems, and sequential Monte Carlo design.",
+      "Posterior sampling, Bayesian inverse problems, and sequential Monte Carlo design.",
     work: ["transport", "smc"],
   },
   {
-    id: "attention",
-    tag: "03 · ARCHITECTURES",
-    label: "ML architectures",
-    name: "Machine learning architectures",
+    id: "scientific-ai",
+    tag: "03 · SCIENTIFIC AI",
+    label: "Scientific AI",
+    name: "Scientific AI",
     description:
-      "Two-sided transport attention and scalable routing for physical prediction.",
-    work: ["ka"],
-  },
-  {
-    id: "learning",
-    tag: "04 · EFFICIENCY",
-    label: "Efficient learning",
-    name: "Efficient & multimodal learning",
-    description:
-      "Speculative decoding and parameter-efficient multimodal adaptation.",
-    work: ["speech", "adaptation", "decoding"],
+      "Two-sided Kantorovich transport attention and physics-aware neural architectures for global Earth system forecasting.",
+    work: ["astra"],
   },
 ];
 
@@ -61,38 +52,47 @@ export type ResearchWork = {
   links?: { label: string; href: string }[];
 };
 
-// Shared experience records link research interests to the CV. Forthcoming
-// projects stay separate from publication metadata.
+// Shared experience records link research interests to papers and the CV.
 export const researchWork: ResearchWork[] = [
+  {
+    id: "astra",
+    title: "Astra: Quarter-Degree Probabilistic Weather Forecasting with Kantorovich Attention",
+    shortTitle: "Astra (Kantorovich Attention)",
+    place: "SNU",
+    status: "arXiv:2610.35545",
+    forthcoming: true,
+    description:
+      "Two-sided transport attention (pull & push) for 0.25° global ensemble weather forecasting, outperforming ECMWF IFS ENS across all 600 target–lead cells using 9.8% of GenCast training compute.",
+    href: "/papers/#astra",
+    links: [
+      { label: "Read paper", href: "https://arxiv.org/abs/2610.35545" },
+      { label: "Interactive preview", href: "/papers/#astra" },
+    ],
+  },
   {
     id: "transport",
     title: ptmManuscript.title,
     shortTitle: ptmManuscript.title,
     place: "SNU",
-    description: "Minimum-energy transport matching with numerical maps for posterior sampling.",
-    href: "/cv/#snu-research",
+    description:
+      "Pairing numerical transport maps with stochastic input updates for measurement-consistent posterior sampling in inverse problems.",
+    href: "/papers/#ptm",
     forthcoming: true,
     status: ptmManuscript.status,
-    links: [{ label: "Manuscript preview", href: "/papers/#ptm" }],
-  },
-  {
-    id: "ka",
-    title: "Kantorovich Attention",
-    shortTitle: "Kantorovich Attention",
-    place: "SNU",
-    description: "Two-sided transport attention for efficient quarter-degree probabilistic weather forecasting (Astra).",
-    href: "/papers/#astra",
     links: [
-      { label: "arXiv", href: "https://arxiv.org/abs/2610.35545" },
-      { label: "Preview", href: "/papers/#astra" },
+      { label: "Manuscript preview", href: "/papers/#ptm" },
+      { label: "Interactive geometry", href: "/papers/#geometry-title" },
     ],
   },
   {
     id: "lighttransporter",
-    title: "LightTransporter",
+    title: "LightTransporter: Diffusion Relighting with Light-Image Conditioning",
     shortTitle: "LightTransporter",
     place: "KAIST",
-    description: "Led a diffusion relighting project using a Light-Image Encoder to condition on source/target environment maps and camera pose.",
+    status: "Earlier Research",
+    forthcoming: true,
+    description:
+      "Diffusion relighting framework conditioning on source and target environment maps and camera pose via a dedicated Light-Image Encoder.",
     href: "/cv/#lighttransporter",
     links: [
       { label: "Code", href: "https://github.com/j-mayo/LightTransporter" },
@@ -100,35 +100,17 @@ export const researchWork: ResearchWork[] = [
     ],
   },
   {
-    id: "speech",
-    title: "Speech & audio–language",
-    shortTitle: "Speech & audio",
-    place: "Humelo",
-    description: "Speech generation, voice conversion, and audio–text understanding.",
-    href: "/cv/#humelo-research",
-  },
-  {
     id: "smc",
-    title: "Resampling design for SMC",
-    shortTitle: "SMC resampling",
+    title: "Population-Simulated Resampling for Sequential Monte Carlo",
+    shortTitle: "SMC Resampling",
     place: "KAIST",
-    description: "Investigated population-simulated resampling for sequential Monte Carlo samplers.",
+    status: "Earlier Research",
+    forthcoming: true,
+    description:
+      "Investigated population-simulated resampling schemes to improve particle diversity and variance reduction in sequential Monte Carlo samplers.",
     href: "/cv/#kaist-visual-ai",
-  },
-  {
-    id: "adaptation",
-    title: "Medical QA adaptation & evaluation",
-    shortTitle: "Medical QA models",
-    place: "KAIST",
-    description: "Parameter-efficient tuning on medical instruction data and an evaluation protocol addressing GPT-4 judge bias and scoring variability.",
-    href: "/cv/#kaist-mlilab",
-  },
-  {
-    id: "decoding",
-    title: "Feature-level speculative decoding",
-    shortTitle: "Feature-level decoding",
-    place: "KAIST",
-    description: "Led a team project combining intermediate-feature speculation, knowledge distillation, and sparse rejection.",
-    href: "/cv/#kaist-decoding",
+    links: [
+      { label: "CV details", href: "/cv/#kaist-visual-ai" },
+    ],
   },
 ];
