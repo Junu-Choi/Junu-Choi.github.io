@@ -2,6 +2,7 @@ import { ptmManuscript } from "./manuscripts";
 
 export type ResearchArea = {
   id: string;
+  tag: string;
   label: string;
   name: string;
   description: string;
@@ -11,34 +12,38 @@ export type ResearchArea = {
 export const researchAreas: ResearchArea[] = [
   {
     id: "generative",
+    tag: "01 · DYNAMICS",
     label: "Generative dynamics",
     name: "Generative dynamics & transport",
     description:
-      "I study transport maps and stochastic dynamics for generative modeling.",
+      "Transport maps and stochastic dynamics for continuous generative modeling.",
     work: ["transport", "lighttransporter", "speech"],
   },
   {
     id: "inference",
-    label: "Inference",
+    tag: "02 · INFERENCE",
+    label: "Probabilistic inference",
     name: "Inference & inverse problems",
     description:
-      "I develop sampling methods for posterior inference and inverse problems.",
+      "Posterior sampling, inverse problems, and sequential Monte Carlo design.",
     work: ["transport", "smc"],
   },
   {
     id: "attention",
+    tag: "03 · ARCHITECTURES",
     label: "ML architectures",
     name: "Machine learning architectures",
     description:
-      "I design efficient model architectures for scientific prediction.",
+      "Two-sided transport attention and scalable routing for physical prediction.",
     work: ["ka"],
   },
   {
     id: "learning",
+    tag: "04 · EFFICIENCY",
     label: "Efficient learning",
     name: "Efficient & multimodal learning",
     description:
-      "I work on efficient adaptation and inference for language and multimodal models.",
+      "Speculative decoding and parameter-efficient multimodal adaptation.",
     work: ["speech", "adaptation", "decoding"],
   },
 ];

@@ -2,13 +2,26 @@
 import { astraPreview } from "../data/manuscripts";
 ---
 <article class="publication-preview" id={astraPreview.id} aria-labelledby="astra-title">
+  <div class="preview-topbar">
+    <div class="preview-id">
+      <strong>01</strong>
+      <span aria-hidden="true">·</span>
+      <span>arXiv:2610.35545</span>
+      <span aria-hidden="true">·</span>
+      <span>Preprint (2026)</span>
+    </div>
+    <div class="preview-badges">
+      <span class="preview-badge blue">0.25° ERA5 Global</span>
+      <span class="preview-badge teal">Kantorovich Attention</span>
+      <span class="preview-badge">9.8% of GenCast Compute</span>
+    </div>
+  </div>
   <div class="publication-banner publication-banner--stacked">
     <header class="preview-heading">
-      <p class="eyebrow"><span class="preview-number">01</span> Preprint</p>
       <h2 id="astra-title">{astraPreview.title}</h2>
       <p class="preview-description">{astraPreview.description}</p>
       <p class="preview-availability">
-        {astraPreview.availability} · <a class="quiet" href={astraPreview.arxiv}>arXiv</a> · <a class="quiet" href={astraPreview.pdf}>PDF</a>
+        {astraPreview.availability} · <a class="quiet" href={astraPreview.arxiv}>arXiv ↗</a> · <a class="quiet" href={astraPreview.pdf}>PDF ↗</a>
       </p>
     </header>
     <figure class="preview-figure preview-figure--wide">
