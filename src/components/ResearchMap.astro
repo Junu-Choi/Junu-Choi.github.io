@@ -2,9 +2,14 @@
 import { researchAreas, researchWork } from "../data/research";
 ---
 <section class="research-section" id="research" aria-labelledby="research-title" data-research-map>
-  <div class="research-heading">
-    <h2 id="research-title">Research Interests</h2>
-    <button class="all-research" type="button" aria-controls="related-work" aria-pressed="false" aria-expanded="false" data-all-research hidden>All projects ({String(researchWork.length).padStart(2, "0")}) <span aria-hidden="true">↓</span></button>
+  <div class="dm-section-head">
+    <div class="dm-section-titles">
+      <h2 id="research-title" class="dm-section-title">Research Interests</h2>
+      <p class="dm-section-subtitle">Connecting mathematical foundations in transport and diffusion with scientific discovery.</p>
+    </div>
+    <button class="dm-pill-btn all-research" type="button" aria-controls="related-work" aria-pressed="false" aria-expanded="false" data-all-research hidden>
+      All projects ({String(researchWork.length).padStart(2, "0")}) <span aria-hidden="true">↓</span>
+    </button>
   </div>
 
   <div class="research-map" data-map-canvas>
@@ -14,12 +19,47 @@ import { researchAreas, researchWork } from "../data/research";
         <li>
           <button class="research-area" type="button" data-area={area.id} data-work={area.work.join(" ")} data-label={area.label}
             aria-labelledby={`area-${area.id}`} aria-describedby={`area-${area.id}-description`} aria-controls="related-work" aria-expanded="false" aria-pressed="false" disabled>
-            <span class="pillar-top">
-              <span class="pillar-num">{area.tag}</span>
-              <span class="area-toggle" aria-hidden="true">+</span>
+            <span class="dark-domain-copy">
+              <span class="area-heading">
+                <span id={`area-${area.id}`} class="area-name">{area.name}</span>
+                <span class="area-toggle" aria-hidden="true">+</span>
+              </span>
+              <span class="area-description" id={`area-${area.id}-description`}>{area.description}</span>
             </span>
-            <span class="area-heading"><span id={`area-${area.id}`} class="area-name">{area.label}</span></span>
-            <span class="area-description" id={`area-${area.id}-description`}>{area.description}</span>
+            <span class="dark-domain-art" aria-hidden="true">
+              {area.id === "generative" && (
+                <svg width="160" height="72" viewBox="0 0 180 80" fill="none">
+                  <path d="M10 65 C 60 65, 90 15, 170 15" stroke="#8AB4F8" stroke-width="2" stroke-opacity="0.8"/>
+                  <path d="M10 65 C 70 45, 100 40, 170 35" stroke="#8AB4F8" stroke-width="1.2" stroke-opacity="0.4" stroke-dasharray="3 3"/>
+                  <path d="M10 65 C 50 25, 110 60, 170 55" stroke="#C58AF9" stroke-width="1.5" stroke-opacity="0.6"/>
+                  <circle cx="10" cy="65" r="4" fill="#8AB4F8"/>
+                  <circle cx="170" cy="15" r="4" fill="#8AB4F8"/>
+                </svg>
+              )}
+              {area.id === "inference" && (
+                <svg width="160" height="72" viewBox="0 0 180 80" fill="none">
+                  <rect x="68" y="12" width="96" height="56" rx="12" stroke="#8AB4F8" stroke-width="1.2" stroke-opacity="0.4"/>
+                  <circle cx="100" cy="40" r="13" stroke="#F28B82" stroke-width="1.6" stroke-opacity="0.65"/>
+                  <circle cx="132" cy="40" r="13" stroke="#8AB4F8" stroke-width="1.6" stroke-opacity="0.8"/>
+                </svg>
+              )}
+              {area.id === "attention" && (
+                <svg width="160" height="72" viewBox="0 0 180 80" fill="none">
+                  <circle cx="130" cy="40" r="32" stroke="#8AB4F8" stroke-width="1.5" stroke-opacity="0.65"/>
+                  <ellipse cx="130" cy="40" rx="32" ry="13" stroke="#8AB4F8" stroke-width="1.1" stroke-opacity="0.38"/>
+                  <ellipse cx="130" cy="40" rx="15" ry="32" stroke="#81C995" stroke-width="1.2" stroke-opacity="0.5"/>
+                </svg>
+              )}
+              {area.id === "learning" && (
+                <svg width="160" height="72" viewBox="0 0 180 80" fill="none">
+                  <path d="M74 40 H 112 L 146 20 M 112 40 L 146 60" stroke="#8AB4F8" stroke-width="1.6" stroke-opacity="0.65" stroke-linecap="round"/>
+                  <circle cx="74" cy="40" r="4" fill="#81C995"/>
+                  <circle cx="112" cy="40" r="4" fill="#8AB4F8"/>
+                  <circle cx="146" cy="20" r="4" fill="#8AB4F8"/>
+                  <circle cx="146" cy="60" r="4" fill="#C58AF9"/>
+                </svg>
+              )}
+            </span>
           </button>
         </li>
       ))}
@@ -31,11 +71,11 @@ import { researchAreas, researchWork } from "../data/research";
         {researchWork.map((work) => (
           <li class="work-card" id={`work-${work.id}`} data-research-work={work.id}>
             <p class="work-meta"><span>{work.place}</span>{work.forthcoming && <span>{work.status ?? "To be published"}</span>}</p>
-            <h3><a href={work.href}>{work.title}<span aria-hidden="true">↗</span></a></h3>
+            <h3><a href={work.href}>{work.title}<span aria-hidden="true">›</span></a></h3>
             <p class="work-description">{work.description}</p>
             {work.links && (
               <div class="work-links">
-                {work.links.map((link) => <a class="work-preview" href={link.href}>{link.label} <span aria-hidden="true">↗</span></a>)}
+                {work.links.map((link) => <a class="work-preview" href={link.href}>{link.label} <span aria-hidden="true">›</span></a>)}
               </div>
             )}
           </li>
@@ -86,8 +126,6 @@ import { researchAreas, researchWork } from "../data/research";
       const connectedTargets = selected === "all" ? targets.filter((target) => target.y < firstTarget + 2) : targets;
       const joins: number[] = stacked ? [-9] : connectedTargets.map((target) => target.x);
 
-      // On small screens, the full overview connects as one group. A selected
-      // top-row topic routes through the outside gutter, clear of the other cards.
       if (selected === "all" && twoRows) {
         joins.push(bounds.width / 2);
         commands.push(`M ${bounds.width / 2} ${topicsBottom} V ${joint}`);
@@ -106,7 +144,6 @@ import { researchAreas, researchWork } from "../data/research";
       }
       commands.push(`M ${Math.min(...joins)} ${joint} H ${Math.max(...joins)}`);
       if (stacked) {
-        // Stacked cards branch from one outside rail, so they read as siblings.
         commands.push(`M -9 ${joint} V ${Math.max(...targets.map((target) => target.y)) + 24}`);
         targets.forEach((target) => commands.push(`M -9 ${target.y + 24} H ${target.left}`));
       } else {

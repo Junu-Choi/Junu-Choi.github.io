@@ -6,19 +6,21 @@ const { activeNav } = Astro.props;
 ---
 <header class="site-header">
   <div class="container header-inner">
-    <a class="wordmark" href="/" aria-label={`${site.name}, home`}>
-      <span class="brand-dot" aria-hidden="true"></span>
-      <span>{site.name}</span>
-    </a>
-    <nav class="main-nav" aria-label="Main navigation">
-      {site.nav.map(({ label, href }, idx) => (
-        <a href={href} aria-current={activeNav === label ? "page" : undefined}>
-          <span class="nav-index" aria-hidden="true">{String(idx + 1).padStart(2, "0")} / </span>{label === "cv" ? "CV" : label.charAt(0).toUpperCase() + label.slice(1)}
-        </a>
-      ))}
-      <a class="header-contact" href={`mailto:${site.email}`}>
-        <span class="nav-index" aria-hidden="true">04 / </span>Contact
+    <div class="header-left">
+      <a class="wordmark" href="/" aria-label={`${site.name}, home`}>
+        <span>{site.name}</span>
       </a>
-    </nav>
+      <nav class="main-nav" aria-label="Main navigation">
+        {site.nav.map(({ label, href }) => (
+          <a href={href} aria-current={activeNav === label ? "page" : undefined}>
+            {label === "about" ? "Overview" : label === "cv" ? "CV" : label.charAt(0).toUpperCase() + label.slice(1)}
+          </a>
+        ))}
+      </nav>
+    </div>
+    <div class="header-right">
+      <a class="dm-pill-btn" href="https://github.com/Junu-Choi">GitHub</a>
+      <a class="dm-pill-btn" href={`mailto:${site.email}`}>Contact</a>
+    </div>
   </div>
 </header>
