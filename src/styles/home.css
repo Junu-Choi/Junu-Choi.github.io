@@ -164,6 +164,7 @@ body.home-theme {
 .domain-action-label {
   font: 500 13.5px/1.2 var(--display);
   color: #9aa0a6;
+  white-space: nowrap;
   transition: color 0.2s ease;
 }
 .dark-domain-art {
@@ -406,19 +407,55 @@ body.home-theme {
   }
   .identity {
     grid-template-columns: 1fr;
-    gap: 28px;
-    padding: 32px 0 68px;
+    gap: 24px;
+    padding: 24px 0 98px;
+  }
+  .identity-copy h1 {
+    font-size: 36px;
+    margin-bottom: 16px;
+  }
+  .identity-description {
+    font-size: 16px;
+    line-height: 1.62;
+  }
+  .hero-actions {
+    margin-top: 22px;
+    gap: 12px 18px;
   }
   .portrait-frame {
     order: -1;
     justify-self: start;
-    max-width: 190px;
+    max-width: 176px;
   }
   .dm-section-head {
     flex-direction: column;
     align-items: flex-start;
-    gap: 16px;
-    margin-bottom: 32px;
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+  .research-section {
+    padding: 52px 0 60px;
+  }
+  .research-area {
+    min-height: 244px;
+    padding: 28px 24px 24px;
+    border-radius: 20px;
+  }
+  .related-work {
+    padding: 22px 18px 24px;
+    border-radius: 20px;
+  }
+  .work-card {
+    padding: 20px 20px;
+    border-radius: 16px;
+  }
+  .home-publications {
+    padding-top: 52px;
+  }
+  .paper-thumb-stage {
+    padding: 14px 16px;
+    min-height: auto;
+    border-radius: 16px;
   }
   .research-areas,
   .work-grid,

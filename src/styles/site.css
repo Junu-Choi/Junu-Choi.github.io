@@ -7,7 +7,7 @@
 .site-header { background: #ffffff; }
 .header-inner { min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 32px; }
 .header-left { display: flex; align-items: center; gap: 40px; }
-.wordmark { display: inline-flex; align-items: center; font-family: var(--display); font-weight: 500; font-size: 21px; letter-spacing: -.015em; color: var(--ink); }
+.wordmark { display: inline-flex; align-items: center; font-family: var(--display); font-weight: 500; font-size: 21px; letter-spacing: -.015em; color: var(--ink); white-space: nowrap; }
 .main-nav { display: flex; align-items: center; gap: 28px; font-family: var(--display); }
 .main-nav a { position: relative; display: inline-flex; align-items: center; min-height: 44px; font: 500 15px/1.4 var(--display); color: var(--ink-soft); }
 .main-nav a:hover, .main-nav a[aria-current="page"] { color: var(--ink); }
@@ -164,36 +164,38 @@
   .container { width: calc(100% - 64px); }
   .header-inner { gap: 28px; }
   .main-nav { gap: 24px; }
-  .publication-preview { padding-inline: 22px; }
   .publication-banner { grid-template-columns: 1fr; gap: 26px; }
   .preview-figure { max-width: 660px; }
   .geometry-panels { gap: 23px; }
 }
 @media (max-width: 720px) {
-  .container { width: calc(100% - 40px); }
-  .header-inner { min-height: 94px; flex-wrap: wrap; gap: 0; justify-content: space-between; padding-top: 6px; }
-  .wordmark { font-size: 15px; }
-  .header-contact { margin-left: auto; font-size: 13px; }
-  .main-nav { order: 3; flex-basis: 100%; justify-content: space-between; margin: 4px 0 0; gap: 20px; }
-  .main-nav a { min-height: 45px; font-size: 13px; }
+  .container { width: calc(100% - 36px); }
+  .header-inner { min-height: auto; flex-wrap: wrap; gap: 8px 16px; justify-content: space-between; padding-block: 14px 4px; }
+  .header-left { display: contents; }
+  .wordmark { font-size: 18px; }
+  .header-right { gap: 8px; }
+  .header-right .dm-pill-btn { padding: 7px 14px; font-size: 13.5px; }
+  .main-nav { order: 3; flex-basis: 100%; justify-content: flex-start; margin: 2px 0 0; gap: 24px; border-top: 1px solid var(--hair); }
+  .main-nav a { min-height: 40px; font-size: 14px; }
   .main-nav a[aria-current="page"]::after { bottom: 0; }
-  .page-content { padding-block: 36px 48px; }
+  .page-content { padding-block: 28px 48px; }
   .section-heading { margin-bottom: 25px; gap: 12px; }
   .section-heading h2 { font-size: 16px; }
   .section-heading > .text-link { font-size: 12px; }
-  .page-head { margin-bottom: 30px; }
-  .page-head h1 { font-size: 34px; }
+  .page-head { margin-bottom: 28px; }
+  .page-head h1 { font-size: 32px; }
   .empty-state { gap: 18px; padding-block: 32px; }
   .empty-state h2 { font-size: 23px; }
   .empty-state p { font-size: 14px; }
   .pubs-year-group { grid-template-columns: 1fr; gap: 20px; }
-  .publication-preview { padding: 22px 18px 20px; }
-  .preview-heading h2 { font-size: 21px; }
-  .preview-description { font-size: 14px; }
+  .publication-preview { padding: 32px 0 24px; }
+  .preview-heading h2 { font-size: 22px; }
+  .preview-description { font-size: 15px; }
+  .preview-figure { padding: 14px; border-radius: 16px; }
   .desktop-break { display: none; }
   .geometry-heading { flex-direction: column; gap: 15px; }
-  .geometry-panels { grid-template-columns: 1fr; gap: 29px; margin-top: 23px; }
-  .geometry-panels figure + figure { border-top: 1px solid var(--paper-rule); padding-top: 23px; }
+  .geometry-panels { grid-template-columns: 1fr; gap: 18px; margin-top: 20px; }
+  .geometry-panels figure { padding: 14px; border-radius: 16px; }
   .geometry-panels img { max-width: 540px; margin-inline: auto; }
   .geometry-panels figcaption { margin-top: 10px; }
   .cv-entry-head { flex-direction: column; gap: 5px; }
@@ -208,11 +210,10 @@
   .note-body { font-size: 16px; }
   .note-body h2 { font-size: 21px; }
   .note-body .katex-display { font-size: 13px; padding-inline: 5px; }
-  .footer-main { flex-direction: column; align-items: flex-start; gap: 0; }
+  .footer-main { flex-direction: column; align-items: flex-start; gap: 4px; }
 }
 @media (max-width: 430px) {
   .preview-heading h2 { font-size: 20px; }
-  .publication-preview { padding-inline: 16px; }
 }
 
 /* A readable CV PDF; other pages retain their own heading when printed. */
