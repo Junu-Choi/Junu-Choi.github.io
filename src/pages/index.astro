@@ -1,47 +1,136 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import SectionRule from "../components/SectionRule.astro";
 import ResearchMap from "../components/ResearchMap.astro";
 import PaperList from "../components/PaperList.astro";
 import "../styles/home.css";
 import { papers } from "../data/papers";
 import { astraPreview, ptmManuscript } from "../data/manuscripts";
+import { site } from "../config/site";
 
 const hasSelectedPapers = papers.some((p) => p.selected);
 ---
 <BaseLayout activeNav="about" pageClass="home-page">
-  <div class="identity-surface">
+  <div class="container home-body">
     <header class="identity">
       <div class="identity-copy">
-        <h1 id="hero-title">Junu Choi</h1>
-        <p class="identity-affiliation">Master’s student in AI <span class="identity-separator" aria-hidden="true">·</span> <span class="identity-institution">Seoul National University</span></p>
-        <p class="identity-description">I study generative modeling, probabilistic inference,<br class="identity-break"/> and scientific machine learning.</p>
+        <p class="identity-eyebrow">Seoul National University · Master’s Student in AI</p>
+        <h1 id="hero-title">{site.name}</h1>
+        <p class="identity-description">
+          I research <strong>generative dynamics</strong>, <strong>probabilistic inference</strong>, and <strong>scientific machine learning</strong>—designing optimal transport principles and scalable architectures for high-dimensional physical systems.
+        </p>
+        <div class="meta-strip">
+          <div class="meta-item">
+            <span class="meta-label">Affiliation</span>
+            <span class="meta-val">M.S. in AI, SNU</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Prior Education</span>
+            <span class="meta-val">B.S. in CS &amp; Math, KAIST</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Contact</span>
+            <span class="meta-val"><a class="meta-email" href={`mailto:${site.email}`}>{site.email}</a></span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Profiles</span>
+            <span class="meta-val">
+              <a href="https://github.com/Junu-Choi">GitHub <span aria-hidden="true">↗</span></a>
+              <a href="https://orcid.org/0009-0005-6979-9505">ORCID <span aria-hidden="true">↗</span></a>
+              <a href="/cv/">CV <span aria-hidden="true">↗</span></a>
+            </span>
+          </div>
+        </div>
       </div>
-      <div class="portrait-blend">
+      <div class="portrait-frame">
         <img class="identity-portrait" src="/junu.jpeg" alt="Portrait of Junu Choi" width="800" height="1103" loading="eager" fetchpriority="high"/>
       </div>
     </header>
-  </div>
 
-  <div class="container home-body">
     <ResearchMap/>
 
     <section class="home-publications" aria-labelledby="selected-title">
-      <SectionRule label="Selected papers" id="selected-title" href="/papers/" linkLabel="All papers"/>
-      <article class="selected-manuscript">
-        <p class="selected-status">arXiv preprint, 2026</p>
-        <div>
-          <h3><a href={`/papers/#${astraPreview.id}`}>{astraPreview.title}<span aria-hidden="true">↗</span></a></h3>
-          <p>Kantorovich Attention lets each region choose both where it reads from and where it writes to; trained on one node, Astra matches GenCast with 9.8% of its hardware-normalised training compute.</p>
-        </div>
-      </article>
-      <article class="selected-manuscript">
-        <p class="selected-status">{ptmManuscript.status}</p>
-        <div>
-          <h3><a href={ptmManuscript.href}>{ptmManuscript.title}<span aria-hidden="true">↗</span></a></h3>
-          <p>{ptmManuscript.description}</p>
-        </div>
-      </article>
+      <div class="section-header-bar">
+        <h2 id="selected-title">Selected Preprints &amp; Manuscripts</h2>
+        <a class="section-action" href="/papers/">Full publication &amp; interactive archive <span aria-hidden="true">→</span></a>
+      </div>
+
+      <div class="paper-list">
+        <article class="paper-item">
+          <div class="paper-topbar">
+            <div class="paper-id">
+              <strong>01</strong>
+              <span aria-hidden="true">·</span>
+              <span>arXiv:2610.35545</span>
+              <span aria-hidden="true">·</span>
+              <span>2026</span>
+            </div>
+            <div class="metric-badges">
+              <span class="badge blue">0.25° ERA5 Global</span>
+              <span class="badge teal">Kantorovich Attention</span>
+              <span class="badge">9.8% of GenCast Compute</span>
+            </div>
+          </div>
+          <div class="paper-body">
+            <div>
+              <h3 class="paper-title">
+                <a href={`/papers/#${astraPreview.id}`}>{astraPreview.title}</a>
+              </h3>
+              <p class="paper-authors"><strong>Junu Choi</strong>, Youngjoon Hong</p>
+              <p class="paper-desc">
+                Kantorovich Attention routes information from both sides (pull &amp; push) so zero regions are left unread, closely matching the exact optimal transport plan. Trained on a single 8-GPU node, Astra beats ECMWF IFS ENS across all 600 target–lead cells.
+              </p>
+              <div class="paper-links">
+                <a class="btn-chip" href={astraPreview.arxiv}>arXiv <span aria-hidden="true">↗</span></a>
+                <a class="btn-chip" href={astraPreview.pdf}>PDF <span aria-hidden="true">↗</span></a>
+                <a class="btn-chip primary" href={`/papers/#${astraPreview.id}`}>Interactive Kantorovich Attention &amp; Scorecard <span aria-hidden="true">→</span></a>
+              </div>
+            </div>
+            <figure class="paper-fig">
+              <a href={`/papers/#${astraPreview.id}`} aria-label="Open Astra interactive scorecard and Kantorovich Attention figure">
+                <img src="/figures/astra/scorecard-c.webp" width="1800" height="465" loading="eager" decoding="async" alt="Astra 0.25 degree WeatherBench 2 CRPS improvement scorecard over ECMWF IFS ENS"/>
+              </a>
+              <figcaption class="paper-fig-cap">0.25° WeatherBench 2 CRPS improvement vs. IFS ENS (all 600 cells significant)</figcaption>
+            </figure>
+          </div>
+        </article>
+
+        <article class="paper-item">
+          <div class="paper-topbar">
+            <div class="paper-id">
+              <strong>02</strong>
+              <span aria-hidden="true">·</span>
+              <span>{ptmManuscript.status}</span>
+              <span aria-hidden="true">·</span>
+              <span>Manuscript</span>
+            </div>
+            <div class="metric-badges">
+              <span class="badge blue">Optimal Transport</span>
+              <span class="badge">Bayesian Inverse Problems</span>
+            </div>
+          </div>
+          <div class="paper-body">
+            <div>
+              <h3 class="paper-title">
+                <a href={ptmManuscript.href}>{ptmManuscript.title}</a>
+              </h3>
+              <p class="paper-authors"><strong>Junu Choi</strong>, et al.</p>
+              <p class="paper-desc">
+                Alternates minimum-energy numerical transport maps with stochastic input updates (rematching) to sample complex posterior distributions without iterative simulation collapse.
+              </p>
+              <div class="paper-links">
+                <a class="btn-chip" href={ptmManuscript.href}>Manuscript Preview <span aria-hidden="true">→</span></a>
+                <a class="btn-chip primary" href="/papers/#geometry-title">Interactive Transport Geometry <span aria-hidden="true">→</span></a>
+              </div>
+            </div>
+            <figure class="paper-fig">
+              <a href={ptmManuscript.href} aria-label="Open Posterior Transport Matching preview">
+                <img src="/figures/ptm/figure-2.svg" width="1875" height="734" loading="lazy" decoding="async" alt="Posterior Transport Matching Figure 2"/>
+              </a>
+              <figcaption class="paper-fig-cap">Alternating numerical transport maps with compatible input laws via rematching</figcaption>
+            </figure>
+          </div>
+        </article>
+      </div>
       {hasSelectedPapers && <PaperList selectedOnly/>}
     </section>
   </div>

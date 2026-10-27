@@ -3,8 +3,8 @@ import { researchAreas, researchWork } from "../data/research";
 ---
 <section class="research-section" id="research" aria-labelledby="research-title" data-research-map>
   <div class="research-heading">
-    <h2 id="research-title">Research interests</h2>
-    <button class="all-research" type="button" aria-controls="related-work" aria-pressed="false" aria-expanded="false" data-all-research hidden>All research <span aria-hidden="true">↓</span></button>
+    <h2 id="research-title">Research Pillars &amp; Connected Projects</h2>
+    <button class="all-research" type="button" aria-controls="related-work" aria-pressed="false" aria-expanded="false" data-all-research hidden>Explore interactive project map ({String(researchWork.length).padStart(2, "0")}) <span aria-hidden="true">↓</span></button>
   </div>
 
   <div class="research-map" data-map-canvas>
@@ -14,7 +14,11 @@ import { researchAreas, researchWork } from "../data/research";
         <li>
           <button class="research-area" type="button" data-area={area.id} data-work={area.work.join(" ")} data-label={area.label}
             aria-labelledby={`area-${area.id}`} aria-describedby={`area-${area.id}-description`} aria-controls="related-work" aria-expanded="false" aria-pressed="false" disabled>
-            <span class="area-heading"><span id={`area-${area.id}`} class="area-name">{area.label}</span><span class="area-toggle" aria-hidden="true">+</span></span>
+            <span class="pillar-top">
+              <span class="pillar-num">{area.tag}</span>
+              <span class="area-toggle" aria-hidden="true">+</span>
+            </span>
+            <span class="area-heading"><span id={`area-${area.id}`} class="area-name">{area.label}</span></span>
             <span class="area-description" id={`area-${area.id}-description`}>{area.description}</span>
           </button>
         </li>
