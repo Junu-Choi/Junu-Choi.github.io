@@ -408,7 +408,7 @@ body.home-theme {
   .identity {
     grid-template-columns: 1fr;
     gap: 24px;
-    padding: 24px 0 98px;
+    padding: 24px 0 48px;
   }
   .identity-copy h1 {
     font-size: 36px;
@@ -420,7 +420,12 @@ body.home-theme {
   }
   .hero-actions {
     margin-top: 22px;
-    gap: 12px 18px;
+    gap: 10px 14px;
+    font-size: 14px;
+  }
+  .hero-actions .dm-pill-btn {
+    padding: 8px 16px;
+    font-size: 14px;
   }
   .portrait-frame {
     order: -1;
