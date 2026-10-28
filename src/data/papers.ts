@@ -32,9 +32,9 @@ export const papers: Paper[] = [
     title: "Efficient probabilistic weather forecasting at quarter-degree resolution with two-sided transport attention",
     authors: "Junu Choi, Youngjoon Hong",
     venue: "arXiv",
-    status: "Preprint",
+    status: "Preprint · arXiv:2610.35545",
     links: [
-      { label: "arXiv", href: "https://arxiv.org/abs/2610.35545" },
+      { label: "https://arxiv.org/abs/2610.35545", href: "https://arxiv.org/abs/2610.35545" },
       { label: "PDF", href: "https://arxiv.org/pdf/2610.35545" },
       { label: "Preview", href: "/papers/#astra" },
     ],
