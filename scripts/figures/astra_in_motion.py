@@ -82,7 +82,7 @@ def save_animation(name, frames, durations=None, still_idx=-1):
     if durations is None:
         cycle = indexed + indexed[-2:0:-1]
         durs = [60] * len(cycle)
-        durs[0], durs[len(frames) - 1] = 1000, 1500
+        durs[0], durs[len(frames) - 1] = 2200, 2600
     else:
         cycle = indexed
         durs = durations
@@ -516,10 +516,11 @@ def coverage_frame(s):
     # Header & progress bar
     title_str = r"Pull alone  $\rightarrow$  Two-sided top-$K$ ($K = 8$)"
     fig.text(0.055, 0.935, title_str, color=MUTED if s < 0.5 else VIOLET_T, fontsize=10.5, fontweight="bold")
+    endpoint = s <= 0.001 or s >= 0.999
     fig.text(
         0.945,
         0.935,
-        f"{n_unread} / 180 unread",
+        f"{n_unread} / 180 unread" if endpoint else "",
         ha="right",
         fontsize=10.5,
         fontweight="bold",
@@ -590,14 +591,12 @@ def coverage_frame(s):
     ov.text(KX0 + 5 * SW + 0.34, YK + KH / 2, "Readers per tile (trained L2 head)", fontsize=7.8, color=MUTED, va="center")
 
     # ---- Bottom metrics (matching geometry_in_motion.py) ----
-    unread_pct = 28.0 * (1.0 - s)
-    gain_pct = 71.0 + 26.5 * s
     fig.text(0.055, 0.11, "TRAINED NETWORK (4,608 SCORE MATRICES)", fontsize=9.0, color=MUTED)
-    if n_unread == 0:
+    if s <= 0.001:
+        fig.text(0.055, 0.04, "Unread  28% on average (2° tiles)", color=BLUE, fontsize=11.2, fontweight="bold")
+    elif s >= 0.999:
         fig.text(0.055, 0.04, "Unread  0% (by construction)", color=VIOLET_T, fontsize=11.2, fontweight="bold")
-    else:
-        fig.text(0.055, 0.04, f"Unread (2°)  {unread_pct:.0f}%", color=BLUE, fontsize=11.2, fontweight="bold")
-    fig.text(0.58, 0.04, f"OT gain  {gain_pct:.0f}% (94–98%)", color=INK, fontsize=11.2, fontweight="bold")
+        fig.text(0.58, 0.04, "OT gain  94–98%", color=INK, fontsize=11.2, fontweight="bold")
 
     return image_from_figure(fig)
 
