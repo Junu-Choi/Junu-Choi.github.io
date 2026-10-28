@@ -1,5 +1,6 @@
 """Render DeepMind-style PTM Figure 2 (Covariant matching cycle) on #F8F9FA."""
 import glob
+import os
 from pathlib import Path
 import numpy as np
 import matplotlib
@@ -9,7 +10,8 @@ from matplotlib import font_manager
 from matplotlib.patches import FancyArrowPatch, PathPatch, Polygon
 from matplotlib.path import Path as MPath
 
-for _f in glob.glob("/data/junuchoi/hyperlane_wb2_prep/fig4b_sprint/M1/fonts_ttf/*.ttf"):
+FONT_DIR = os.environ.get("FIGURE_FONT_DIR")  # TeX Gyre Heros .ttf files, if not installed system-wide
+for _f in glob.glob(os.path.join(FONT_DIR, "*.ttf")) if FONT_DIR else []:
     font_manager.fontManager.addfont(_f)
 
 OUT_SVG = Path(__file__).resolve().parents[2] / "public" / "figures" / "ptm" / "figure-2.svg"
