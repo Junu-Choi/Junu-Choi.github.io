@@ -124,11 +124,11 @@ export const cv = {
 
   awards: [
     {
-      title: "AI Graduate Fellowship (BK21 FOUR)",
+      title: "AI Fellowship (AI Graduate School Support Program)",
       place: "Seoul National University, Interdisciplinary Program in Artificial Intelligence",
       date: "2025 – present",
       details: [
-        "Full tuition support and monthly research stipend.",
+        "Government-sponsored graduate fellowship providing full tuition waiver and monthly stipend.",
       ],
     },
     {
