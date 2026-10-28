@@ -124,9 +124,12 @@ export const cv = {
 
   awards: [
     {
-      title: "Full graduate fellowship",
-      place: "Seoul National University, Interdisciplinary Program in AI",
+      title: "AI Graduate Fellowship (BK21 FOUR)",
+      place: "Seoul National University, Interdisciplinary Program in Artificial Intelligence",
       date: "2025 – present",
+      details: [
+        "Full tuition support and monthly research stipend.",
+      ],
     },
     {
       title: "National Science & Technology Scholarship (KAIST Scholarship)",
