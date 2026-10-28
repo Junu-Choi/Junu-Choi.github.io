@@ -9,6 +9,7 @@ a posterior heat marginal. No manuscript files are read or modified.
 from pathlib import Path
 import glob
 import json
+import os
 
 import matplotlib
 matplotlib.use("Agg")
@@ -18,7 +19,8 @@ from matplotlib.patches import Ellipse, Polygon
 import numpy as np
 from PIL import Image
 
-for _f in glob.glob("/data/junuchoi/hyperlane_wb2_prep/fig4b_sprint/M1/fonts_ttf/*.ttf"):
+FONT_DIR = os.environ.get("FIGURE_FONT_DIR")  # TeX Gyre Heros .ttf files, if not installed system-wide
+for _f in glob.glob(os.path.join(FONT_DIR, "*.ttf")) if FONT_DIR else []:
     font_manager.fontManager.addfont(_f)
 
 OUT = Path(__file__).resolve().parents[2] / "public" / "figures" / "ptm"

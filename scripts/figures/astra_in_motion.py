@@ -3,7 +3,7 @@
 Uses the exact 3D raised Blue Marble Earth plates, 3D pinched lattice wells,
 lit 3D transport tubes, twisting unravelling strand bundles, bipartite tally
 strips, and trained-network 180-tile global score matrices from the Astra
-manuscript (fig2c_h18.py & fig2b_h18.py) on the #F8F9FA DeepMind surface.
+manuscript's Figure 2 sources (ASTRA_FIG2_DIR) on a #F8F9FA surface.
 """
 import glob
 import importlib.util
@@ -22,11 +22,12 @@ from matplotlib.transforms import Affine2D
 import numpy as np
 from PIL import Image
 
-for _f in glob.glob("/data/junuchoi/hyperlane_wb2_prep/fig4b_sprint/M1/fonts_ttf/*.ttf"):
+FONT_DIR = os.environ.get("FIGURE_FONT_DIR")  # TeX Gyre Heros .ttf files, if not installed system-wide
+for _f in glob.glob(os.path.join(FONT_DIR, "*.ttf")) if FONT_DIR else []:
     font_manager.fontManager.addfont(_f)
 
 OUT = Path(__file__).resolve().parents[2] / "public" / "figures" / "astra"
-FIG2_DIR = Path("/data/junuchoi/hyperlane_wb2_prep/paper_eff/docs/paper_arxiv/figures/src/fig2_ka")
+FIG2_DIR = Path(os.environ["ASTRA_FIG2_DIR"])  # the manuscript's Figure 2 sources
 
 os.environ["EARTH_AB"] = "A"
 os.environ["C3D_MODE"] = "c3d"
