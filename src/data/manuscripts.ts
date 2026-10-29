@@ -18,4 +18,5 @@ export const astraPreview = {
   availability: "Junu Choi, Youngjoon Hong · arXiv:2610.35545",
   arxiv: "https://arxiv.org/abs/2610.35545",
   pdf: "https://arxiv.org/pdf/2610.35545",
+  code: "https://github.com/Junu-Choi/astra-wx",
 } as const;
