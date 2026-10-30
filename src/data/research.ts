@@ -62,7 +62,7 @@ export const researchWork: ResearchWork[] = [
     status: "arXiv:2610.35545",
     forthcoming: true,
     description:
-      "Two-sided Kantorovich Attention (pull & push) for 0.25° global ensemble weather forecasting, outperforming ECMWF IFS ENS across all 600 target–lead cells using 9.8% of GenCast training compute.",
+      "Two-sided Kantorovich Attention (pull & push) for 0.25° global ensemble weather forecasting. Trained on a single 8-GPU node, Astra has lower CRPS and ensemble-mean RMSE than ECMWF IFS ENS on all 600 variable–level–lead-time combinations, verified against ERA5.",
     href: "/papers/#astra",
     links: [
       { label: "Read paper", href: astraPreview.arxiv },
