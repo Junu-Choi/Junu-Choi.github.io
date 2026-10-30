@@ -355,7 +355,7 @@ body.home-theme {
 .paper-thumb-stage img {
   width: 100%;
   height: auto;
-  max-height: 300px;
+  max-height: 380px;
   object-fit: contain;
   border-radius: 10px;
   display: block;

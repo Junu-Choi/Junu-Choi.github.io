@@ -2,7 +2,7 @@
 import { ptmManuscript } from "../data/manuscripts";
 ---
 <article class="publication-preview" id={ptmManuscript.id} aria-labelledby="ptm-title">
-  <div class="publication-banner">
+  <div class="publication-banner publication-banner--stacked">
     <header class="preview-heading">
       <h2 id="ptm-title">{ptmManuscript.title}</h2>
       <p class="preview-description">{ptmManuscript.description}</p>
@@ -11,12 +11,12 @@ import { ptmManuscript } from "../data/manuscripts";
         <span>Junu Choi, Youngjoon Hong · {ptmManuscript.status}</span>
       </div>
     </header>
-    <figure class="preview-figure">
-      <a href="/figures/ptm/figure-2.svg" aria-label="View Figure 2 at full size">
-        <img src="/figures/ptm/figure-2.svg" width="1875" height="734" loading="eager" decoding="async"
-          alt="Figure 2: numerical transport maps alternate with rematching. Blue current laws are compared with dashed required input laws and their common posterior target."/>
+    <figure class="preview-figure preview-figure--wide">
+      <a href="/figures/ptm/benchmark-overview.webp" aria-label="View PTM image restoration and InverseBench results at full size">
+        <img src="/figures/ptm/benchmark-overview.webp" width="2400" height="1170" loading="eager" decoding="async"
+          alt="Posterior Transport Matching empirical results: (a) image restoration on ImageNet and FFHQ with 48x48 zoom insets and PSNR gains up to +5.83 dB over SITCOM and DAPS, and (b) InverseBench scientific inverse problems across black-hole interferometry, inverse scattering, multi-coil knee MRI, and acoustic full waveform inversion."/>
       </a>
-      <figcaption>Figure 2. Rematching supplies a compatible input law.</figcaption>
+      <figcaption>Image restoration with 48×48 zoom insets (a; ImageNet &amp; FFHQ 256×256, PSNR in dB) and scientific inverse problems on InverseBench (b; single-particle PTM vs. training-free diffusion baselines).</figcaption>
     </figure>
   </div>
 
@@ -50,6 +50,13 @@ import { ptmManuscript } from "../data/manuscripts";
         <figcaption>Stronger conditioning narrows the <span class="kernel-key">Gaussian kernel</span> along the observed direction. Blue contours show the same prior convolved with that kernel.</figcaption>
       </figure>
     </div>
+    <figure class="preview-figure ka-figure" style="margin-top: 28px;">
+      <a href="/figures/ptm/figure-2.svg" aria-label="View Figure 2 at full size">
+        <img src="/figures/ptm/figure-2.svg" width="1875" height="734" loading="lazy" decoding="async"
+          alt="Figure 2: numerical transport maps alternate with rematching. Blue current laws are compared with dashed required input laws and their common posterior target."/>
+      </a>
+      <figcaption>Figure 2. Rematching supplies a compatible input law.</figcaption>
+    </figure>
     <p class="geometry-note">Illustrative 2D geometry. The blue contours describe a smoothed prior, rather than posterior marginals.</p>
   </details>
 </article>
@@ -62,6 +69,12 @@ import { ptmManuscript } from "../data/manuscripts";
     if (!button) return;
 
     let wantsMotion = !reducedMotion.matches;
+    function syncHashOpen() {
+      const hash = window.location.hash;
+      if (hash && (hash === "#ka-title" || hash === "#geometry-title") && figure.querySelector(hash)) {
+        figure.open = true;
+      }
+    }
     function updatePlayback() {
       const playing = figure.open && wantsMotion;
       images.forEach((image) => {
@@ -73,7 +86,12 @@ import { ptmManuscript } from "../data/manuscripts";
     }
 
     button.hidden = false;
+    syncHashOpen();
     updatePlayback();
+    window.addEventListener("hashchange", () => {
+      syncHashOpen();
+      updatePlayback();
+    });
     figure.addEventListener("toggle", updatePlayback);
     button.addEventListener("click", () => {
       wantsMotion = !wantsMotion;

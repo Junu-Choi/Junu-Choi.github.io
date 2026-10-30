@@ -67,7 +67,7 @@ export const researchWork: ResearchWork[] = [
     links: [
       { label: "Read paper", href: astraPreview.arxiv },
       { label: "Code", href: astraPreview.code },
-      { label: "Interactive preview", href: "/papers/#astra" },
+      { label: "Interactive preview", href: "/papers/#ka-title" },
     ],
   },
   {
@@ -82,7 +82,7 @@ export const researchWork: ResearchWork[] = [
     status: ptmManuscript.status,
     links: [
       { label: "Manuscript preview", href: "/papers/#ptm" },
-      { label: "Interactive geometry", href: "/papers/#geometry-title" },
+      { label: "Interactive preview", href: "/papers/#geometry-title" },
     ],
   },
   {

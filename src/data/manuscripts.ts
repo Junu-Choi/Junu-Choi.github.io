@@ -3,7 +3,8 @@
 export const ptmManuscript = {
   id: "ptm",
   title: "Posterior Transport Matching for Inverse Problems",
-  description: "Pairing numerical transport maps with stochastic input updates for posterior sampling.",
+  description:
+    "Posterior Transport Matching pairs numerical transport maps with minimum-energy stochastic rematching so each map’s inputs remain posterior-compatible using only a frozen denoiser and the observation operator. Across eight FFHQ and ImageNet restoration tasks and four InverseBench scientific inverse problems, PTM achieves the highest PSNR and lowest posterior energy score at 5–8× fewer denoiser evaluations than DAPS.",
   status: "Under review, ICLR 2027",
   availability: "Manuscript and links forthcoming.",
   href: "/papers/#ptm",
