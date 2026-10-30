@@ -106,7 +106,7 @@ export const cv = {
         "Led a three-person project using a Light-Image Encoder to condition diffusion on source/target environment maps and camera pose; evaluated on OpenIllumination.",
       ],
       links: [
-        { label: "Code", href: "https://github.com/j-mayo/LightTransporter" },
+        { label: "Code (team repository)", href: "https://github.com/j-mayo/LightTransporter" },
         { label: "Hugging Face", href: "https://huggingface.co/LightTransporter/DiffRelight-OpenIllumination" },
         { label: "Report", href: "https://drive.google.com/file/d/1009QskpqLxJRltqiCnim5seDmX1nxwEL/view" },
       ],
@@ -134,9 +134,9 @@ export const cv = {
     {
       title: "National Science & Technology Scholarship (KAIST Scholarship)",
       place: "Korea Advanced Institute of Science and Technology",
-      date: "2017 – 2025",
+      date: "8 semesters, 2017 – 2025 (excluding leave)",
       details: [
-        "Government-sponsored full tuition waiver and monthly stipend for 8 semesters.",
+        "Government-sponsored full tuition waiver and monthly stipend (8 semesters, 2017 – 2025 excluding leave).",
       ],
     },
     {
