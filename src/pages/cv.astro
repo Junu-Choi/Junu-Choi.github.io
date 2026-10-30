@@ -35,14 +35,6 @@ const publicationEntries: CVEntry[] = papers
   .slice()
   .sort((a, b) => b.year - a.year)
   .map(paperToCVEntry);
-
-/**
- * SHA-256 of the download passphrase. Default value here is the hash of
- * `junu-cv-private`. To change: pick a new passphrase and replace the
- * `expectedHash` value below with the output of
- *   echo -n "your-new-passphrase" | shasum -a 256 | head -c 64
- */
-const expectedHash = "4e62b4fcd27edfdc23251df7002ed399eeb81bd64a6cb76829fc8913768082c3";
 ---
 <BaseLayout title="CV" activeNav="cv" pageClass="cv-page">
 
@@ -91,33 +83,12 @@ const expectedHash = "4e62b4fcd27edfdc23251df7002ed399eeb81bd64a6cb76829fc891376
     <CVEntries items={cv.awards}/>
   </section>
 
-  {/*
-    Download gate: SHA-256 of a passphrase is compared client-side.
-    Not cryptographically strong (anyone can dev-tools the hash and brute-force
-    a weak passphrase) — but adequate for "casual visitors can't grab the
-    button-driven PDF; only people who know the passphrase can".
-  */}
-  <script is:inline define:vars={{ expectedHash }}>
+  <script is:inline>
     document
       .querySelector('[data-action="download-cv"]')
-      ?.addEventListener('click', async () => {
-        const pwd = window.prompt('Passphrase:');
-        if (!pwd) return;
-        const buf = await crypto.subtle.digest(
-          'SHA-256',
-          new TextEncoder().encode(pwd)
-        );
-        const hash = Array.from(new Uint8Array(buf))
-          .map((b) => b.toString(16).padStart(2, '0'))
-          .join('');
-        if (hash !== expectedHash) {
-          window.alert('Incorrect passphrase.');
-          return;
-        }
+      ?.addEventListener('click', () => {
         /* Clear document title so the browser's default print header
-           does not embed "CV — Junu Choi" alongside the auto-timestamp.
-           To remove the timestamp itself the user must uncheck
-           "Headers and footers" in the print dialog (one-time setting). */
+           does not embed "CV — Junu Choi" alongside the auto-timestamp. */
         const origTitle = document.title;
         document.title = '';
         setTimeout(() => { document.title = origTitle; }, 1500);
