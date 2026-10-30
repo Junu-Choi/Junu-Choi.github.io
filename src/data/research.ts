@@ -96,7 +96,7 @@ export const researchWork: ResearchWork[] = [
       "Diffusion relighting framework conditioning on source and target environment maps and camera pose via a dedicated Light-Image Encoder.",
     href: "/cv/#lighttransporter",
     links: [
-      { label: "Code", href: "https://github.com/j-mayo/LightTransporter" },
+      { label: "Code (team repository)", href: "https://github.com/j-mayo/LightTransporter" },
       { label: "Hugging Face", href: "https://huggingface.co/LightTransporter/DiffRelight-OpenIllumination" },
     ],
   },

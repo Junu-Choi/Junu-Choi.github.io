@@ -40,4 +40,14 @@ export const papers: Paper[] = [
       { label: "Preview", href: "/papers/#astra" },
     ],
   },
+  {
+    year: 2026,
+    title: "Posterior Transport Matching for Inverse Problems",
+    authors: "Junu Choi, Youngjoon Hong",
+    venue: "Under review",
+    status: "ICLR 2027",
+    links: [
+      { label: "Preview", href: "/papers/#ptm" },
+    ],
+  },
 ];
