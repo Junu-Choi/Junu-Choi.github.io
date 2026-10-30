@@ -134,9 +134,9 @@ export const cv = {
     {
       title: "National Science & Technology Scholarship (KAIST Scholarship)",
       place: "Korea Advanced Institute of Science and Technology",
-      date: "8 semesters, 2017 – 2025 (excluding leave)",
+      date: "2017 – 2025",
       details: [
-        "Government-sponsored full tuition waiver and monthly stipend (8 semesters, 2017 – 2025 excluding leave).",
+        "Government-sponsored full tuition waiver and monthly stipend for 8 semesters (excluding leave).",
       ],
     },
     {
