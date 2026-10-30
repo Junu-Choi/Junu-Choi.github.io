@@ -218,14 +218,15 @@
 
 /* A readable CV PDF; other pages retain their own heading when printed. */
 @media print {
-  @page { size: A4; margin: 16mm 14mm; }
+  @page { size: A4; margin: 0; }
   html, body { background: white; color: #111; }
   body { font-size: 10pt; line-height: 1.35; }
   .site-header, .site-footer, .skip-link, .cv-meta, .article-back, .note-foot, .motion-toggle { display: none !important; }
   .container, .page-content { width: 100%; max-width: 100%; margin: 0; padding: 0; min-height: 0; }
   .cv-page .page-head { display: none; }
-  .cv-page { line-height: 1.25; }
+  .cv-page { line-height: 1.25; padding: 15mm 14mm 14mm; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
   .print-only { display: block; }
+  .print-timestamp { position: fixed; top: 5.5mm; left: 14mm; font: 400 7.5pt/1 var(--sans); color: #555; }
   .print-header { text-align: center; border-bottom: 1px solid #333; padding-bottom: 8px; margin-bottom: 12px; }
   .print-name { font-size: 22pt; font-weight: 600; }
   .print-contact { font-size: 8pt; margin-top: 4px; }
