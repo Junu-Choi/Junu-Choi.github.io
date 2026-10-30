@@ -5,6 +5,21 @@ interface Props {
   items: readonly CVEntry[];
 }
 const { items } = Astro.props;
+
+/** Bold the literal "Junu Choi" inside an author/place string. */
+function splitSelf(text: string): { text: string; bold: boolean }[] {
+  const me = "Junu Choi";
+  const out: { text: string; bold: boolean }[] = [];
+  let i = 0;
+  while (i < text.length) {
+    const idx = text.indexOf(me, i);
+    if (idx === -1) { out.push({ text: text.slice(i), bold: false }); break; }
+    if (idx > i) out.push({ text: text.slice(i, idx), bold: false });
+    out.push({ text: me, bold: true });
+    i = idx + me.length;
+  }
+  return out;
+}
 ---
 <ul class="cv-list">
   {items.map((e) => (
@@ -13,7 +28,9 @@ const { items } = Astro.props;
         <span class="cv-entry-title">{e.title}</span>
         <span class="cv-entry-date">{e.date}</span>
       </div>
-      <div class="cv-entry-place">{e.place}</div>
+      <div class="cv-entry-place">
+        {splitSelf(e.place).map((seg) => seg.bold ? <strong>{seg.text}</strong> : <>{seg.text}</>)}
+      </div>
       {e.details && e.details.length > 0 && (
         <ul class="cv-entry-details">
           {e.details.map((d) => <li>{d}</li>)}

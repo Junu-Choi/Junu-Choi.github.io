@@ -95,6 +95,7 @@
 .cv-entry-title { font: 550 19px/1.5 var(--display); letter-spacing: -.025em; }
 .cv-entry-date { white-space: nowrap; font: 12px/1.5 var(--sans); color: var(--accent); }
 .cv-entry-place { font-size: 14px; color: var(--ink-soft); }
+.cv-entry-place strong { color: var(--ink); font-weight: 500; }
 .cv-entry-details { padding-left: 20px; margin: 12px 0 0; max-width: 850px; font-size: 14px; color: var(--ink-soft); }
 .cv-entry-details li { padding-left: 2px; margin-top: 5px; }
 .cv-entry-details li::marker { color: var(--teal); }
