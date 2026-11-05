@@ -15,7 +15,7 @@ interface Props {
 const { title, description, activeNav, pageClass } = Astro.props;
 const isHome = pageClass === "home-page";
 const pageTitle = title ? `${title} — ${site.name}` : site.name;
-const desc = description ?? `${site.name}, a master's student in AI at Seoul National University, advised by Prof. Youngjoon Hong, studying generative modeling, probabilistic inference, and scientific machine learning.`;
+const desc = description ?? "I am a Master’s student in Artificial Intelligence at Seoul National University, advised by Prof. Youngjoon Hong, studying generative modeling, probabilistic inference, and scientific machine learning.";
 const canonicalURL = new URL(Astro.url.pathname, site.url);
 ---
 <!doctype html>
@@ -32,8 +32,10 @@ const canonicalURL = new URL(Astro.url.pathname, site.url);
   <meta property="og:title" content={pageTitle}/>
   <meta property="og:description" content={desc}/>
   <meta property="og:url" content={canonicalURL}/>
-  <meta property="og:image" content={new URL("/junu.jpeg", site.url)}/>
-  <meta property="og:image:alt" content={`Portrait of ${site.name}`}/>
+  <meta property="og:image" content={new URL("/og-card.png", site.url)}/>
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+  <meta property="og:image:alt" content={`${site.name} — ${desc}`}/>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
   <link rel="icon" type="image/png" sizes="64x64" href="/favicon.png"/>
   <link rel="icon" href="/favicon.ico" sizes="any"/>
