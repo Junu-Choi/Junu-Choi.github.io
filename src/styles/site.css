@@ -43,6 +43,8 @@
 .preview-availability a { color: var(--blue); font-weight: 500; }
 .preview-availability a:hover { text-decoration: underline; }
 .preview-figure { min-width: 0; background: var(--surface); border: 0; border-radius: 20px; padding: 24px; }
+.preview-figure--white { background: #ffffff; border: 1px solid var(--hair); }
+.preview-figure picture { display: contents; }
 .preview-figure a { display: block; }
 .preview-figure img { display: block; width: 100%; height: auto; background: transparent; border-radius: 10px; }
 .preview-figure figcaption { color: var(--ink-soft); font: 400 12.5px/1.55 var(--sans); margin-top: 12px; }

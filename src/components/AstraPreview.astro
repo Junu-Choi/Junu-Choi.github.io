@@ -16,6 +16,36 @@ import WeatherBenchExplorer from "./WeatherBenchExplorer.astro";
         <a class="dm-meta-link" href={astraPreview.weatherbench} target="_blank" rel="noopener noreferrer">WeatherBench 2 <span class="dm-chevron" aria-hidden="true">↗</span></a>
       </div>
     </header>
-    <WeatherBenchExplorer id="wb2-explorer"/>
+
+    <figure class="preview-figure preview-figure--wide preview-figure--white">
+      <a href="/figures/astra/two-globes.webp" aria-label="View the ERA5 vs. Astra 0.25-degree global rollout animation at full size">
+        <picture>
+          <source srcset="/figures/astra/two-globes-still.webp" media="(prefers-reduced-motion: reduce)" type="image/webp"/>
+          <img src="/figures/astra/two-globes.webp" width="1280" height="720" loading="eager" decoding="async"
+            alt="Animated 6-day global 0.25-degree 10 m wind speed rollout (+6 h to +144 h, 2–8 Sep 2020) comparing ERA5 reanalysis and a single Astra ensemble member across Typhoons Maysak and Haishen"/>
+        </picture>
+      </a>
+      <figcaption>ERA5 reanalysis (left) and a single Astra ensemble member (right) on the 0.25° global grid: 10 m wind speed rollout from +6 h to +144 h (2–8 September 2020).</figcaption>
+    </figure>
   </div>
+
+  <details class="geometry-figure" data-wb2-details>
+    <summary class="geometry-summary" id="wb2-toggle">WeatherBench 2 benchmark (0.25°)</summary>
+    <WeatherBenchExplorer id="wb2-explorer"/>
+  </details>
 </article>
+
+<script is:inline>
+  (() => {
+    const details = document.querySelector("[data-wb2-details]");
+    if (!details) return;
+    function syncWb2Hash() {
+      const h = window.location.hash;
+      if (h === "#wb2-explorer" || h === "#wb2-toggle") {
+        details.open = true;
+      }
+    }
+    syncWb2Hash();
+    window.addEventListener("hashchange", syncWb2Hash);
+  })();
+</script>
