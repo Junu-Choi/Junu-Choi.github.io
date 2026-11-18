@@ -20,4 +20,7 @@ export const astraPreview = {
   arxiv: "https://arxiv.org/abs/2610.35545",
   pdf: "https://arxiv.org/pdf/2610.35545",
   code: "https://github.com/Junu-Choi/astra-wx",
+  weatherbench: "https://sites.research.google/gr/weatherbench/",
+  weatherbenchProbabilistic: "https://sites.research.google/gr/weatherbench/probabilistic-scores/",
+  weatherbenchScorecards: "https://sites.research.google/gr/weatherbench/scorecards-2020/",
 } as const;

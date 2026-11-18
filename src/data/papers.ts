@@ -37,6 +37,7 @@ export const papers: Paper[] = [
       { label: "arXiv", href: "https://arxiv.org/abs/2610.35545" },
       { label: "PDF", href: "https://arxiv.org/pdf/2610.35545" },
       { label: "Code", href: "https://github.com/Junu-Choi/astra-wx" },
+      { label: "WeatherBench 2", href: "https://sites.research.google/gr/weatherbench/scorecards-2020/" },
       { label: "Preview", href: "/papers/#astra" },
     ],
   },

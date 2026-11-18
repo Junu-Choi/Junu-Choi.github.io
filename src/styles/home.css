@@ -360,6 +360,15 @@ body.home-theme {
   border-radius: 10px;
   display: block;
 }
+.paper-copy,
+.paper-thumb-stage {
+  min-width: 0;
+}
+.paper-row-wb2 {
+  grid-column: 1 / -1;
+  margin-top: -18px;
+  min-width: 0;
+}
 
 .visually-hidden {
   position: absolute;
@@ -392,6 +401,9 @@ body.home-theme {
     grid-template-columns: 1fr;
     gap: 28px;
     padding: 36px 0;
+  }
+  .paper-row-wb2 {
+    margin-top: 0;
   }
   .paper-thumb-stage {
     max-width: 640px;

@@ -1,5 +1,6 @@
 ---
 import { astraPreview } from "../data/manuscripts";
+import WeatherBenchExplorer from "./WeatherBenchExplorer.astro";
 ---
 <article class="publication-preview" id={astraPreview.id} aria-labelledby="astra-title">
   <div class="publication-banner publication-banner--stacked">
@@ -12,8 +13,10 @@ import { astraPreview } from "../data/manuscripts";
         <a class="dm-meta-link" href={astraPreview.arxiv}>arXiv <span class="dm-chevron" aria-hidden="true">›</span></a>
         <a class="dm-meta-link" href={astraPreview.pdf}>PDF <span class="dm-chevron" aria-hidden="true">›</span></a>
         <a class="dm-meta-link" href={astraPreview.code}>Code <span class="dm-chevron" aria-hidden="true">›</span></a>
+        <a class="dm-meta-link" href={astraPreview.weatherbench} target="_blank" rel="noopener noreferrer">WeatherBench 2 <span class="dm-chevron" aria-hidden="true">↗</span></a>
       </div>
     </header>
+    <WeatherBenchExplorer id="wb2-explorer"/>
     <figure class="preview-figure preview-figure--wide">
       <a href="/figures/astra/scorecard-c.webp" aria-label="View the scorecard at full size">
         <img src="/figures/astra/scorecard-c.webp" width="1800" height="465" loading="eager" decoding="async"

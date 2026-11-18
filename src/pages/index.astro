@@ -2,6 +2,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import ResearchMap from "../components/ResearchMap.astro";
 import PaperList from "../components/PaperList.astro";
+import WeatherBenchExplorer from "../components/WeatherBenchExplorer.astro";
 import "../styles/home.css";
 import { papers } from "../data/papers";
 import { astraPreview, ptmManuscript } from "../data/manuscripts";
@@ -57,6 +58,7 @@ const hasSelectedPapers = papers.some((p) => p.selected);
               <a class="dm-meta-link" href={astraPreview.arxiv}>Read paper <span class="dm-chevron" aria-hidden="true">›</span></a>
               <a class="dm-meta-link" href={astraPreview.pdf}>PDF <span class="dm-chevron" aria-hidden="true">›</span></a>
               <a class="dm-meta-link" href={astraPreview.code}>Code <span class="dm-chevron" aria-hidden="true">›</span></a>
+              <a class="dm-meta-link" href={astraPreview.weatherbench} target="_blank" rel="noopener noreferrer">WeatherBench 2 <span class="dm-chevron" aria-hidden="true">↗</span></a>
               <a class="dm-meta-link" href="/papers/#ka-title">Interactive preview <span class="dm-chevron" aria-hidden="true">›</span></a>
             </div>
           </div>
@@ -65,6 +67,9 @@ const hasSelectedPapers = papers.some((p) => p.selected);
               <img src="/figures/astra/hero-globe.webp" width="1039" height="1000" loading="eager" decoding="async" alt="Astra 3D cut-away Earth globe illustrating two-sided Kantorovich Attention transport tubes and raised tile zooms"/>
             </a>
           </figure>
+          <div class="paper-row-wb2">
+            <WeatherBenchExplorer id="wb2-home" compact/>
+          </div>
         </article>
 
         <article class="paper-row">

@@ -67,6 +67,7 @@ export const researchWork: ResearchWork[] = [
     links: [
       { label: "Read paper", href: astraPreview.arxiv },
       { label: "Code", href: astraPreview.code },
+      { label: "WeatherBench 2", href: "/papers/#wb2-explorer" },
       { label: "Interactive preview", href: "/papers/#ka-title" },
     ],
   },
