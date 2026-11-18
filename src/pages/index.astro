@@ -61,9 +61,12 @@ const hasSelectedPapers = papers.some((p) => p.selected);
               <a class="dm-meta-link" href={astraPreview.weatherbench} target="_blank" rel="noopener noreferrer">WeatherBench 2 <span class="dm-chevron" aria-hidden="true">↗</span></a>
             </div>
           </div>
-          <figure class="paper-thumb-stage">
+          <figure class="paper-thumb-stage paper-thumb-stage--white">
             <a href={`/papers/#${astraPreview.id}`} aria-label="Open Astra publication overview">
-              <img src="/figures/astra/hero-globe.webp" width="1039" height="1000" loading="eager" decoding="async" alt="Astra 3D cut-away Earth globe illustrating two-sided Kantorovich Attention transport tubes and raised tile zooms"/>
+              <picture>
+                <source srcset="/figures/astra/two-globes-still.webp" media="(prefers-reduced-motion: reduce)" type="image/webp"/>
+                <img src="/figures/astra/two-globes.webp" width="1280" height="720" loading="eager" decoding="async" alt="Animated 6-day global 0.25-degree 10 m wind speed rollout (+6 h to +144 h, 2–8 Sep 2020) comparing ERA5 reanalysis and a single Astra ensemble member across Typhoons Maysak and Haishen"/>
+              </picture>
             </a>
           </figure>
           <div class="paper-row-wb2">

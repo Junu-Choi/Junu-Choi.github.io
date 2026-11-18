@@ -346,6 +346,14 @@ body.home-theme {
   align-items: center;
   justify-content: center;
 }
+.paper-thumb-stage--white {
+  background: #ffffff;
+  border: 1px solid var(--hair);
+  padding: 16px 18px;
+}
+.paper-thumb-stage picture {
+  display: contents;
+}
 .paper-thumb-stage a {
   display: flex;
   align-items: center;
