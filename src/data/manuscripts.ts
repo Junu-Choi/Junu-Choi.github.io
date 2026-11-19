@@ -15,7 +15,7 @@ export const astraPreview = {
   id: "astra",
   title: "Efficient probabilistic weather forecasting at quarter-degree resolution with two-sided transport attention",
   description:
-    "Astra forecasts on the 0.25° grid with Kantorovich Attention, in which each region chooses both where it reads from and where it writes to, so every region sends and receives information at token resolution. Trained on one node of eight GPUs, it matches GenCast with 9.8% of its hardware-normalised training compute.",
+    "Astra forecasts on the 0.25° grid with Kantorovich Attention, in which each region chooses both where it reads from and where it writes to, so every region sends and receives information at token resolution. Trained on one node of eight GPUs, it matches GenCast with 10.3 times less hardware-normalised training compute.",
   availability: "Junu Choi, Youngjoon Hong · arXiv:2610.35545",
   arxiv: "https://arxiv.org/abs/2610.35545",
   pdf: "https://arxiv.org/pdf/2610.35545",
