@@ -16,11 +16,12 @@ import { site } from "../config/site";
  * Data still lives in src/data/papers.ts — this is purely a view.
  */
 function paperToCVEntry(p: Paper): CVEntry {
-  const venueParts = [p.venue];
+  const venueParts: string[] = [];
+  if (!p.links?.some((l) => l.label === p.venue)) venueParts.push(p.venue);
   if (p.grade)  venueParts.push(p.grade);
   if (p.status) venueParts.push(p.status);
   if (p.note)   venueParts.push(p.note);
-  const details: string[] = [venueParts.join(" · ")];
+  const details: string[] = venueParts.length > 0 ? [venueParts.join(" · ")] : [];
   if (p.cvDetails) details.push(...p.cvDetails);
   const links = p.links?.filter((l) => l.label !== "Preview");
   return {
@@ -51,12 +52,11 @@ const publicationEntries: CVEntry[] = papers
   </header>
 
   {/* Print-only header — replaces the page-head when the user prints */}
-  <div class="print-only print-timestamp" data-print-timestamp aria-hidden="true"></div>
   <div class="print-only print-header" aria-hidden="true">
     <h1 class="print-name">{site.name}</h1>
     <div class="print-legal-name">(legal name: Junwoo Choi)</div>
     <div class="print-contact">
-      <a href={`mailto:${site.emailInstitutional}`}>{site.emailInstitutional}</a> &nbsp;·&nbsp; <a href={site.url}>{site.url}</a> &nbsp;·&nbsp; <a href="https://github.com/Junu-Choi">https://github.com/Junu-Choi</a>
+      <a href={`mailto:${site.emailInstitutional}`}>{site.emailInstitutional}</a> &nbsp;·&nbsp; <a href={`mailto:${site.emailPermanent}`}>{site.emailPermanent}</a> &nbsp;·&nbsp; <a href={site.url}>{site.url}</a> &nbsp;·&nbsp; <a href="https://github.com/Junu-Choi">https://github.com/Junu-Choi</a>
     </div>
   </div>
 
@@ -88,24 +88,9 @@ const publicationEntries: CVEntry[] = papers
   </section>
 
   <script is:inline>
-    function updatePrintTimestamp() {
-      const el = document.querySelector('[data-print-timestamp]');
-      if (!el) return;
-      el.textContent = new Intl.DateTimeFormat('en-US', {
-        year: '2-digit',
-        month: 'numeric',
-        day: 'numeric',
-        hour: 'numeric',
-        minute: '2-digit',
-        hour12: true,
-      }).format(new Date());
-    }
-    updatePrintTimestamp();
-    window.addEventListener('beforeprint', updatePrintTimestamp);
     document
       .querySelector('[data-action="download-cv"]')
       ?.addEventListener('click', () => {
-        updatePrintTimestamp();
         window.print();
       });
   </script>

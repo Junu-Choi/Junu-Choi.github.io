@@ -81,7 +81,8 @@ export const researchWork: ResearchWork[] = [
     forthcoming: true,
     status: ptmManuscript.status,
     links: [
-      { label: "Manuscript preview", href: "/papers/#ptm" },
+      { label: "Manuscripts", href: ptmManuscript.manuscriptUrl },
+      { label: "Overview", href: "/papers/#ptm" },
     ],
   },
   {

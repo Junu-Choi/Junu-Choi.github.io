@@ -5,7 +5,8 @@ export const ptmManuscript = {
   title: "Posterior Transport Matching for Inverse Problems",
   description:
     "Posterior Transport Matching sets up training-free posterior sampling with two separate dynamics—a map from a noisy input to a clean endpoint and an endpoint-only kernel to the next noisy input—meeting in the input law from which the next map returns the posterior. On truths drawn from the prior, PTM achieves a lower energy score than every baseline on every task, the highest PSNR on all eight FFHQ tasks and seven of eight ImageNet tasks, and the best primary metric on four scientific inverse problems.",
-  status: "Under review",
+  status: "Manuscripts",
+  manuscriptUrl: "https://drive.google.com/file/d/1Oe1KA3gtsLZNh0CxQX-jJG608A2tUJep/view?usp=sharing",
   availability: "Manuscript and links forthcoming.",
   href: "/papers/#ptm",
 } as const;

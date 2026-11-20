@@ -85,7 +85,7 @@ const hasSelectedPapers = papers.some((p) => p.selected);
             </p>
             <div class="dm-meta-row">
               <span>2026</span>
-              <span>{ptmManuscript.status}</span>
+              <a class="dm-meta-link" href={ptmManuscript.manuscriptUrl} target="_blank" rel="noopener noreferrer">Manuscripts <span class="dm-chevron" aria-hidden="true">›</span></a>
               <a class="dm-meta-link" href={ptmManuscript.href}>Overview <span class="dm-chevron" aria-hidden="true">›</span></a>
             </div>
           </div>

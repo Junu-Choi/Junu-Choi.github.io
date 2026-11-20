@@ -50,11 +50,12 @@ export const papers: Paper[] = [
     year: 2026,
     title: "Posterior Transport Matching for Inverse Problems",
     authors: "Junu Choi, Youngjoon Hong",
-    venue: "Under review",
+    venue: "Manuscripts",
     cvDetails: [
       "Best primary metric on four scientific inverse problems (InverseBench), highest PSNR on 8/8 FFHQ and 7/8 ImageNet tasks, and lowest energy score on every task.",
     ],
     links: [
+      { label: "Manuscripts", href: "https://drive.google.com/file/d/1Oe1KA3gtsLZNh0CxQX-jJG608A2tUJep/view?usp=sharing" },
       { label: "Preview", href: "/papers/#ptm" },
     ],
   },
