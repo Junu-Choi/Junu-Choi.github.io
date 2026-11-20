@@ -7,7 +7,7 @@ export const site = {
   emailPermanent: "junu.choi.research@gmail.com",
   emailDisplay: "junu.choi.research",
   url: "https://junu-choi.github.io",
-  lastUpdated: "2026 September",
+  lastUpdated: "2026 November",
 
   nav: [
     { label: "about",  href: "/" },

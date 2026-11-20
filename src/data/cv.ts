@@ -19,13 +19,13 @@ export type CVEntry = {
 export type CVSection = readonly CVEntry[];
 
 export const cv = {
-  lastUpdated: "October 2026",
+  lastUpdated: "November 2026",
 
   education: [
     {
       title: "M.S., Interdisciplinary Program in Artificial Intelligence",
       place: "Seoul National University",
-      date: "Sep 2025 – Aug 2027",
+      date: "Sep 2025 – Aug 2027 (expected)",
       details: ["GPA: 4.20 / 4.30 (in progress)"],
     },
     {
@@ -52,7 +52,7 @@ export const cv = {
       details: [
         "Advisor: Prof. Youngjoon Hong.",
         "Astra: Kantorovich Attention (two-sided transport attention) for efficient quarter-degree probabilistic weather forecasting — arXiv:2610.35545.",
-        `${ptmManuscript.title}: minimum-energy transport matching for posterior sampling — under review, ICLR 2027.`,
+        `${ptmManuscript.title}: minimum-energy transport matching for posterior sampling — under review.`,
       ],
     },
     {

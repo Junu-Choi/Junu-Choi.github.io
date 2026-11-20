@@ -5,7 +5,7 @@ export const ptmManuscript = {
   title: "Posterior Transport Matching for Inverse Problems",
   description:
     "Posterior Transport Matching pairs numerical transport maps with minimum-energy stochastic rematching so each map’s inputs remain posterior-compatible using only a frozen denoiser and the observation operator.",
-  status: "Under review, ICLR 2027",
+  status: "Under review",
   availability: "Manuscript and links forthcoming.",
   href: "/papers/#ptm",
 } as const;
@@ -13,7 +13,7 @@ export const ptmManuscript = {
 // Preview card for the released Astra preprint (Figure 2 of the paper).
 export const astraPreview = {
   id: "astra",
-  title: "Efficient probabilistic weather forecasting at quarter-degree resolution with two-sided transport attention",
+  title: "Efficient probabilistic weather forecasting at quarter-degree resolution",
   description:
     "Astra forecasts on the 0.25° grid with Kantorovich Attention, in which each region chooses both where it reads from and where it writes to, so every region sends and receives information at token resolution. Trained on one node of eight GPUs, it matches GenCast with 10.3 times less hardware-normalised training compute.",
   availability: "Junu Choi, Youngjoon Hong · arXiv:2610.35545",

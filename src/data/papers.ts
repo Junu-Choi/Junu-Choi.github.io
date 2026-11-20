@@ -29,7 +29,7 @@ export type Paper = {
 export const papers: Paper[] = [
   {
     year: 2026,
-    title: "Efficient probabilistic weather forecasting at quarter-degree resolution with two-sided transport attention",
+    title: "Efficient probabilistic weather forecasting at quarter-degree resolution",
     authors: "Junu Choi, Youngjoon Hong",
     venue: "Preprint",
     status: "arXiv:2610.35545",
@@ -46,7 +46,6 @@ export const papers: Paper[] = [
     title: "Posterior Transport Matching for Inverse Problems",
     authors: "Junu Choi, Youngjoon Hong",
     venue: "Under review",
-    status: "ICLR 2027",
     links: [
       { label: "Preview", href: "/papers/#ptm" },
     ],
