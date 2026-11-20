@@ -14,6 +14,8 @@ export type Paper = {
   status?: string;
   /** Footnote-style annotation for dagger / star marks (e.g. "†corresponding"). */
   note?: string;
+  /** Additional bullet lines shown under the entry on the CV Publications section. */
+  cvDetails?: string[];
   links?: PaperLink[];
   /** Show on the about page's "Selected" preview. */
   selected?: boolean;
@@ -33,6 +35,9 @@ export const papers: Paper[] = [
     authors: "Junu Choi, Youngjoon Hong",
     venue: "Preprint",
     status: "arXiv:2610.35545",
+    cvDetails: [
+      "Independently evaluated and listed on the official Google Research WeatherBench 2 benchmark (0.25° global ensemble).",
+    ],
     links: [
       { label: "arXiv", href: "https://arxiv.org/abs/2610.35545" },
       { label: "PDF", href: "https://arxiv.org/pdf/2610.35545" },

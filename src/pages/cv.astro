@@ -21,6 +21,7 @@ function paperToCVEntry(p: Paper): CVEntry {
   if (p.status) venueParts.push(p.status);
   if (p.note)   venueParts.push(p.note);
   const details: string[] = [venueParts.join(" · ")];
+  if (p.cvDetails) details.push(...p.cvDetails);
   const links = p.links?.filter((l) => l.label !== "Preview");
   return {
     title: p.title,
@@ -73,6 +74,13 @@ const publicationEntries: CVEntry[] = papers
     <SectionRule label="Experience"/>
     <CVEntries items={cv.experience}/>
   </section>
+
+  {cv.talks.length > 0 && (
+    <section>
+      <SectionRule label="Talks"/>
+      <CVEntries items={cv.talks}/>
+    </section>
+  )}
 
   <section>
     <SectionRule label="Selected projects"/>

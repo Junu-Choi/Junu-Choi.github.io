@@ -96,6 +96,14 @@ export const cv = {
     },
   ] satisfies CVSection,
 
+  talks: [
+    {
+      title: "Efficient probabilistic weather forecasting at quarter-degree resolution with two-sided transport attention",
+      place: "Seoul National University",
+      date: "Nov 19, 2026",
+    },
+  ] satisfies CVSection,
+
   projects: [
     {
       id: "lighttransporter",
