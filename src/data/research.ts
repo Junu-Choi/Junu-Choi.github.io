@@ -76,7 +76,7 @@ export const researchWork: ResearchWork[] = [
     shortTitle: ptmManuscript.title,
     place: "SNU",
     description:
-      "Pairing numerical transport maps with stochastic input updates for measurement-consistent posterior sampling in inverse problems.",
+      "Training-free posterior sampling with two separate dynamics—a noisy-to-clean map and an endpoint-only kernel—meeting in the input law from which the next map returns the posterior. Achieves the lowest energy score on every task, highest PSNR on 8/8 FFHQ and 7/8 ImageNet tasks, and best primary metric on four scientific inverse problems.",
     href: "/papers/#ptm",
     forthcoming: true,
     status: ptmManuscript.status,

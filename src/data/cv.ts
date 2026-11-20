@@ -52,7 +52,7 @@ export const cv = {
       details: [
         "Advisor: Prof. Youngjoon Hong.",
         "Astra: Kantorovich Attention (two-sided transport attention) for efficient quarter-degree probabilistic weather forecasting — arXiv:2610.35545.",
-        `${ptmManuscript.title}: minimum-energy transport matching for posterior sampling — under review.`,
+        `${ptmManuscript.title}: training-free posterior sampling with a noisy-to-clean map and an endpoint-only kernel matched at the input law — under review.`,
       ],
     },
     {
