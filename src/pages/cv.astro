@@ -75,13 +75,6 @@ const publicationEntries: CVEntry[] = papers
     <CVEntries items={cv.experience}/>
   </section>
 
-  {cv.talks.length > 0 && (
-    <section>
-      <SectionRule label="Talks"/>
-      <CVEntries items={cv.talks}/>
-    </section>
-  )}
-
   <section>
     <SectionRule label="Selected projects"/>
     <CVEntries items={cv.projects}/>
