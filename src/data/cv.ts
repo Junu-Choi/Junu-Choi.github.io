@@ -80,7 +80,7 @@ export const cv = {
       place: "Humelo, Inc. — incl. two years of alternative military service (industrial technical personnel)",
       date: "Sep 2020 – Jan 2024",
       details: [
-        "Production text-to-speech and voice-conversion systems across multiple product lines.",
+        "Production text-to-speech and voice-conversion systems across multiple product lines; cut training memory by rewriting tensor operations one at a time, spending the savings on larger batches and models.",
         "Proposed Style Contrastive Adversarial Neutralization (SCAN) for vocal-style disentanglement, combining bi-adversarial training with contrastive feature compaction.",
         "Implemented an LTU-2-family audio–text understanding system (Llama × Whisper-AT) with partial LoRA / QLoRA training.",
         "Stabilised auto-regressive TTS via Lipschitz-preserving discriminators and 3-step causal training.",

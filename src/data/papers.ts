@@ -52,7 +52,7 @@ export const papers: Paper[] = [
     authors: "Junu Choi, Youngjoon Hong",
     venue: "Under review",
     cvDetails: [
-      "Best primary metric on all four scientific inverse problems (InverseBench), highest PSNR on 8/8 FFHQ and 7/8 ImageNet tasks, and lowest energy score on every task.",
+      "Best primary metric on four scientific inverse problems (InverseBench), highest PSNR on 8/8 FFHQ and 7/8 ImageNet tasks, and lowest energy score on every task.",
     ],
     links: [
       { label: "Preview", href: "/papers/#ptm" },

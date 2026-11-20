@@ -28,7 +28,11 @@ from PIL import Image
 import torch
 
 FONT_DIR = os.environ.get("FIGURE_FONT_DIR")
-for _f in glob.glob(os.path.join(FONT_DIR, "*.ttf")) if FONT_DIR else []:
+for _f in (
+    glob.glob(os.path.join(FONT_DIR, "*.ttf")) + glob.glob(os.path.join(FONT_DIR, "*.otf"))
+    if FONT_DIR
+    else []
+):
     font_manager.fontManager.addfont(_f)
 
 OUT_DIR = Path(__file__).resolve().parents[2] / "public" / "figures" / "ptm"
@@ -46,7 +50,8 @@ TEAL = "#0D9488"
 GOLD = "#F0E442"
 
 plt.rcParams.update({
-    "font.family": "TeX Gyre Heros",
+    "font.family": "sans-serif",
+    "font.sans-serif": ["TeX Gyre Heros", "Nimbus Sans", "DejaVu Sans"],
     "font.size": 8.5,
     "mathtext.fontset": "stixsans",
     "figure.facecolor": BG,
@@ -139,7 +144,7 @@ def build_wide_banner(qual_data, ib):
     fig.text(0.030, 0.955, "Image Restoration with Zoom Callouts (256×256)", fontsize=11.5, fontweight="bold", color=INK, va="center")
     fig.text(
         0.030, 0.918,
-        r"100-image cohorts: PTM leads all 8 FFHQ tasks in PSNR & energy score at 5.0–7.9× lower denoiser cost ($D_{\mathsf{eff}}$) than DAPS",
+        "100-image cohorts: highest PSNR on 8/8 FFHQ and 7/8 ImageNet tasks · lowest energy score on every task",
         fontsize=8.1, color=MUTED, va="center",
     )
 
@@ -150,7 +155,7 @@ def build_wide_banner(qual_data, ib):
     fig.text(0.576, 0.955, "Scientific Inverse Problems (InverseBench)", fontsize=11.5, fontweight="bold", color=INK, va="center")
     fig.text(
         0.576, 0.918,
-        "Single-particle PTM attains the #1 primary metric on all 4 physical benchmarks vs. training-free baselines",
+        "PTM attains the #1 primary metric on four physical benchmarks vs. training-free baselines",
         fontsize=7.5, color=MUTED, va="center",
     )
 
@@ -246,7 +251,7 @@ def build_wide_banner(qual_data, ib):
             "title": "Multi-Coil Knee MRI (4× raw k-space)",
             "rec": render_image_tile(mri_rec, "gray", 0.0, np.percentile(mri_gt, 99.5)),
             "gt": render_image_tile(mri_gt, "gray", 0.0, np.percentile(mri_gt, 99.5)),
-            "ptm_metric": r"PTM  29.11 dB  ($D_{\mathsf{eff}} = 286$)",
+            "ptm_metric": "PTM  29.11 dB",
             "base_metric": "vs. RED-diff 28.71 · DAPS 28.61 dB",
             "badge": "#1 training-free PSNR",
         },
@@ -314,7 +319,7 @@ def build_home_card(qual_data, ib):
 
     # Section a: Image restoration with zoom callouts
     fig.text(0.015, 0.966, "a. Image Restoration with Zoom Callouts", fontsize=10.6, fontweight="bold", color=INK, va="center")
-    fig.text(0.985, 0.966, r"#1 PSNR across all 8 FFHQ tasks · 5–8× lower $D_{\mathsf{eff}}$", fontsize=8.5, fontweight="bold", color=BLUE, ha="right", va="center")
+    fig.text(0.985, 0.966, "#1 PSNR on 8/8 FFHQ & 7/8 ImageNet · Lowest energy score", fontsize=8.5, fontweight="bold", color=BLUE, ha="right", va="center")
 
     rows_spec = [
         ("imagenet", "phase_retrieval", "Phase\nRetrieval"),
@@ -381,7 +386,7 @@ def build_home_card(qual_data, ib):
 
     # Section b: InverseBench Scientific Inverse Problems
     fig.text(0.015, 0.254, "b. Scientific Inverse Problems (InverseBench)", fontsize=10.4, fontweight="bold", color=INK, va="center")
-    fig.text(0.985, 0.254, "Blue frame: PTM · Grey: Ground truth · #1 on all 4 tasks", fontsize=8.1, fontweight="bold", color=TEAL, ha="right", va="center")
+    fig.text(0.985, 0.254, "Blue frame: PTM · Grey: Ground truth · #1 on 4 tasks", fontsize=8.1, fontweight="bold", color=TEAL, ha="right", va="center")
 
     bh_rec, bh_gt = ib["bh"]
     scat_rec, scat_gt = ib["scat"]
