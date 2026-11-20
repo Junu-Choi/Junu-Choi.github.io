@@ -23,9 +23,9 @@ export const cv = {
 
   education: [
     {
-      title: "M.S., Interdisciplinary Program in Artificial Intelligence",
-      place: "Seoul National University",
-      date: "Sep 2025 – Aug 2027 (expected)",
+      title: "M.S. track, integrated M.S./Ph.D. program (M.S. expected Aug 2027)",
+      place: "Seoul National University, Interdisciplinary Program in Artificial Intelligence",
+      date: "Sep 2025 – present",
       details: ["GPA: 4.20 / 4.30 (in progress)"],
     },
     {
@@ -46,7 +46,7 @@ export const cv = {
   experience: [
     {
       id: "snu-research",
-      title: "Graduate Researcher (M.S.)",
+      title: "Graduate Researcher",
       place: "Seoul National University",
       date: "Sep 2025 – present",
       details: [
