@@ -36,7 +36,7 @@ export const papers: Paper[] = [
     venue: "Preprint",
     status: "arXiv:2610.35545",
     cvDetails: [
-      "Independently evaluated and listed on the official Google Research WeatherBench 2 benchmark (0.25° global ensemble).",
+      "Listed on the official Google Research WeatherBench 2 benchmark (0.25° global ensemble); matches GenCast’s skill with 10.3× less hardware-normalised training compute.",
     ],
     links: [
       { label: "arXiv", href: "https://arxiv.org/abs/2610.35545" },
@@ -51,6 +51,9 @@ export const papers: Paper[] = [
     title: "Posterior Transport Matching for Inverse Problems",
     authors: "Junu Choi, Youngjoon Hong",
     venue: "Under review",
+    cvDetails: [
+      "Best primary metric on all four scientific inverse problems (InverseBench), highest PSNR on 8/8 FFHQ and 7/8 ImageNet tasks, and lowest energy score on every task.",
+    ],
     links: [
       { label: "Preview", href: "/papers/#ptm" },
     ],

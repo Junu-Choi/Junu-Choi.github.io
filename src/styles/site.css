@@ -177,7 +177,9 @@
 
 /* CV */
 .cv-page > section { margin-bottom: 45px; }
-.cv-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 28px; margin-top: 22px; font-size: 13px; color: var(--ink-soft); }
+.cv-legal-name { margin-top: 10px; font: 500 16px/1.45 var(--display); color: var(--ink); }
+.cv-legal-name span { font-weight: 400; color: var(--ink-soft); font-family: var(--sans); font-size: 14.5px; margin-left: 4px; }
+.cv-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 28px; margin-top: 14px; font-size: 13px; color: var(--ink-soft); }
 .cv-download { padding: 8px 14px; color: var(--accent); background: transparent; border: 1px solid var(--hair); font-size: 12px; }
 .cv-download:hover { border-color: var(--accent); }
 .cv-list { list-style: none; padding: 0; margin: 0; }
@@ -331,6 +333,7 @@
   .print-timestamp { position: fixed; top: 5.5mm; left: 14mm; font: 400 7.5pt/1 var(--sans); color: #555; }
   .print-header { text-align: center; border-bottom: 1px solid #333; padding-bottom: 8px; margin-bottom: 12px; }
   .print-name { font-size: 22pt; font-weight: 600; }
+  .print-legal-name { font-size: 9pt; color: #555; margin-top: 2px; }
   .print-contact { font-size: 8pt; margin-top: 4px; }
   .cv-page > section { margin-bottom: 10px; }
   .cv-page .section-heading { padding-top: 6px; margin-bottom: 4px; }

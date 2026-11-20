@@ -15,7 +15,7 @@ export const astraPreview = {
   id: "astra",
   title: "Efficient probabilistic weather forecasting at quarter-degree resolution",
   description:
-    "Astra forecasts on the 0.25° grid with Kantorovich Attention, in which each region chooses both where it reads from and where it writes to, so every region sends and receives information at token resolution. Trained on one node of eight GPUs, it matches GenCast with 10.3 times less hardware-normalised training compute.",
+    "Astra samples each quarter-degree forecast step in one network evaluation using Kantorovich Attention—in which every grid tile chooses both the tiles it reads and those that read it at a local window’s cost—and a self-featurised CRPS objective. On WeatherBench 2, Astra has better CRPS than ECMWF’s ensemble on 560 of 570 target and lead-time combinations, matches GenCast’s skill with 10.3 times less hardware-normalised training compute, and runs a 50-member, 15-day forecast on one consumer GPU in just over half an hour.",
   availability: "Junu Choi, Youngjoon Hong · arXiv:2610.35545",
   arxiv: "https://arxiv.org/abs/2610.35545",
   pdf: "https://arxiv.org/pdf/2610.35545",

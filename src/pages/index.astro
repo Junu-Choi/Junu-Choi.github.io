@@ -50,7 +50,7 @@ const hasSelectedPapers = papers.some((p) => p.selected);
             </h3>
             <p class="paper-authors"><strong>Junu Choi</strong>, Youngjoon Hong</p>
             <p class="paper-desc">
-              Kantorovich Attention routes information from both sides (pull &amp; push) so zero regions are left unread, closely matching the exact optimal transport plan. Trained on a single 8-GPU node, Astra has lower CRPS and ensemble-mean RMSE than ECMWF IFS ENS on all 600 variable–level–lead-time combinations, verified against ERA5.
+              Kantorovich Attention lets every grid tile choose both the tiles it reads and those that read it at a local window’s cost, paired with a self-featurised CRPS objective. On WeatherBench 2, Astra has better CRPS than ECMWF’s ensemble on 560 of 570 target and lead-time combinations, matches GenCast’s skill with 10.3× less hardware-normalised training compute, and runs a 50-member, 15-day forecast on one consumer GPU in just over half an hour.
             </p>
             <div class="dm-meta-row">
               <span>2026</span>
