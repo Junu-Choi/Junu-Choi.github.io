@@ -140,9 +140,12 @@ export const cv = {
       ],
     },
     {
-      title: "Qualcomm Innovation Award",
-      place: "KAIST × Qualcomm AI Hackathon",
-      date: "2019",
+      title: "Qualcomm Innovation Award 2019 — Track Winner",
+      place: "Qualcomm × KAIST software hackathon (emotion recognition from video)",
+      date: "Dec 2019",
+      details: [
+        "One of five undergraduate track winners; two-person team.",
+      ],
     },
   ] satisfies CVSection,
 
