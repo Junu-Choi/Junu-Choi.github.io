@@ -56,6 +56,15 @@ export const cv = {
       ],
     },
     {
+      id: "kaist-intern-2026",
+      title: "Research Intern",
+      place: "KAIST",
+      date: "Jul 2026",
+      details: [
+        "Optimal-transport theory for one-step generative models, continuing a project co-advised by Prof. Hyunwoo J. Kim (Mar–May 2026); now ongoing as Model Implicit Optimal Transport.",
+      ],
+    },
+    {
       id: "kaist-visual-ai",
       title: "Undergraduate Researcher",
       place: "Visual AI Group, KAIST",

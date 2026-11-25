@@ -328,17 +328,17 @@
   .site-header, .site-footer, .skip-link, .cv-meta, .article-back, .note-foot, .motion-toggle { display: none !important; }
   .container, .page-content { width: 100%; max-width: 100%; margin: 0; padding: 0; min-height: 0; }
   .cv-page .page-head { display: none; }
-  .cv-page { line-height: 1.25; padding: 15mm 14mm 14mm; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+  .cv-page { line-height: 1.23; padding: 11.5mm 14mm 11mm; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
   .print-only { display: block; }
-  .print-header { text-align: center; border-bottom: 1px solid #333; padding-bottom: 8px; margin-bottom: 12px; }
+  .print-header { text-align: center; border-bottom: 1px solid #333; padding-bottom: 7px; margin-bottom: 10px; }
   .print-name { font-size: 22pt; font-weight: 600; }
   .print-legal-name { font-size: 9pt; color: #555; margin-top: 2px; }
   .print-contact { font-size: 8pt; margin-top: 4px; }
-  .cv-page > section { margin-bottom: 10px; }
-  .cv-page .section-heading { padding-top: 6px; margin-bottom: 4px; }
-  .section-heading { margin-bottom: 6px; padding-top: 8px; break-after: avoid; }
+  .cv-page > section { margin-bottom: 7px; }
+  .cv-page .section-heading { padding-top: 5px; margin-bottom: 3px; }
+  .section-heading { margin-bottom: 5px; padding-top: 7px; break-after: avoid; }
   .section-heading h2 { font-size: 10pt; }
-  .cv-entry, .cv-entry + .cv-entry { break-inside: avoid; padding: 2px 0 5px; border: 0; }
+  .cv-entry, .cv-entry + .cv-entry { break-inside: avoid; padding: 1.5px 0 3.5px; border: 0; }
   .cv-entry:target { background: transparent; box-shadow: none; }
   .cv-entry-head { flex-direction: row; gap: 15px; margin-bottom: 1px; }
   .cv-entry-date { order: initial; font-size: 8pt; color: #444; }
