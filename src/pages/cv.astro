@@ -45,9 +45,9 @@ const publicationEntries: CVEntry[] = papers
     <p class="cv-legal-name">{site.name} <span>(legal name: Junwoo Choi)</span></p>
     <div class="cv-meta">
       <span class="cv-updated">Last updated &mdash; {cv.lastUpdated}</span>
-      <button type="button" class="cv-download" data-action="download-cv">
+      <a class="cv-download" href="/Junu_Choi_CV.pdf" download="Junu_Choi_CV.pdf">
         Download as PDF
-      </button>
+      </a>
     </div>
   </header>
 
@@ -86,13 +86,5 @@ const publicationEntries: CVEntry[] = papers
     <SectionRule label="Honors &amp; awards"/>
     <CVEntries items={cv.awards}/>
   </section>
-
-  <script is:inline>
-    document
-      .querySelector('[data-action="download-cv"]')
-      ?.addEventListener('click', () => {
-        window.print();
-      });
-  </script>
 
 </BaseLayout>
